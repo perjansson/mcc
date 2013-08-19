@@ -1,1 +1,43 @@
-My GitHub Page
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Meeting cost calculator</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" ></script>
+
+    <script type="text/javascript">
+        var meetingStartTime;
+        var timerId = 0;
+
+        $(function () {
+            $("#startMeetingButton").click(function() {
+                meetingStartTime = new Date();
+                clearInterval(timerId);
+                timerId = setInterval(meetingCostCalculator, 1000);
+            })
+        })
+
+        var meetingCostCalculator = function() {
+            var numberOfAttendees = $('#numberOfAttendees');
+            var averageHourlyRate = $('#averageHourlyRate');
+            var meetingCostPerSecond = numberOfAttendees.val() * (averageHourlyRate.val() / 3600);
+            var meetingCurrentTime = new Date();
+            var elapsedMeetingTimeInSeconds = (meetingCurrentTime - meetingStartTime) / 1000;
+            var currentMeetingCost = meetingCostPerSecond * elapsedMeetingTimeInSeconds
+            var rounded = Math.round(currentMeetingCost).toFixed(0);
+            $("#meetingCost").text("Meeting cost is " + rounded);
+        }
+
+    </script>
+
+</head>
+<body>
+
+    <input id="numberOfAttendees" value="Number of attendees" onfocus="if (this.value=='Number of attendees') this.value = ''" onblur="if (this.value=='') this.value = 'Number of attendees'" type="text"><br>
+    <input id="averageHourlyRate" value="Average hourly rate" onfocus="if (this.value=='Average hourly rate') this.value = ''" onblur="if (this.value=='') this.value = 'Average hourly rate'" type="text"><br>
+    <input id="currency" value="Currency" onfocus="if (this.value=='Currency') this.value = ''" onblur="if (this.value=='') this.value = 'Average hourly rate'" type="text"><br>
+    <input id="startMeetingButton" value='Start meeting' type="submit" /><br><br>
+
+    <span id="meetingCost"></span>
+
+</body>
+</html>
