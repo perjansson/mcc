@@ -14,7 +14,7 @@
                 clearInterval(timerId);
                 timerId = setInterval(meetingCostCalculator, 1000);
             })
-        })
+        });
 
         var meetingCostCalculator = function() {
             var numberOfAttendees = $('#numberOfAttendees');
@@ -22,9 +22,9 @@
             var meetingCostPerSecond = numberOfAttendees.val() * (averageHourlyRate.val() / 3600);
             var meetingCurrentTime = new Date();
             var elapsedMeetingTimeInSeconds = (meetingCurrentTime - meetingStartTime) / 1000;
-            var currentMeetingCost = meetingCostPerSecond * elapsedMeetingTimeInSeconds
+            var currentMeetingCost = meetingCostPerSecond * elapsedMeetingTimeInSeconds;
             var rounded = Math.round(currentMeetingCost).toFixed(0);
-            $("#meetingCost").text("Meeting cost is " + rounded);
+            $("#meetingCost").text("Meeting cost is " + rounded + " " + $('#currency').val());
         }
 
     </script>
