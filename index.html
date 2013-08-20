@@ -15,7 +15,7 @@
             $("#startMeetingButton").click(function() {
                 meetingStartTime = new Date();
                 clearInterval(timerId);
-                timerId = setInterval(meetingCostCalculator, 1000);
+                timerId = setInterval(meetingCostCalculator, 10);
             })
         });
 
