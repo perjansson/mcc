@@ -15,7 +15,7 @@
             $("#startMeetingButton").click(function() {
                 meetingStartTime = new Date();
                 clearInterval(timerId);
-                timerId = setInterval(meetingCostCalculator, 10);
+                timerId = setInterval(meetingCostCalculator, 1);
             })
         });
 
@@ -26,7 +26,7 @@
             var meetingCurrentTime = new Date();
             var elapsedMeetingTimeInSeconds = (meetingCurrentTime - meetingStartTime) / 1000;
             var currentMeetingCost = meetingCostPerSecond * elapsedMeetingTimeInSeconds;
-            var rounded = Math.round(currentMeetingCost).toFixed(0);
+            var rounded = Math.round(currentMeetingCost).toFixed(2);
             $("#meetingCost").text("Meeting cost is " + rounded + " " + $('#currency').val());
         }
 
