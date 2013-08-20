@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="845a2d55-49db-4b0b-96c2-baf7c25a84fa" name="Default" comment="Added some more space between button and text">
+    <list default="true" id="845a2d55-49db-4b0b-96c2-baf7c25a84fa" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.html" afterPath="$PROJECT_DIR$/index.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="MeetingCostCalculator.iws" />
     <ignored path=".idea/workspace.xml" />
     <file path="/meetingcostcalculator.html" changelist="845a2d55-49db-4b0b-96c2-baf7c25a84fa" time="1376942555553" ignored="false" />
-    <file path="/Dummy.txt" changelist="845a2d55-49db-4b0b-96c2-baf7c25a84fa" time="1377028864678" ignored="false" />
-    <file path="/index.html" changelist="845a2d55-49db-4b0b-96c2-baf7c25a84fa" time="1377028837790" ignored="false" />
+    <file path="/Dummy.txt" changelist="845a2d55-49db-4b0b-96c2-baf7c25a84fa" time="1377029684673" ignored="false" />
+    <file path="/index.html" changelist="845a2d55-49db-4b0b-96c2-baf7c25a84fa" time="1377030392020" ignored="false" />
     <file path="/fragment.js2" changelist="845a2d55-49db-4b0b-96c2-baf7c25a84fa" time="1377026637819" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -74,7 +74,7 @@
       <file leaf-file-name="index.html" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="56" column="83" selection-start="2443" selection-end="2443" vertical-scroll-proportion="1.042394">
+            <state line="70" column="8" selection-start="2254" selection-end="2254" vertical-scroll-proportion="0.47630924">
               <folding>
                 <element signature="n#style#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#span#0;n#h2#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -370,7 +370,7 @@
     <option name="WRAP_WHEN_TYPING_REACHES_RIGHT_MARGIN" value="false" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added some more space between button and text" />
+    <option name="LAST_COMMIT_MESSAGE" value="Changed meeting cost text" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -391,6 +391,7 @@
     <MESSAGE value="Removed space between button and meeting cost text" />
     <MESSAGE value="Fixed so header isn't cut off" />
     <MESSAGE value="Added some more space between button and text" />
+    <MESSAGE value="Changed meeting cost text" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -423,7 +424,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="56" column="83" selection-start="2443" selection-end="2443" vertical-scroll-proportion="1.042394">
+        <state line="70" column="8" selection-start="2254" selection-end="2254" vertical-scroll-proportion="0.47630924">
           <folding>
             <element signature="n#style#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#span#0;n#h2#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
