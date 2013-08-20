@@ -3,9 +3,10 @@
 <head>
     <title>Meeting cost calculator</title>
 
-    <meta name="viewport" content="width=device-width; initial-scale=1.0">
-
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" ></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.css" />
+    <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.js"></script>
 
     <script type="text/javascript">
         var meetingStartTime;
@@ -20,13 +21,13 @@
         });
 
         var meetingCostCalculator = function() {
+            var meetingCurrentTime = new Date();
             var numberOfAttendees = $('#numberOfAttendees');
             var averageHourlyRate = $('#averageHourlyRate');
             var meetingCostPerSecond = numberOfAttendees.val() * (averageHourlyRate.val() / 3600);
-            var meetingCurrentTime = new Date();
             var elapsedMeetingTimeInSeconds = (meetingCurrentTime - meetingStartTime) / 1000;
             var currentMeetingCost = meetingCostPerSecond * elapsedMeetingTimeInSeconds;
-            var rounded = Math.round(currentMeetingCost).toFixed(2);
+            var rounded = Math.round(currentMeetingCost).toFixed(0);
             $("#meetingCost").text("Meeting cost is " + rounded + " " + $('#currency').val());
         }
 
@@ -34,14 +35,25 @@
 
 </head>
 
-<body>
+<body style="text-align: center">
 
-    <input id="numberOfAttendees" value="Number of attendees" onfocus="if (this.value=='Number of attendees') this.value = ''" onblur="if (this.value=='') this.value = 'Number of attendees'" type="text"><br>
-    <input id="averageHourlyRate" value="Average hourly rate" onfocus="if (this.value=='Average hourly rate') this.value = ''" onblur="if (this.value=='') this.value = 'Average hourly rate'" type="text"><br>
-    <input id="currency" value="Currency" onfocus="if (this.value=='Currency') this.value = ''" onblur="if (this.value=='') this.value = 'Average hourly rate'" type="text"><br>
-    <input id="startMeetingButton" value='Start meeting' type="submit" /><br><br>
+<div data-role="page" data-theme="b">
 
-    <span id="meetingCost"></span>
+    <div data-role="header">
+        <h1>Meeting cost calculator</h1>
+    </div>
+
+    <div data-role="content">
+        <p>
+            <input id="numberOfAttendees" value="Number of attendees" onfocus="if (this.value=='Number of attendees') this.value = ''" onblur="if (this.value=='') this.value = 'Number of attendees'" type="text"><br>
+            <input id="averageHourlyRate" value="Average hourly rate" onfocus="if (this.value=='Average hourly rate') this.value = ''" onblur="if (this.value=='') this.value = 'Average hourly rate'" type="text"><br>
+            <input id="currency" value="Currency" onfocus="if (this.value=='Currency') this.value = ''" onblur="if (this.value=='') this.value = 'Average hourly rate'" type="text"><br>
+            <input id="startMeetingButton" value='Start meeting' type="submit" /><br><br>
+            <h2><span id="meetingCost" style="width: 50%; margin: 0 auto"></span></h2>
+        </p>
+    </div>
+
+</div>
 
 </body>
 </html>
