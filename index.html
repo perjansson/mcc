@@ -35,7 +35,7 @@
             var elapsedMeetingTimeInSeconds = (meetingCurrentTime - meetingStartTime) / 1000;
             var currentMeetingCost = meetingCostPerSecond * elapsedMeetingTimeInSeconds;
             var rounded = Math.round(currentMeetingCost).toFixed(0);
-            $("#meetingCost").text("Meeting cost is " + rounded + " " + $('#currency').val());
+            $("#meetingCost").text("Meeting cost: " + rounded + " " + $('#currency').val());
         }
 
     </script>
@@ -53,7 +53,7 @@
     <div data-role="content">
         <input id="numberOfAttendees" value="Number of attendees" onfocus="if (this.value=='Number of attendees') this.value = ''" onblur="if (this.value=='') this.value = 'Number of attendees'" type="text"><br>
         <input id="averageHourlyRate" value="Average hourly rate" onfocus="if (this.value=='Average hourly rate') this.value = ''" onblur="if (this.value=='') this.value = 'Average hourly rate'" type="text"><br>
-        <input id="currency" value="Currency" onfocus="if (this.value=='Currency') this.value = ''" onblur="if (this.value=='') this.value = 'Average hourly rate'" type="text"><br>
+        <input id="currency" value="Currency" onfocus="if (this.value=='Currency') this.value = ''" onblur="if (this.value=='') this.value = 'Currency'" type="text"><br>
         <input id="startMeetingButton" value='Start meeting' type="submit" />  <br>
         <h2><span id="meetingCost" style="width: 50%; margin: 0 auto"></span></h2>
     </div>
