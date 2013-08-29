@@ -24,15 +24,12 @@
 
     <div data-role="content">
         <input id="numberOfAttendees" value="Number of attendees"
-               onkeydown="if (event.keyCode == 13) document.getElementById('startMeetingButton').click()"
                onfocus="if (this.value=='Number of attendees') this.value = ''"
                onblur="if (this.value=='') this.value = 'Number of attendees'" type="text"><br>
         <input id="averageHourlyRate" value="Average hourly rate"
-               onkeydown="if (event.keyCode == 13) document.getElementById('startMeetingButton').click()"
                onfocus="if (this.value=='Average hourly rate') this.value = ''"
                onblur="if (this.value=='') this.value = 'Average hourly rate'" type="text"><br>
         <input id="currency" value="Currency"
-               onkeydown="if (event.keyCode == 13) document.getElementById('startMeetingButton').click()"
                onfocus="if (this.value=='Currency') this.value = ''"
                onblur="if (this.value=='') this.value = 'Currency'" type="text"><br>
         <span id="controlWhenStopped">
