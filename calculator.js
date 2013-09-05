@@ -8,6 +8,7 @@ $(function () {
     $('#startMeetingButton').click(function () {
         $('#controlWhenStopped').toggle();
         $('#controlWhenStarted').toggle();
+        $('#controlWhenNotBoring').toggle();
         start();
     });
 });
@@ -40,8 +41,8 @@ $(function () {
 $(function () {
     $('#boringMeetingButton').click(function () {
         $('#playground').toggle();
-        $('#boringMeetingButton').toggle();
-        $('#notBoringMeetingButton').toggle();
+        $('#controlWhenNotBoring').toggle();
+        $('#controlWhenBoring').toggle();
         animateToBottom();
     });
 });
@@ -49,8 +50,8 @@ $(function () {
 $(function () {
     $('#notBoringMeetingButton').click(function () {
         $('#playground').toggle();
-        $('#boringMeetingButton').toggle();
-        $('#notBoringMeetingButton').toggle();
+        $('#controlWhenNotBoring').toggle();
+        $('#controlWhenBoring').toggle();
     });
 });
 
@@ -88,8 +89,9 @@ function reset() {
     $('#controlWhenStarted').hide();
     $('#controlWhenRunning').show();
     $('#controlWhenPaused').hide();
+    $('#controlWhenNotBoring').hide();
+    $('#controlWhenBoring').hide();
     $('#playground').hide();
-    $('#notBoringMeetingButton').hide();
 }
 
 var meetingCostCalculator = function () {

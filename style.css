@@ -52,6 +52,6 @@ table {
 	margin-top: 5px;
 }
 
-#controlWhenStarted, #controlWhenPaused {
+#controlWhenStarted, #controlWhenPaused, #controlWhenNotBoring, #controlWhenBoring {
     display: none;
 }
