@@ -16,6 +16,7 @@ $(function () {
     $('#stopMeetingButton').click(function () {
         $('#controlWhenStopped').toggle();
         $('#controlWhenStarted').toggle();
+        $('#playground').toggle();
         stop();
     });
 });
@@ -35,6 +36,28 @@ $(function () {
         resume();
     });
 });
+
+$(function () {
+    $('#boringMeetingButton').click(function () {
+        $('#playground').toggle();
+        $('#boringMeetingButton').toggle();
+        $('#notBoringMeetingButton').toggle();
+        animateToBottom();
+    });
+});
+
+$(function () {
+    $('#notBoringMeetingButton').click(function () {
+        $('#playground').toggle();
+        $('#boringMeetingButton').toggle();
+        $('#notBoringMeetingButton').toggle();
+    });
+});
+
+function animateToBottom() {
+    $('html, body').scrollTop($('body').prop("scrollHeight"));
+    return false;
+}
 
 function start() {
     clearInterval(timerId);
@@ -65,6 +88,8 @@ function reset() {
     $('#controlWhenStarted').hide();
     $('#controlWhenRunning').show();
     $('#controlWhenPaused').hide();
+    $('#playground').hide();
+    $('#notBoringMeetingButton').hide();
 }
 
 var meetingCostCalculator = function () {
