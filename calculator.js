@@ -10,6 +10,7 @@ $(function () {
         $('#controlWhenStarted').toggle();
         $('#controlWhenNotBoring').toggle();
         start();
+animateToBottom();
     });
 });
 
