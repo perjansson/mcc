@@ -13,7 +13,7 @@ html, body {
 }
 
 .warning div, img {
-	vertical-align: text-bottom;
+	vertical-align: middle;
 }
 
 #page {
