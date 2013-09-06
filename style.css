@@ -12,7 +12,7 @@ html, body {
 	color: gray;
 }
 
-.warning div, img {
+.warning span, img {
 	vertical-align: text-bottom;
 }
 
