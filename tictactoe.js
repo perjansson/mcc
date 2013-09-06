@@ -6,7 +6,7 @@ function TicTacToeCtrl($scope, $location) {
 	    'vertical-align': 'middle',
 	    'cursor': 'pointer',
 	    'font-size': '3em',
-	    'color': 'black'
+	    'color': 'white'
 	};
 
 	$scope.reset = function() {
