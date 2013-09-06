@@ -13,6 +13,10 @@ html, body {
 	margin-bottom: 12px;
 }
 
+.warning div, img {
+	vertical-align: text-bottom;
+}
+
 #page {
 	height: 100%;
 	width: 100%; 
