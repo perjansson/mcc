@@ -33,15 +33,17 @@
         </div>
 
         <!-- Meeting cost calculator -->
-        <input id="numberOfAttendees" value="Number of attendees"
-               onfocus="if (this.value=='Number of attendees') this.value = ''"
-               onblur="if (this.value=='') this.value = 'Number of attendees'" type="text"><br>
-        <input id="averageHourlyRate" value="Average hourly rate"
-               onfocus="if (this.value=='Average hourly rate') this.value = ''"
-               onblur="if (this.value=='') this.value = 'Average hourly rate'" type="text"><br>
-        <input id="currency" value="Currency"
-               onfocus="if (this.value=='Currency') this.value = ''"
-               onblur="if (this.value=='') this.value = 'Currency'" type="text"><br>
+        <span id="meetingInputVariables">
+            <input id="numberOfAttendees" value="Number of attendees"
+                   onfocus="if (this.value=='Number of attendees') this.value = ''"
+                   onblur="if (this.value=='') this.value = 'Number of attendees'" type="text">
+            <input id="averageHourlyRate" value="Average hourly rate"
+                   onfocus="if (this.value=='Average hourly rate') this.value = ''"
+                   onblur="if (this.value=='') this.value = 'Average hourly rate'" type="text">
+            <input id="currency" value="Currency"
+                   onfocus="if (this.value=='Currency') this.value = ''"
+                   onblur="if (this.value=='') this.value = 'Currency'" type="text">
+        </span>  
         <span id="controlWhenStopped">
             <a id="startMeetingButton" href="#" data-role="button" data-inline="true">Start meeting</a>
         </span>
