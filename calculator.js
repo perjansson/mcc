@@ -10,7 +10,7 @@ $(function () {
         $('#controlWhenStarted').toggle();
         $('#controlWhenNotBoring').toggle();
         start();
-animateToBottom();
+        animateToBottom();
     });
 });
 
@@ -96,12 +96,29 @@ function reset() {
 }
 
 var meetingCostCalculator = function () {
-    var meetingCurrentTime = new Date();
+    var currentMeetingCost = roundToZeroDecimals(getCurrentMeetingCost());
+    updateText(currentMeetingCost);
+}
+
+function updateText(meetingCost) {
+    $('#meetingCost').text("Meeting cost: " + meetingCost + " " + $('#currency').val());
+}
+
+function getCurrentMeetingCost() {
+    return getMeetingCostPerSecond() * getElapsedMeetingTimeInSeconds();
+}
+
+function getMeetingCostPerSecond() {
     var numberOfAttendees = $('#numberOfAttendees');
     var averageHourlyRate = $('#averageHourlyRate');
-    var meetingCostPerSecond = numberOfAttendees.val() * (averageHourlyRate.val() / 3600);
-    var elapsedMeetingTimeInSeconds = (meetingCurrentTime - meetingStartTime - meetingPauseTime) / 1000;
-    var currentMeetingCost = meetingCostPerSecond * elapsedMeetingTimeInSeconds;
-    var rounded = Math.round(currentMeetingCost).toFixed(0);
-    $('#meetingCost').text("Meeting cost: " + rounded + " " + $('#currency').val());
+    return numberOfAttendees.val() * (averageHourlyRate.val() / 3600);
+}
+
+function getElapsedMeetingTimeInSeconds() {
+    var meetingCurrentTime = new Date();
+    return (meetingCurrentTime - meetingStartTime - meetingPauseTime) / 1000;    
+}
+
+function roundToZeroDecimals(value) {
+    return Math.round(value).toFixed(0);
 }
