@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app>
+<html ng-app="MeetingCostCalculatorApp">
 <head>
     <title>Meeting cost calculator v1.2.2</title>
 
@@ -8,12 +8,17 @@
     <link rel="stylesheet" href="jquery.mobile-1.3.2.min.css"/>
     <link rel="stylesheet" href="style.css"/>
 
-    <script src="tictactoe.js" type="text/javascript"></script>
     <script src="angular.min.js" type="text/javascript"></script>
-
     <script src="jquery-1.8.3.min.js"></script>
     <script src="jquery.mobile-1.3.2.min.js"></script>
-    <script src="calculator.js"></script>
+
+    <script src="calculator.js" type="text/javascript"></script>
+    <script src="tictactoe.js" type="text/javascript"></script>
+
+    <script src="app.js" type="text/javascript"></script>
+    <script src="constants.js" type="text/javascript"></script>
+    <script src="controllers.js" type="text/javascript"></script>
+    <script src="directives.js" type="text/javascript"></script>
     
 </head>
 
@@ -32,56 +37,69 @@
             <span>Warning, should probably only be used in a laid-back way and together w/ the right people.</span>
         </div>
 
-        <!-- Meeting cost calculator -->
-        <span id="meetingInputVariables">
-            <input id="numberOfAttendees" value="Number of attendees"
-                   onfocus="if (this.value=='Number of attendees') this.value = ''"
-                   onblur="if (this.value=='') this.value = 'Number of attendees'" type="text">
-            <input id="averageHourlyRate" value="Average hourly rate"
-                   onfocus="if (this.value=='Average hourly rate') this.value = ''"
-                   onblur="if (this.value=='') this.value = 'Average hourly rate'" type="text">
-            <input id="currency" value="Currency"
-                   onfocus="if (this.value=='Currency') this.value = ''"
-                   onblur="if (this.value=='') this.value = 'Currency'" type="text">
-        </span>  
-        <span id="controlWhenStopped">
-            <a id="startMeetingButton" href="#" data-role="button" data-inline="true">Start meeting</a>
-        </span>
-         <span id="controlWhenStarted">
-            <a id="stopMeetingButton" href="#" data-role="button" data-inline="true">Stop</a>
-            <span id="controlWhenRunning">
-                <a id="pauseMeetingButton" href="#" data-role="button" data-inline="true">Pause</a>
+        <div id="meetingCostCalculator" ng-controller="MeetingCostController">
+
+            <span id="meetingInputVariables">
+                <input type="text" id="numberOfAttendees" 
+                    ng-model="meeting.numberOfAttendees"
+                    ng-focus="onNumberOfAttendeesFocus()"
+                    ng-blur="onNumberOfAttendeesBlur()">
+
+                <input type="text" id="averageHourlyRate" 
+                    ng-model="meeting.averageHourlyRate"
+                    ng-focus="onAverageHourlyRateFocus()"
+                    ng-blur="onAverageHourlyRateBlur()">
+
+                <input type="text" id="currency" 
+                    ng-model="meeting.currency"
+                    ng-focus="onCurrencyFocus()"
+                    ng-blur="onCurrencyBlur()">
+
+            </span>  
+
+            <span id="controlWhenStopped">
+                <a id="startMeetingButton" href="#" data-role="button" data-inline="true">Start meeting</a>
             </span>
-            <span id="controlWhenPaused">
-                <a id="resumeMeetingButton" href="#" data-role="button" data-inline="true">Resume</a>
-            </span>    
+             <span id="controlWhenStarted">
+                <a id="stopMeetingButton" href="#" data-role="button" data-inline="true">Stop</a>
+                <span id="controlWhenRunning">
+                    <a id="pauseMeetingButton" href="#" data-role="button" data-inline="true">Pause</a>
+                </span>
+                <span id="controlWhenPaused">
+                    <a id="resumeMeetingButton" href="#" data-role="button" data-inline="true">Resume</a>
+                </span>  
+            </span>
+
+            <h2><span id="meetingCost" style="width: 50%; margin: 0 auto"></span></h2>
+
+        </div>
+
+        <div>
             <span id="controlWhenNotBoring">
                 <a id="boringMeetingButton" href="#" data-role="button" data-inline="true">Boring?</a>
             </span>
             <span id="controlWhenBoring">
-                <a id="notBoringMeetingButton" href="#" data-role="button" data-inline="true">Not boring?</a>
+                <a id="notBoringMeetingButton" ref="#" data-role="button" data-inline="true">Not boring?</a>
             </span>
-        </span>
-        <br>
+        </div>
 
-        <h2><span id="meetingCost" style="width: 50%; margin: 0 auto"></span></h2>
-    </div>
+        <div ng-controller="TicTacToeCtrl" id="playground">
 
-    <!-- Tic Tac Toe -->
-    <div ng-controller="TicTacToeCtrl" id="playground">
-        <div class="nextPlayer">Next Player: {{nextMove}}</a></div>
-        <table class="board">
-            <tr ng-repeat="row in board track by $index" style="height:15px;">
-                <td ng-repeat="cell in row track by $index" ng-style="cellStyle" ng-click="dropPiece($parent.$index, $index)">{{cell}}</td>
-            </tr>
-        </table>
-        <div class="winner" ng-show="winner">Player {{winner}} has won!</div>
-        <a ng-click="reset()" href="#" data-role="button" data-inline="true">Reset board</a>
+            <div class="nextPlayer">Next Player: {{nextMove}}</a></div>
+            <table class="board">
+                <tr ng-repeat="row in board track by $index" style="height:15px;">
+                    <td ng-repeat="cell in row track by $index" ng-style="cellStyle" ng-click="dropPiece($parent.$index, $index)">{{cell}}</td>
+                </tr>
+            </table>
+            <div class="winner" ng-show="winner">Player {{winner}} has won!</div>
+            <a ng-click="reset()" href="#" data-role="button" data-inline="true">Reset board</a>
+
+            <br>
+        </div>
+
     </div>
 
 </div>
-
-<script src="analytics.js" type="text/javascript"></script>
 
 </body>
 </html>
