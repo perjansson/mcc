@@ -1,19 +1,28 @@
-app.controller('MeetingCostController', function($scope, $location, constants) {
+app.controller('MeetingCostController', function($scope, $location, meetingService, constants) {
 
     var timerId = 0;
     var pauseTimeStamp = 0;
  	const intervalDelay = 50;
     
  	$scope.meeting = {
-				    	numberOfAttendees: constants.numberOfAttendeesText, 
+				    	guid: null,
+                        numberOfAttendees: constants.numberOfAttendeesText, 
 				    	averageHourlyRate: constants.averageHourlyRateText,
 				    	currency: constants.currencyText,
                         status: 'notStarted',
                         isBoring: false,
                         meetingStartTime: null,
                         meetingPauseTime: null,
-                        meetingCost: null
+                        meetingCost: 0
 				    };
+
+    $scope.messages = [];
+ 
+    meetingService.subscribe(function(message) {
+        console.log(message);
+    });
+
+    meetingService.connect();
 
     var meetingCostCalculator = function() {
         $scope.meeting.meetingCost = roundToZeroDecimals(getCurrentMeetingCost());
@@ -39,25 +48,37 @@ app.controller('MeetingCostController', function($scope, $location, constants) {
         return (meetingCurrentTime - $scope.meeting.meetingStartTime - $scope.meeting.meetingPauseTime) / 1000;    
     }
 
+    function sendMeetingToServer() {
+        meetingService.send(JSON.stringify($scope.meeting));
+    }
+
     $scope.startMeeting = function() {
-        clearInterval(timerId);
+        $scope.meeting.guid = guid();
         $scope.meeting.meetingStartTime = new Date();
+        $scope.meeting.meetingCost = 0;
+
+        clearInterval(timerId);
         timerId = setInterval(meetingCostCalculator, intervalDelay);
 
         changeMeetingStatus('started');
+
+        sendMeetingToServer();
+
         animateToBottom();
     };
 
     $scope.stopMeeting = function() {
         pauseTimeStamp = new Date();
         clearInterval(timerId);
+
+        changeMeetingStatus('stopped');
+
+        sendMeetingToServer();
         
         $scope.meeting.meetingStartTime = null;
         $scope.meeting.meetingPauseTime = null;
 
         $('#playground').hide();
-
-        changeMeetingStatus('stopped');
         $scope.meetingIsNotBoring();
     };
 
@@ -65,6 +86,8 @@ app.controller('MeetingCostController', function($scope, $location, constants) {
         pauseTimeStamp = new Date();
         clearInterval(timerId);
         changeMeetingStatus('paused');
+
+        sendMeetingToServer();
     };
 
     $scope.resumeMeeting = function() {
@@ -72,6 +95,8 @@ app.controller('MeetingCostController', function($scope, $location, constants) {
         pauseTimeStamp = 0;
         timerId = setInterval(meetingCostCalculator, intervalDelay);
         changeMeetingStatus('started');
+
+        sendMeetingToServer();
     };
 
     $scope.meetingIsBoring = function() {
@@ -83,12 +108,13 @@ app.controller('MeetingCostController', function($scope, $location, constants) {
     $scope.meetingIsNotBoring = function() {
         $scope.meeting.isBoring = false;
         $('#playground').hide();
+        animateToTop();
     };
 
     function changeMeetingStatus(status) {
         var meeting = $scope.meeting;
         meeting.status = status;
-        console.log("Meeting " + status + ": " + JSON.stringify(meeting));
+        /*console.log("Meeting " + status + ": " + JSON.stringify(meeting));*/
     }
 
     $scope.onNumberOfAttendeesFocus = function() {
@@ -127,9 +153,22 @@ app.controller('MeetingCostController', function($scope, $location, constants) {
     	}
     };
 
+    function animateToTop() {
+        $('html, body').scrollTop(0);
+        return false;
+    }
+
     function animateToBottom() {
         $('html, body').scrollTop($('body').prop("scrollHeight"));
         return false;
+    }
+
+    function guid() {
+        return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
+    }
+
+    function S4() {
+        return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
     }
 
 });
