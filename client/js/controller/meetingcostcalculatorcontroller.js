@@ -2,7 +2,7 @@ app.controller('MeetingCostController', function($scope, $location, meetingServi
 
     var timerId = 0;
     var pauseTimeStamp = 0;
- 	const intervalDelay = 50;
+ 	const intervalDelay = constants.meetingCostUpdateIntervalInMillis;
     
  	$scope.meeting = {
 				    	guid: null,
@@ -49,7 +49,9 @@ app.controller('MeetingCostController', function($scope, $location, meetingServi
     }
 
     function sendMeetingToServer() {
-        meetingService.send(JSON.stringify($scope.meeting));
+        if (constants.shouldPersistMeetings) {
+            meetingService.send(JSON.stringify($scope.meeting));
+        }
     }
 
     $scope.startMeeting = function() {
@@ -114,7 +116,6 @@ app.controller('MeetingCostController', function($scope, $location, meetingServi
     function changeMeetingStatus(status) {
         var meeting = $scope.meeting;
         meeting.status = status;
-        /*console.log("Meeting " + status + ": " + JSON.stringify(meeting));*/
     }
 
     $scope.onNumberOfAttendeesFocus = function() {
