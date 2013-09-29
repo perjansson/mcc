@@ -1,4 +1,4 @@
-app.controller('MeetingCostController', function($scope, $location, meetingService, constants) {
+app.controller('MeetingCostController', function($scope, $location, nodeJsMeetingService, constants) {
 
     var timerId = 0;
     var pauseTimeStamp = 0;
@@ -18,11 +18,11 @@ app.controller('MeetingCostController', function($scope, $location, meetingServi
 
     $scope.messages = [];
  
-    meetingService.subscribe(function(message) {
+    nodeJsMeetingService.subscribe(function(message) {
         console.log(message);
     });
 
-    meetingService.connect();
+    nodeJsMeetingService.connect();
 
     var meetingCostCalculator = function() {
         $scope.meeting.meetingCost = roundToZeroDecimals(getCurrentMeetingCost());
@@ -50,7 +50,7 @@ app.controller('MeetingCostController', function($scope, $location, meetingServi
 
     function sendMeetingToServer() {
         if (constants.shouldPersistMeetings) {
-            meetingService.send(JSON.stringify($scope.meeting));
+            nodeJsMeetingService.send(JSON.stringify($scope.meeting));
         }
     }
 

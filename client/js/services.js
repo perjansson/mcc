@@ -1,10 +1,12 @@
-app.factory('meetingService', function() {
+app.factory('nodeJsMeetingService', function() {
 
   var service = {};
  
   service.connect = function() {
 
-    if(service.ws) { return; }
+    if (service.ws) { 
+      return; 
+    }
  
     var ws = new WebSocket("ws://localhost:1337");
  
