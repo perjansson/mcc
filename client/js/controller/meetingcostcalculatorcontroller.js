@@ -19,11 +19,15 @@ app.controller('MeetingCostController', function($scope, $location, constants, n
 
     $scope.messages = [];
  
-    nodeJsMeetingService.subscribe(function(message) {
-        console.log(message);
-    });
+    if (constants.shouldPersistMeetings) {
+        if (constants.shouldUseNodeJs) {
+            nodeJsMeetingService.subscribe(function(message) {
+                console.log(message);
+            });
 
-    nodeJsMeetingService.connect();
+            nodeJsMeetingService.connect();
+        }
+    }
 
     var meetingCostCalculator = function() {
         $scope.meeting.meetingCost = roundToZeroDecimals(getCurrentMeetingCost());
