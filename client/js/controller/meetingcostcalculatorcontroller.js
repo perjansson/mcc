@@ -2,7 +2,7 @@ app.controller('MeetingCostController', function($scope, $location, constants, n
 
     var timerId = 0;
     var pauseTimeStamp = 0;
- 	const intervalDelay = constants.meetingCostUpdateIntervalInMillis;
+ 	var intervalDelay = constants.meetingCostUpdateIntervalInMillis;
     
  	$scope.meeting = {
 				    	id: null,
