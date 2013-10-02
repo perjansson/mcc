@@ -1,11 +1,12 @@
-app.controller('MeetingCostController', function($scope, $location, nodeJsMeetingService, constants) {
+app.controller('MeetingCostController', function($scope, $location, constants, nodeJsMeetingService, restMeetingService) {
 
     var timerId = 0;
     var pauseTimeStamp = 0;
  	const intervalDelay = constants.meetingCostUpdateIntervalInMillis;
     
  	$scope.meeting = {
-				    	guid: null,
+				    	id: null,
+                        name: null,
                         numberOfAttendees: constants.numberOfAttendeesText, 
 				    	averageHourlyRate: constants.averageHourlyRateText,
 				    	currency: constants.currencyText,
@@ -50,14 +51,24 @@ app.controller('MeetingCostController', function($scope, $location, nodeJsMeetin
 
     function sendMeetingToServer() {
         if (constants.shouldPersistMeetings) {
-            nodeJsMeetingService.send(JSON.stringify($scope.meeting));
+            if (constants.shouldUseNodeJs) {
+                nodeJsMeetingService.send(JSON.stringify($scope.meeting));
+            }
+            if (constants.shouldUseSpringMvc) {
+                restMeetingService.create($scope.meeting, function success(responseMeeting) {
+                    // Update meeting with id from response
+                    $scope.meeting.id = responseMeeting.id;
+                    console.log(JSON.stringify($scope.meeting));
+                });
+            }
         }
     }
 
     $scope.startMeeting = function() {
-        $scope.meeting.guid = guid();
+        $scope.meeting.id = null;
         $scope.meeting.meetingStartTime = new Date();
         $scope.meeting.meetingCost = 0;
+        $scope.meeting.meetingPauseTime = null;
 
         clearInterval(timerId);
         timerId = setInterval(meetingCostCalculator, intervalDelay);
@@ -76,9 +87,6 @@ app.controller('MeetingCostController', function($scope, $location, nodeJsMeetin
         changeMeetingStatus('stopped');
 
         sendMeetingToServer();
-        
-        $scope.meeting.meetingStartTime = null;
-        $scope.meeting.meetingPauseTime = null;
 
         $('#playground').hide();
         $scope.meetingIsNotBoring();
@@ -162,14 +170,6 @@ app.controller('MeetingCostController', function($scope, $location, nodeJsMeetin
     function animateToBottom() {
         $('html, body').scrollTop($('body').prop("scrollHeight"));
         return false;
-    }
-
-    function guid() {
-        return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
-    }
-
-    function S4() {
-        return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
     }
 
 });

@@ -1,1 +1,1 @@
-var app = angular.module('MeetingCostCalculatorApp', []);
+var app = angular.module('MeetingCostCalculatorApp', ['ngResource']);
