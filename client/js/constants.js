@@ -3,7 +3,7 @@ app.constant('constants', {
     averageHourlyRateText: 'Average hourly rate',
     currencyText: 'Currency',
     meetingCostUpdateIntervalInMillis: '50',
-    shouldPersistMeetings: false,
+    shouldPersistMeetings: true,
     shouldUseNodeJs: true,
-    shouldUseSpringMvc: true
+    shouldUseSpringMvc: false
 });

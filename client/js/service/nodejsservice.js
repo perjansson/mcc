@@ -8,7 +8,7 @@ app.factory('nodeJsMeetingService', function() {
       return; 
     }
  
-    var ws = new WebSocket("ws://localhost:1337");
+    var ws = new WebSocket("ws://mcc.cloudno.de/");
  
     ws.onopen = function() {
       service.callback("WebSocket connection opened on client side using AngularJS :)");
