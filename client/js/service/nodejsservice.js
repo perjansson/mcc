@@ -4,29 +4,29 @@ app.factory('nodeJsMeetingService', function() {
  
   service.connect = function() {
 
-    if (service.ws) { 
+    if (service.webSocket) { 
       return; 
     }
  
-    var ws = new WebSocket("ws://mcc.cloudno.de/");
+    var webSocket = new WebSocket("ws://mcc.cloudno.de/");
  
-    ws.onopen = function() {
+    webSocket.onopen = function() {
       service.callback("WebSocket connection opened on client side using AngularJS :)");
     };
  
-    ws.onerror = function() {
+    webSocket.onerror = function() {
       service.callback("WebSocket connection NOT opened on client side using AngularJS :(");
     }
  
-    ws.onmessage = function(message) {
+    webSocket.onmessage = function(message) {
       service.callback(message.data);
     };
  
-    service.ws = ws;
+    service.webSocket = webSocket;
   }
  
   service.send = function(message) {
-    service.ws.send(message);
+    service.webSocket.send(message);
   }
  
   service.subscribe = function(callback) {
@@ -34,4 +34,5 @@ app.factory('nodeJsMeetingService', function() {
   }
  
   return service;
+  
 });

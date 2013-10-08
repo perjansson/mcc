@@ -1,8 +1,10 @@
 app.controller('MeetingCostController', function($scope, $location, constants, nodeJsMeetingService, restMeetingService) {
 
-    var timerId = 0;
+    var updateMeetingTextTimerId = 0;
+    var updateBackendTimerId = 0;
     var pauseTimeStamp = 0;
- 	var intervalDelay = constants.meetingCostUpdateIntervalInMillis;
+ 	var updateMeetingTextIntervalDelay = constants.meetingCostTextUpdateIntervalInMillis;
+    var backendUpdateIntervalDelay = constants.backendUpdateIntervalInMillis;
     
  	$scope.meeting = {
 				    	id: null,
@@ -74,8 +76,10 @@ app.controller('MeetingCostController', function($scope, $location, constants, n
         $scope.meeting.meetingCost = 0;
         $scope.meeting.meetingPauseTime = null;
 
-        clearInterval(timerId);
-        timerId = setInterval(meetingCostCalculator, intervalDelay);
+        clearInterval(updateMeetingTextTimerId);
+        clearInterval(updateBackendTimerId);
+        updateMeetingTextTimerId = setInterval(meetingCostCalculator, updateMeetingTextIntervalDelay);
+        updateBackendTimerId = setInterval(sendMeetingToServer, backendUpdateIntervalDelay);
 
         changeMeetingStatus('started');
 
@@ -86,7 +90,8 @@ app.controller('MeetingCostController', function($scope, $location, constants, n
 
     $scope.stopMeeting = function() {
         pauseTimeStamp = new Date();
-        clearInterval(timerId);
+        clearInterval(updateMeetingTextTimerId);
+        clearInterval(updateBackendTimerId);
 
         changeMeetingStatus('stopped');
 
@@ -98,7 +103,8 @@ app.controller('MeetingCostController', function($scope, $location, constants, n
 
     $scope.pauseMeeting = function() {
         pauseTimeStamp = new Date();
-        clearInterval(timerId);
+        clearInterval(updateMeetingTextTimerId);
+        clearInterval(updateBackendTimerId);
         changeMeetingStatus('paused');
 
         sendMeetingToServer();
@@ -107,7 +113,8 @@ app.controller('MeetingCostController', function($scope, $location, constants, n
     $scope.resumeMeeting = function() {
         $scope.meeting.meetingPauseTime = $scope.meeting.meetingPauseTime + (new Date() - pauseTimeStamp);
         pauseTimeStamp = 0;
-        timerId = setInterval(meetingCostCalculator, intervalDelay);
+        updateMeetingTextTimerId = setInterval(meetingCostCalculator, updateMeetingTextIntervalDelay);
+        updateBackendTimerId = setInterval(sendMeetingToServer, backendUpdateIntervalDelay);
         changeMeetingStatus('started');
 
         sendMeetingToServer();
