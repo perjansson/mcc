@@ -1,12 +1,12 @@
 function TicTacToeCtrl($scope, $location) {
 	$scope.cellStyle= {
 	    'min-height': '100%',
-	    'border': '2px solid black',
+	    'border': '2px solid #C4C4C4',
 	    'text-align': 'center',
 	    'vertical-align': 'middle',
 	    'cursor': 'pointer',
-	    'font-size': '3em',
-	    'color': 'white'
+	    'font-size': '4em',
+	    'color': '#C4C4C4'
 	};
 
 	$scope.reset = function() {
