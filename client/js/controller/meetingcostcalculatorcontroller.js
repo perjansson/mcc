@@ -31,6 +31,11 @@ app.controller('MeetingCostController', function($scope, $location, constants, n
         }
     }
 
+    $scope.meetingIsInvalid = function() {
+        var m = $scope.meeting;
+        return m.numberOfAttendees == null || m.averageHourlyRate == null || m.currency == null || m.currency == "";
+    }
+
     var meetingCostCalculator = function() {
         $scope.meeting.meetingCost = roundToZeroDecimals(getCurrentMeetingCost());
         $scope.$apply();
