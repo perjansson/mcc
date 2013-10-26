@@ -1,41 +1,30 @@
-html, body { 
-	height: 100%; 
-	width: 100%; 
-	margin: 0;
-	padding: 0; 
-	margin-left: auto;
-	margin-right: auto;
+.container {
+	padding-bottom: 15px;
 }
 
-.warning {
-	font-size: 12px;
-	color: gray;
+.form-inline .form-group {
+	margin-right: 10px;
 }
 
-.warning span, img {
-	vertical-align: text-bottom;
+.version {
+	color: #C4C4C4;
 }
 
-#page {
-	height: 100%;
-	width: 100%; 
-	margin-left: auto;
-	margin-right: auto;
+.alert {
+	font-size: 14px;
 }
 
-#meetingInputVariables div {
-	margin-top: 15px;
-	margin-bottom: 15px;
+.meeting-cost {
+	font-size: 100%;
+	display: block;
 }
 
 #playground {
 	display: none;
 	height: 100%;
 	width: 90%; 
-	margin-left: auto;
-	margin-right: auto;
 	text-align: center;
-	margin-top: -2px;
+	margin-top: 7%;
 }
 
 table, tr, td {
@@ -47,10 +36,6 @@ table {
 	width: 100%; 
 	height: 70%;
 	border-spacing: 0px;
-}
-
-.ui-title {
-    margin: 0.6em 10% 0.8em !important;
 }
 
 .board {
@@ -65,8 +50,5 @@ table {
 
 .winner {
 	margin-top: 5px;
-}
-
-#controlWhenStarted, #controlWhenPaused, #controlWhenNotBoring, #controlWhenBoring {
-    display: none;
+	color: #8F8F8F;
 }

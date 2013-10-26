@@ -1,7 +1,7 @@
 app.constant('constants', {
-    numberOfAttendeesText: 'Number of attendees',
-    averageHourlyRateText: 'Average hourly rate',
-    currencyText: 'Currency',
+    numberOfAttendeesText: null,
+    averageHourlyRateText: null,
+    currencyText: null,
     meetingCostTextUpdateIntervalInMillis: '50',
     backendUpdateIntervalInMillis: '10000',
     shouldPersistMeetings: true,
