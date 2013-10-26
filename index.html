@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html ng-app="MeetingCostCalculatorApp">
 <head>
-    <title>Meeting cost calculator v1.3</title>
+    <title>Meeting cost calculator v1.3.1</title>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
     <link href="client/ui/style/bootstrap.min.css" rel="stylesheet"/>
     <link href="client/ui/style/bootstrap-theme.min.css" rel="stylesheet"/>
@@ -14,7 +14,7 @@
 
     <div class="jumbotron">
         <div class="page-header">
-            <h1>Meeting cost calculator <span class="version">v1.3</span></h1>
+            <h1>Meeting cost calculator <span class="version">v1.3.1</span></h1>
         </div>
         <div class="alert alert-warning">
             <img src="client/ui/image/warning.png">
@@ -25,70 +25,67 @@
     <div class="container" ng-controller="MeetingCostController">
 
         <form class="form-inline" role="form">
-            <div class="form-group">
-                <label class="sr-only" for="numberOfAttendees">Number of attendees</label>
-                <input id="numberOfAttendees" type="number" class="form-control" 
-                    ng-model="meeting.numberOfAttendees" placeholder="Number of attendees">
-            </div>
 
-            <div class="form-group">
-                <label class="sr-only" for="averageHourlyRate">Average hourly rate</label>
-                <input id="averageHourlyRate" type="number" class="form-control"
-                    ng-model="meeting.averageHourlyRate" placeholder="Average hourly rate">
-            </div>
+            <div class="row">
+                <div class="form-group col-sm-4 col-md-3">
+                    <label class="sr-only" for="numberOfAttendees">Number of attendees</label>
+                    <input id="numberOfAttendees" type="number" class="form-control" ng-model="meeting.numberOfAttendees" placeholder="Number of attendees">
+                </div>
 
-            <div class="form-group">
-                <label class="sr-only" for="currency">Currency</label>
-                <input id="currency" type="text" class="form-control"
-                    ng-model="meeting.currency" placeholder="Currency">
-            </div>
+                <div class="form-group col-sm-4 col-md-3">
+                    <label class="sr-only" for="averageHourlyRate">Average hourly rate</label>
+                    <input id="averageHourlyRate" type="number" class="form-control" ng-model="meeting.averageHourlyRate" placeholder="Average hourly rate">
+                </div>
 
-            <div class="form-group">
-                <span ng-show="meeting.status == 'notStarted' || meeting.status == 'stopped'">
-                    <button type="button" class="btn btn-success" ng-click="startMeeting()">
-                        Start meeting
-                    </button>
-                </span>
+                <div class="form-group col-sm-4 col-md-3">
+                    <label class="sr-only" for="currency">Currency</label>
+                    <input id="currency" type="text" class="form-control" ng-model="meeting.currency" placeholder="Currency">
+                </div>
 
-                <span ng-show="meeting.status == 'started' || meeting.status == 'paused'">
-                    <button type="button" class="btn btn-danger" ng-click="stopMeeting()">
-                        Stop
-                    </button>
-                </span>
+                <div class="form-group col-sm-12 col-md-3">
+                    <span ng-show="meeting.status == 'notStarted' || meeting.status == 'stopped'">
+                        <button type="button" class="btn btn-success" ng-click="startMeeting()">
+                            Start meeting
+                        </button>
+                    </span>
 
-                <span ng-show="meeting.status == 'started'">
-                    <button type="button" class="btn btn-warning" ng-click="pauseMeeting()">
-                        Pause
-                    </button>
-                </span>
+                    <span ng-show="meeting.status == 'started' || meeting.status == 'paused'">
+                        <button type="button" class="btn btn-danger" ng-click="stopMeeting()">
+                            Stop
+                        </button>
+                    </span>
 
-                <span ng-show="meeting.status == 'paused'">
-                    <button type="button" class="btn btn-warning" ng-click="resumeMeeting()">
-                        Resume
-                    </button>
-                </span>
+                    <span ng-show="meeting.status == 'started'">
+                        <button type="button" class="btn btn-warning" ng-click="pauseMeeting()">
+                            Pause
+                        </button>
+                    </span>
 
-                <span ng-show="(meeting.status == 'started' || meeting.status == 'paused') && meeting.isBoring == false">
-                    <button type="button" class="btn btn-primary" ng-click="meetingIsBoring()">
-                        Boring?
-                    </button>
-                </span>
+                    <span ng-show="meeting.status == 'paused'">
+                        <button type="button" class="btn btn-warning" ng-click="resumeMeeting()">
+                            Resume
+                        </button>
+                    </span>
 
-                <span ng-show="(meeting.status == 'started' || meeting.status == 'paused') && meeting.isBoring == true">
-                    <button type="button" class="btn btn-primary" ng-click="meetingIsNotBoring()">
-                        Not boring?
-                    </button>
-                </span>
+                    <span ng-show="(meeting.status == 'started' || meeting.status == 'paused') && meeting.isBoring == false">
+                        <button type="button" class="btn btn-primary" ng-click="meetingIsBoring()">
+                            Boring?
+                        </button>
+                    </span>
 
+                    <span ng-show="(meeting.status == 'started' || meeting.status == 'paused') && meeting.isBoring == true">
+                        <button type="button" class="btn btn-primary" ng-click="meetingIsNotBoring()">
+                            Not boring?
+                        </button>
+                    </span>
+                </div>
             </div>
 
         </form>
 
-        <h3>
-            <div ng-show="meeting.status != 'notStarted'" class="meeting-cost label label-info col-xs-12 col-md-8">
-                {{meeting|meetingstatus}}
-            </div>
-        </h3>
+        <div ng-show="meeting.status != 'notStarted'" class="meeting-cost label label-info col-xs-12 col-md-8">
+            {{meeting|meetingstatus}}
+        </div>
 
         <div ng-controller="TicTacToeCtrl" id="playground">
             <div class="nextPlayer">Next Player: {{nextMove}}</a></div>

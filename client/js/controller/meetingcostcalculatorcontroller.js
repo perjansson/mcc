@@ -129,7 +129,6 @@ app.controller('MeetingCostController', function($scope, $location, constants, n
     $scope.meetingIsNotBoring = function() {
         $scope.meeting.isBoring = false;
         $('#playground').hide();
-        animateToTop();
     };
 
     function changeMeetingStatus(status) {
@@ -172,11 +171,6 @@ app.controller('MeetingCostController', function($scope, $location, constants, n
     		$scope.meeting.currency = constants.currencyText;    		
     	}
     };
-
-    function animateToTop() {
-        $('html, body').scrollTop(0);
-        return false;
-    }
 
     function animateToBottom() {
         $('html, body').scrollTop($('body').prop("scrollHeight"));
