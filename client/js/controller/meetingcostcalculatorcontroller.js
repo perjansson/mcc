@@ -1,4 +1,4 @@
-app.controller('MeetingCostController', function($scope, $location, constants, socketioMeetingService, restMeetingService) {
+app.controller('MeetingCostController', function($scope, $location, constants, meetingCostService, socketioMeetingService, restMeetingService) {
 
     /* Properties for handling updating of meeting cost text */
     var updateMeetingTextIntervalDelay = constants.meetingCostTextUpdateIntervalInMillis;
@@ -91,27 +91,8 @@ app.controller('MeetingCostController', function($scope, $location, constants, s
     };
 
     var meetingCostCalculator = function() {
-        $scope.meeting.meetingCost = roundToZeroDecimals(getCurrentMeetingCost());
+        $scope.meeting.meetingCost = meetingCostService.getMeetingCost($scope.meeting);
         $scope.$apply();
-    }
-
-    function roundToZeroDecimals(value) {
-        return Math.round(value).toFixed(0);
-    }
-
-    function getCurrentMeetingCost() {
-        return getMeetingCostPerSecond() * getElapsedMeetingTimeInSeconds();
-    }
-
-    function getMeetingCostPerSecond() {
-        var numberOfAttendees = $scope.meeting.numberOfAttendees;
-        var averageHourlyRate = $scope.meeting.averageHourlyRate;
-        return numberOfAttendees * (averageHourlyRate / 3600);
-    }
-
-    function getElapsedMeetingTimeInSeconds() {
-        var meetingCurrentTime = new Date();
-        return (meetingCurrentTime - $scope.meeting.meetingStartTime - $scope.meeting.meetingPauseTime) / 1000;    
     }
 
     function sendMeetingToServer() {
