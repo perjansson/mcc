@@ -6,5 +6,6 @@ app.constant('constants', {
     backendUpdateIntervalInMillis: '10000',
     shouldPersistMeetings: true,
     shouldUseNodeJs: true,
-    shouldUseSpringMvc: false
+    shouldUseSpringMvc: false,
+    nodeJsServer: "ws://mcc.cloudno.de/", /* ws://127.0.0.1:1337/ */ 
 });

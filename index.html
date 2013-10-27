@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html ng-app="MeetingCostCalculatorApp">
 <head>
-    <title>Meeting cost calculator v1.3.1</title>
+    <title>Meeting cost calculator v1.3.2</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
@@ -14,7 +14,7 @@
 
     <div class="jumbotron">
         <div class="page-header">
-            <h1>Meeting cost calculator <span class="version">v1.3.1</span></h1>
+            <h1>Meeting cost calculator <span class="version">v1.3.2</span></h1>
         </div>
         <div class="alert alert-warning">
             <img src="client/ui/image/warning.png">
@@ -44,41 +44,29 @@
 
                 <div class="form-group col-sm-12 col-lg-3">
                     <div class="pull-right">
-                        <span ng-show="meeting.status == 'notStarted' || meeting.status == 'stopped'">
-                            <button type="button" class="btn btn-success" ng-disabled="meetingIsInvalid()" ng-click="startMeeting()">
-                                Start meeting
-                            </button>
-                        </span>
+                        <button type="button" class="btn btn-success" ng-click="startMeeting()" ng-show="meeting.status == 'notStarted' || meeting.status == 'stopped'" ng-disabled="meetingIsInvalid()">
+                            Start meeting
+                        </button>
 
-                        <span ng-show="meeting.status == 'started' || meeting.status == 'paused'">
-                            <button type="button" class="btn btn-danger" ng-click="stopMeeting()">
-                                Stop
-                            </button>
-                        </span>
+                        <button type="button" class="btn btn-danger" ng-click="stopMeeting()" ng-show="meeting.status == 'started' || meeting.status == 'paused'">
+                            Stop
+                        </button>
 
-                        <span ng-show="meeting.status == 'started'">
-                            <button type="button" class="btn btn-warning" ng-click="pauseMeeting()">
-                                Pause
-                            </button>
-                        </span>
+                        <button type="button" class="btn btn-warning" ng-click="pauseMeeting()" ng-show="meeting.status == 'started'">
+                            Pause
+                        </button>
 
-                        <span ng-show="meeting.status == 'paused'">
-                            <button type="button" class="btn btn-warning" ng-click="resumeMeeting()">
-                                Resume
-                            </button>
-                        </span>
+                        <button type="button" class="btn btn-warning" ng-click="resumeMeeting()" ng-show="meeting.status == 'paused'">
+                            Resume
+                        </button>
 
-                        <span ng-show="(meeting.status == 'started' || meeting.status == 'paused') && meeting.isBoring == false">
-                            <button type="button" class="btn btn-primary" ng-click="meetingIsBoring()">
-                                Boring?
-                            </button>
-                        </span>
+                        <button type="button" class="btn btn-primary" ng-click="meetingIsBoring()" ng-show="(meeting.status == 'started' || meeting.status == 'paused') && meeting.isBoring == false">
+                            Boring?
+                        </button>
 
-                        <span ng-show="(meeting.status == 'started' || meeting.status == 'paused') && meeting.isBoring == true">
-                            <button type="button" class="btn btn-primary" ng-click="meetingIsNotBoring()">
-                                Not boring?
-                            </button>
-                        </span>
+                        <button type="button" class="btn btn-primary" ng-click="meetingIsNotBoring()" ng-show="(meeting.status == 'started' || meeting.status == 'paused') && meeting.isBoring == true">
+                            Not boring?
+                        </button>
                     </div>
                 </div>
             </div>
@@ -104,11 +92,13 @@
 
     <script src="client/js/lib/angular.min.js" type="text/javascript"></script>
     <script src="client/js/lib/angular-resource.min.js" type="text/javascript"></script>
+    <script src="client/js/lib/socket.io.min.js"></script>
     <script src="client/js/lib/jquery-1.8.3.min.js"></script>
 
     <script src="client/js/app.js" type="text/javascript"></script>
     <script src="client/js/constants.js" type="text/javascript"></script>
     <script src="client/js/directives.js" type="text/javascript"></script>
+    <script src="client/js/service/socketioservice.js" type="text/javascript"></script>
     <script src="client/js/service/nodejsservice.js" type="text/javascript"></script>
     <script src="client/js/service/restservice.js" type="text/javascript"></script>
     <script src="client/js/controller/meetingcostcalculatorcontroller.js" type="text/javascript"></script>

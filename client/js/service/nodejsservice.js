@@ -1,4 +1,4 @@
-app.factory('nodeJsMeetingService', function() {
+app.factory('nodeJsMeetingService', function(constants) {
 
   var service = {};
  
@@ -8,7 +8,8 @@ app.factory('nodeJsMeetingService', function() {
       return; 
     }
  
-    var webSocket = new WebSocket("ws://mcc.cloudno.de/");
+    console.log("Using nodejs server: " + constants.nodeJsServer);
+    var webSocket = new WebSocket(constants.nodeJsServer);
  
     webSocket.onopen = function() {
       service.callback("WebSocket connection opened on client side using AngularJS :)");

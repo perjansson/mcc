@@ -1,10 +1,11 @@
-app.controller('MeetingCostController', function($scope, $location, constants, nodeJsMeetingService, restMeetingService) {
+app.controller('MeetingCostController', function($scope, $location, constants, socketioMeetingService, restMeetingService) {
 
     var updateMeetingTextTimerId = 0;
     var updateBackendTimerId = 0;
     var pauseTimeStamp = 0;
  	var updateMeetingTextIntervalDelay = constants.meetingCostTextUpdateIntervalInMillis;
     var backendUpdateIntervalDelay = constants.backendUpdateIntervalInMillis;
+    var socket;
     
  	$scope.meeting = {
 				    	id: null,
@@ -23,12 +24,20 @@ app.controller('MeetingCostController', function($scope, $location, constants, n
  
     if (constants.shouldPersistMeetings) {
         if (constants.shouldUseNodeJs) {
-            nodeJsMeetingService.subscribe(function(message) {
-                console.log(message);
-            });
-
-            nodeJsMeetingService.connect();
+            connectUsingNodeJs();
         }
+    }
+
+    function connectUsingNodeJs() {
+        var onConnectionCallback = function(data) {
+            console.log('On connection: ' + data);
+        };
+        var onMessageCallback = function(data) {
+            console.log('On message: ' + JSON.stringify(data, null, 4));
+            $scope.meeting.id = data.id;
+        };
+        socketioMeetingService.subscribe(onConnectionCallback, onMessageCallback);
+        socketioMeetingService.connect();
     }
 
     $scope.meetingIsInvalid = function() {
@@ -63,7 +72,7 @@ app.controller('MeetingCostController', function($scope, $location, constants, n
     function sendMeetingToServer() {
         if (constants.shouldPersistMeetings) {
             if (constants.shouldUseNodeJs) {
-                nodeJsMeetingService.send(JSON.stringify($scope.meeting));
+                socketioMeetingService.send(JSON.stringify($scope.meeting));
             }
             if (constants.shouldUseSpringMvc) {
                 restMeetingService.create($scope.meeting, function success(responseMeeting) {
