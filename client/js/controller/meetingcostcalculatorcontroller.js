@@ -1,11 +1,12 @@
 app.controller('MeetingCostController', function($scope, $location, constants, socketioMeetingService, restMeetingService) {
 
+    /* Properties for handling updating of meeting cost text */
+    var updateMeetingTextIntervalDelay = constants.meetingCostTextUpdateIntervalInMillis;
     var updateMeetingTextTimerId = 0;
+
+    /* Properties for handling updating backend */
+    var updateBackendIntervalDelay = constants.backendUpdateIntervalInMillis;
     var updateBackendTimerId = 0;
-    var pauseTimeStamp = 0;
- 	var updateMeetingTextIntervalDelay = constants.meetingCostTextUpdateIntervalInMillis;
-    var backendUpdateIntervalDelay = constants.backendUpdateIntervalInMillis;
-    var socket;
     
  	$scope.meeting = {
 				    	id: null,
@@ -16,11 +17,10 @@ app.controller('MeetingCostController', function($scope, $location, constants, s
                         status: 'notStarted',
                         isBoring: false,
                         meetingStartTime: null,
+                        pauseTimeStamp: null,
                         meetingPauseTime: null,
-                        meetingCost: 0
+                        meetingCost: null
 				    };
-
-    $scope.messages = [];
  
     if (constants.shouldPersistMeetings) {
         if (constants.shouldUseNodeJs) {
@@ -40,10 +40,55 @@ app.controller('MeetingCostController', function($scope, $location, constants, s
         socketioMeetingService.connect();
     }
 
-    $scope.meetingIsInvalid = function() {
-        var m = $scope.meeting;
-        return m.numberOfAttendees == null || m.averageHourlyRate == null || m.currency == null || m.currency == "";
-    }
+    $scope.startMeeting = function() {
+        $scope.meeting.status = 'started';
+        $scope.meeting.id = null;
+        $scope.meeting.meetingStartTime = new Date();
+        $scope.meeting.meetingCost = 0;
+        $scope.meeting.meetingPauseTime = null;
+
+        clearInterval(updateMeetingTextTimerId);
+        clearInterval(updateBackendTimerId);
+        updateMeetingTextTimerId = setInterval(meetingCostCalculator, updateMeetingTextIntervalDelay);
+        updateBackendTimerId = setInterval(sendMeetingToServer, updateBackendIntervalDelay);
+
+        sendMeetingToServer();
+
+        animateToBottom();
+    };
+
+    $scope.stopMeeting = function() {
+        $scope.meeting.status = 'stopped';
+        $scope.meeting.isBoring = false;
+
+        pauseTimeStamp = new Date();
+        clearInterval(updateMeetingTextTimerId);
+        clearInterval(updateBackendTimerId);
+
+        sendMeetingToServer();
+
+    };
+
+    $scope.pauseMeeting = function() {
+        $scope.meeting.status = 'paused';
+
+        $scope.meeting.pauseTimeStamp = new Date();
+        clearInterval(updateMeetingTextTimerId);
+        clearInterval(updateBackendTimerId);
+
+        sendMeetingToServer();
+    };
+
+    $scope.resumeMeeting = function() {
+        $scope.meeting.meetingPauseTime = $scope.meeting.meetingPauseTime + (new Date() - $scope.meeting.pauseTimeStamp);
+        $scope.meeting.status = 'started';
+
+        $scope.meeting.pauseTimeStamp = 0;
+        updateMeetingTextTimerId = setInterval(meetingCostCalculator, updateMeetingTextIntervalDelay);
+        updateBackendTimerId = setInterval(sendMeetingToServer, updateBackendIntervalDelay);
+
+        sendMeetingToServer();
+    };
 
     var meetingCostCalculator = function() {
         $scope.meeting.meetingCost = roundToZeroDecimals(getCurrentMeetingCost());
@@ -83,92 +128,6 @@ app.controller('MeetingCostController', function($scope, $location, constants, s
             }
         }
     }
-
-    $scope.startMeeting = function() {
-        $scope.meeting.status = 'started';
-        $scope.meeting.id = null;
-        $scope.meeting.meetingStartTime = new Date();
-        $scope.meeting.meetingCost = 0;
-        $scope.meeting.meetingPauseTime = null;
-
-        clearInterval(updateMeetingTextTimerId);
-        clearInterval(updateBackendTimerId);
-        updateMeetingTextTimerId = setInterval(meetingCostCalculator, updateMeetingTextIntervalDelay);
-        updateBackendTimerId = setInterval(sendMeetingToServer, backendUpdateIntervalDelay);
-
-        sendMeetingToServer();
-
-        animateToBottom();
-    };
-
-    $scope.stopMeeting = function() {
-        $scope.meeting.status = 'stopped';
-        $scope.meeting.isBoring = false;
-
-        pauseTimeStamp = new Date();
-        clearInterval(updateMeetingTextTimerId);
-        clearInterval(updateBackendTimerId);
-
-        sendMeetingToServer();
-
-    };
-
-    $scope.pauseMeeting = function() {
-        $scope.meeting.status = 'paused';
-
-        pauseTimeStamp = new Date();
-        clearInterval(updateMeetingTextTimerId);
-        clearInterval(updateBackendTimerId);
-
-        sendMeetingToServer();
-    };
-
-    $scope.resumeMeeting = function() {
-        $scope.meeting.meetingPauseTime = $scope.meeting.meetingPauseTime + (new Date() - pauseTimeStamp);
-        $scope.meeting.status = 'started';
-
-        pauseTimeStamp = 0;
-        updateMeetingTextTimerId = setInterval(meetingCostCalculator, updateMeetingTextIntervalDelay);
-        updateBackendTimerId = setInterval(sendMeetingToServer, backendUpdateIntervalDelay);
-
-        sendMeetingToServer();
-    };
-
-    $scope.onNumberOfAttendeesFocus = function() {
-    	if ($scope.meeting.numberOfAttendees == constants.numberOfAttendeesText) {
-    		$scope.meeting.numberOfAttendees = '';    		
-    	}
-    };
-
-    $scope.onNumberOfAttendeesBlur = function() {
-    	if ($scope.meeting.numberOfAttendees == '') {
-    		$scope.meeting.numberOfAttendees = constants.numberOfAttendeesText;    		
-    	}
-    };
-
-    $scope.onAverageHourlyRateFocus = function() {
-    	if ($scope.meeting.averageHourlyRate == constants.averageHourlyRateText) {
-    		$scope.meeting.averageHourlyRate = '';    		
-    	}
-    };
-
-    $scope.onAverageHourlyRateBlur = function() {
-    	if ($scope.meeting.averageHourlyRate == '') {
-    		$scope.meeting.averageHourlyRate = constants.averageHourlyRateText;    		
-    	}
-    };
-
-    $scope.onCurrencyFocus = function() {
-    	if ($scope.meeting.currency == constants.currencyText) {
-    		$scope.meeting.currency = '';    		
-    	}
-    };
-
-    $scope.onCurrencyBlur = function() {
-    	if ($scope.meeting.currency == '') {
-    		$scope.meeting.currency = constants.currencyText;    		
-    	}
-    };
 
     function animateToBottom() {
         $('html, body').scrollTop($('body').prop("scrollHeight"));
