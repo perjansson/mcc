@@ -85,6 +85,7 @@ app.controller('MeetingCostController', function($scope, $location, constants, s
     }
 
     $scope.startMeeting = function() {
+        $scope.meeting.status = 'started';
         $scope.meeting.id = null;
         $scope.meeting.meetingStartTime = new Date();
         $scope.meeting.meetingCost = 0;
@@ -95,60 +96,43 @@ app.controller('MeetingCostController', function($scope, $location, constants, s
         updateMeetingTextTimerId = setInterval(meetingCostCalculator, updateMeetingTextIntervalDelay);
         updateBackendTimerId = setInterval(sendMeetingToServer, backendUpdateIntervalDelay);
 
-        changeMeetingStatus('started');
-
         sendMeetingToServer();
 
         animateToBottom();
     };
 
     $scope.stopMeeting = function() {
+        $scope.meeting.status = 'stopped';
+        $scope.meeting.isBoring = false;
+
         pauseTimeStamp = new Date();
         clearInterval(updateMeetingTextTimerId);
         clearInterval(updateBackendTimerId);
-
-        changeMeetingStatus('stopped');
 
         sendMeetingToServer();
 
-        $('#playground').hide();
-        $scope.meetingIsNotBoring();
     };
 
     $scope.pauseMeeting = function() {
+        $scope.meeting.status = 'paused';
+
         pauseTimeStamp = new Date();
         clearInterval(updateMeetingTextTimerId);
         clearInterval(updateBackendTimerId);
-        changeMeetingStatus('paused');
 
         sendMeetingToServer();
     };
 
     $scope.resumeMeeting = function() {
         $scope.meeting.meetingPauseTime = $scope.meeting.meetingPauseTime + (new Date() - pauseTimeStamp);
+        $scope.meeting.status = 'started';
+
         pauseTimeStamp = 0;
         updateMeetingTextTimerId = setInterval(meetingCostCalculator, updateMeetingTextIntervalDelay);
         updateBackendTimerId = setInterval(sendMeetingToServer, backendUpdateIntervalDelay);
-        changeMeetingStatus('started');
 
         sendMeetingToServer();
     };
-
-    $scope.meetingIsBoring = function() {
-        $scope.meeting.isBoring = true;
-        $('#playground').show();
-        animateToBottom();
-    };
-
-    $scope.meetingIsNotBoring = function() {
-        $scope.meeting.isBoring = false;
-        $('#playground').hide();
-    };
-
-    function changeMeetingStatus(status) {
-        var meeting = $scope.meeting;
-        meeting.status = status;
-    }
 
     $scope.onNumberOfAttendeesFocus = function() {
     	if ($scope.meeting.numberOfAttendees == constants.numberOfAttendeesText) {

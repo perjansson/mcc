@@ -60,11 +60,11 @@
                             Resume
                         </button>
 
-                        <button type="button" class="btn btn-primary" ng-click="meetingIsBoring()" ng-show="(meeting.status == 'started' || meeting.status == 'paused') && meeting.isBoring == false">
+                        <button type="button" class="btn btn-primary" ng-click="meeting.isBoring = true" ng-show="(meeting.status == 'started' || meeting.status == 'paused') && meeting.isBoring == false">
                             Boring?
                         </button>
 
-                        <button type="button" class="btn btn-primary" ng-click="meetingIsNotBoring()" ng-show="(meeting.status == 'started' || meeting.status == 'paused') && meeting.isBoring == true">
+                        <button type="button" class="btn btn-primary" ng-click="meeting.isBoring = false" ng-show="(meeting.status == 'started' || meeting.status == 'paused') && meeting.isBoring == true">
                             Not boring?
                         </button>
                     </div>
@@ -77,7 +77,7 @@
             {{meeting|meetingstatus}}
         </div>
 
-        <div ng-controller="TicTacToeCtrl" id="playground">
+        <div ng-controller="TicTacToeCtrl" id="playground" ng-show="meeting.isBoring">
             <div class="nextPlayer">Next Player: {{nextMove}}</a></div>
             <table class="board">
                 <tr ng-repeat="row in board track by $index" style="height:15px;">
@@ -99,7 +99,6 @@
     <script src="client/js/constants.js" type="text/javascript"></script>
     <script src="client/js/directives.js" type="text/javascript"></script>
     <script src="client/js/service/socketioservice.js" type="text/javascript"></script>
-    <script src="client/js/service/nodejsservice.js" type="text/javascript"></script>
     <script src="client/js/service/restservice.js" type="text/javascript"></script>
     <script src="client/js/controller/meetingcostcalculatorcontroller.js" type="text/javascript"></script>
     <script src="client/js/controller/tictactoecontroller.js" type="text/javascript"></script>

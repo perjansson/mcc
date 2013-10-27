@@ -7,5 +7,6 @@ app.constant('constants', {
     shouldPersistMeetings: true,
     shouldUseNodeJs: true,
     shouldUseSpringMvc: false,
-    nodeJsServer: "ws://mcc.cloudno.de/", /* ws://127.0.0.1:1337/ */ 
+    /*nodeJsServer: "ws://mcc.cloudno.de/",*/
+    nodeJsServer: "127.0.0.1:1337/",
 });
