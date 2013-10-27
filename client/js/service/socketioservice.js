@@ -4,15 +4,36 @@ app.factory('socketioMeetingService', function(constants) {
   var socket;
  
   service.connect = function() {
-    console.log("Trying websocket at: " + constants.nodeJsServer);
-    socket = io.connect(constants.nodeJsServer);
+    socket = io.connect(constants.nodeJsBackendHost, {
+      'force new connection': true
+    });
 
-    socket.on('connection', function (data) {
-      service.connection(data);
+    socket.on('connect', function () {
+      service.onConnectCallback();
+    });
+
+    socket.on('reconnect', function () {
+      service.onConnectCallback();
+    });
+
+    socket.on('connect_failed', function () {
+      service.onErrorCallback();
+    });
+
+    socket.on('reconnect_failed', function () {
+      service.onErrorCallback();
+    });
+
+    socket.on('disconnect', function () {
+      service.onDisconnectCallback();
+    });
+
+    socket.on('error', function () {
+      service.onErrorCallback();
     });
 
     socket.on('message', function (data) {
-      service.message(data);
+      service.onMessageCallback(data);
     });
   }
  
@@ -20,9 +41,11 @@ app.factory('socketioMeetingService', function(constants) {
     socket.emit('meeting update', data);
   }
  
-  service.subscribe = function(connectionCallback, messageCallback) {
-    service.connection = connectionCallback;
-    service.message = messageCallback;
+  service.subscribe = function(onConnectCallback, onMessageCallback, onDisconnectCallback, onErrorCallback) {
+    service.onConnectCallback = onConnectCallback;
+    service.onMessageCallback = onMessageCallback;
+    service.onDisconnectCallback = onDisconnectCallback;
+    service.onErrorCallback = onErrorCallback;
   }
  
   return service;

@@ -6,6 +6,14 @@
 	margin-bottom: 15px;
 }
 
+.connected {
+	color: #419C21;
+}
+
+.disconnected {
+	color: #D63E3E;
+}
+
 .version {
 	color: #C4C4C4;
 }
