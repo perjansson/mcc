@@ -49,6 +49,12 @@ app.controller('MeetingCostController', function($scope, $location, constants, m
         socketioMeetingService.connect();
     }
 
+    $scope.connect = function() {        
+        if (constants.shouldUseNodeJs && $('#connection-indicator').attr('class').split(' ') == 'disconnected') {
+            connectUsingNodeJs();
+        }
+    }
+
     $scope.startMeeting = function() {
         $scope.meeting.status = 'started';
         $scope.meeting.id = null;

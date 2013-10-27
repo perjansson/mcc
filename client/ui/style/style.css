@@ -8,10 +8,12 @@
 
 .connected {
 	color: #419C21;
+	cursor: auto;
 }
 
 .disconnected {
 	color: #D63E3E;
+	cursor: pointer;
 }
 
 .version {
