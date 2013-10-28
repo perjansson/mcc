@@ -30,7 +30,6 @@ app.controller('MeetingCostController', function($scope, $location, constants, m
 
     function connectUsingNodeJs() {
         var onConnectCallback = function() {
-            console.log('Websocket connection accepted to Node.js backend on ' + constants.nodeJsBackendHost + '  d-(*_*)z');
             $('#connection-indicator').addClass('connected').removeClass('disconnected');
         };
         var onMeetingUpdatedCallback = function(meeting) {
@@ -38,11 +37,9 @@ app.controller('MeetingCostController', function($scope, $location, constants, m
             $scope.meeting.id = meeting.id;
         };
         var onDisconnectCallback = function() {
-            console.log('Websocket connection disconnected o_O');
             $('#connection-indicator').addClass('disconnected').removeClass('connected').removeClass('connecting');
         };
         var onErrorCallback = function() {
-            console.log('Websocket error >:(');
             $('#connection-indicator').addClass('disconnected').removeClass('connected').removeClass('connecting');
         };
         socketioMeetingService.subscribe(onConnectCallback, onMeetingUpdatedCallback, onDisconnectCallback, onErrorCallback);
