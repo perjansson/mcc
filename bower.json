@@ -1,6 +1,6 @@
 {
   "name": "mcc_web",
-  "version": "1.3.5-SNAPSHOT",
+  "version": "1.3.5",
   "homepage": "https://github.com/perjansson/mcc",
   "authors": [
     "Per Jansson <per.r.jansson@gmail.com>"

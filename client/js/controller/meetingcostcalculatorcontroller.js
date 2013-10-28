@@ -7,6 +7,8 @@ app.controller('MeetingCostController', function($scope, $location, constants, m
     /* Properties for handling updating backend */
     var updateBackendIntervalDelay = constants.backendUpdateIntervalInMillis;
     var updateBackendTimerId = 0;
+
+    $scope.version = '1.3.5';
     
  	$scope.meeting = {
 				    	id: null,
