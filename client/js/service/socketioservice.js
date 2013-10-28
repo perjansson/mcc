@@ -32,18 +32,18 @@ app.factory('socketioMeetingService', function(constants) {
       service.onErrorCallback();
     });
 
-    socket.on('message', function (data) {
-      service.onMessageCallback(data);
+    socket.on('meeting update response', function (data) {
+      service.onMeetingUpdatedCallback(data);
     });
   }
  
   service.send = function(data) {
-    socket.emit('meeting update', data);
+    socket.emit('meeting update request', data);
   }
  
-  service.subscribe = function(onConnectCallback, onMessageCallback, onDisconnectCallback, onErrorCallback) {
+  service.subscribe = function(onConnectCallback, onMeetingUpdatedCallback, onDisconnectCallback, onErrorCallback) {
     service.onConnectCallback = onConnectCallback;
-    service.onMessageCallback = onMessageCallback;
+    service.onMeetingUpdatedCallback = onMeetingUpdatedCallback;
     service.onDisconnectCallback = onDisconnectCallback;
     service.onErrorCallback = onErrorCallback;
   }
