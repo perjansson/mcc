@@ -6,6 +6,10 @@
 	margin-bottom: 15px;
 }
 
+.connecting {
+	color: #E3DC81;
+}
+
 .connected {
 	color: #419C21;
 	cursor: auto;

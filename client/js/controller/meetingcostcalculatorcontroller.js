@@ -39,11 +39,11 @@ app.controller('MeetingCostController', function($scope, $location, constants, m
         };
         var onDisconnectCallback = function() {
             console.log('Websocket connection disconnected o_O');
-            $('#connection-indicator').addClass('disconnected').removeClass('connected');
+            $('#connection-indicator').addClass('disconnected').removeClass('connected').removeClass('connecting');
         };
         var onErrorCallback = function() {
             console.log('Websocket error >:(');
-            $('#connection-indicator').addClass('disconnected').removeClass('connected');
+            $('#connection-indicator').addClass('disconnected').removeClass('connected').removeClass('connecting');
         };
         socketioMeetingService.subscribe(onConnectCallback, onMeetingUpdatedCallback, onDisconnectCallback, onErrorCallback);
         socketioMeetingService.connect();

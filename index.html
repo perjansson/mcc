@@ -5,15 +5,16 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-    <link href="client/ui/style/bootstrap.min.css" rel="stylesheet"/>
-    <link href="client/ui/style/bootstrap-theme.min.css" rel="stylesheet"/>
+    <!-- Bower managed dependencies -->
+    <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet"/>
+    <script src="bower_components/angular/angular.min.js" type="text/javascript"></script>
+    <script src="bower_components/angular-resource/angular-resource.min.js" type="text/javascript"></script>
+    <script src="bower_components/jquery/jquery.min.js"></script>
+    <script src="bower_components/socket.io-client/dist/socket.io.min.js"></script>
+
+    <!-- App dependencies -->
     <link href="client/ui/style/style.css" rel="stylesheet"/>    
-
-    <script src="client/js/lib/angular.min.js" type="text/javascript"></script>
-    <script src="client/js/lib/angular-resource.min.js" type="text/javascript"></script>
-    <script src="client/js/lib/socket.io.min.js"></script>
-    <script src="client/js/lib/jquery-1.8.3.min.js"></script>
-
     <script src="client/js/app.js" type="text/javascript"></script>
     <script src="client/js/constants.js" type="text/javascript"></script>
     <script src="client/js/directives.js" type="text/javascript"></script>
@@ -32,7 +33,7 @@
 
         <div class="jumbotron">
             <div class="page-header">
-                <h1><span id="connection-indicator" ng-click="connect()">M</span>eeting cost calculator <span class="version">v1.3.3</span></h1>
+                <h1><span id="connection-indicator" class="connecting" ng-click="connect()">M</span>eeting cost calculator <span class="version">v1.3.3</span></h1>
             </div>
             <div class="alert alert-warning">
                 <img src="client/ui/image/warning.png">
@@ -98,8 +99,8 @@
             <div ng-controller="TicTacToeCtrl" id="playground" ng-show="meeting.isBoring">
                 <div class="nextPlayer">Next Player: {{nextMove}}</a></div>
                 <table class="board">
-                    <tr ng-repeat="row in board track by $index" style="height:15px;">
-                        <td ng-repeat="cell in row track by $index" ng-style="cellStyle" ng-click="dropPiece($parent.$index, $index)">{{cell}}</td>
+                    <tr ng-repeat="row in board" style="height:15px;">
+                        <td ng-repeat="cell in row" ng-style="cellStyle" ng-click="dropPiece($parent.$index, $index)">{{cell}}</td>
                     </tr>
                 </table>
                 <div class="winner" ng-show="winner">{{winner|tictactoewinner}}</div>
