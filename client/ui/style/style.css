@@ -6,6 +6,10 @@
 	margin-bottom: 15px;
 }
 
+#header h1, h4 {
+	display: inline;
+}
+
 .connecting {
 	color: #E3DC81;
 }
