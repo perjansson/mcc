@@ -1,4 +1,4 @@
-app.controller('MeetingCostCalculatorCtrl', function($scope, $location, constants, meetingCostService, socketioMeetingService, restMeetingService) {
+app.controller('MeetingCostCalculatorCtrl', function($scope, $location, $window, constants, meetingCostService, socketioMeetingService, restMeetingService) {
 
     /* Properties for handling updating of meeting cost text */
     var updateMeetingTextIntervalDelay = constants.meetingCostTextUpdateIntervalInMillis;
@@ -101,6 +101,13 @@ app.controller('MeetingCostCalculatorCtrl', function($scope, $location, constant
 
         sendMeetingToServer();
     };
+
+    $scope.copyMeeting = function() {
+        var meetingId = $scope.meeting.id;
+        /*if (meetingId != null && meetingId != '') {*/
+            $window.open(constants.sharingUrl + meetingId);  
+        /*}*/
+    }
 
     var meetingCostCalculator = function() {
         $scope.meeting.meetingCost = meetingCostService.getMeetingCost($scope.meeting);

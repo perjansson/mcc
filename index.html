@@ -96,7 +96,7 @@
 
             </form>
 
-            <div ng-show="meeting.status != 'notStarted'" class="meeting-cost label label-info col-xs-12 col-md-8">
+            <div ng-show="meeting.status != 'notStarted'" ng-click="copyMeeting()"  data-toggle="tooltip" title="Click to open a sharing url (in a new tab) for this fantastic meeting" class="meeting-cost label label-info col-xs-12 col-md-8">
                 {{meeting|meetingstatus}}
             </div>
 

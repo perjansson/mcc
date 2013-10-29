@@ -10,4 +10,5 @@ app.constant('constants', {
     shouldUseSpringMvc: false,
     nodeJsBackendHost: "ws://mcc.cloudno.de/",
     /*nodeJsBackendHost: "127.0.0.1:1337/",*/
+    sharingUrl: 'https://cloudno.de/couchdb/mcc/'
 });

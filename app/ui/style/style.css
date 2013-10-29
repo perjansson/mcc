@@ -42,6 +42,7 @@
 	padding: 10px 0;
 	font-size: 16px;
 	display: block;
+	cursor: pointer;
 }
 
 @media screen and (min-width: 768px) {
