@@ -67,7 +67,7 @@
 
                     <div class="form-group col-sm-12 col-lg-3">
                         <div class="pull-right">
-                            <button type="button" class="btn btn-success" ng-click="startMeeting()" ng-show="meeting.status == 'notStarted' || meeting.status == 'stopped'" ng-disabled="meeting.numberOfAttendees == null || meeting.averageHourlyRate == null || meeting.currency == null || meeting.currency == ''">
+                            <button type="button" class="btn btn-success" ng-click="startMeeting(); animateToBottom()" ng-show="meeting.status == 'notStarted' || meeting.status == 'stopped'" ng-disabled="meeting.numberOfAttendees == null || meeting.averageHourlyRate == null || meeting.currency == null || meeting.currency == ''">
                                 Start meeting
                             </button>
 
@@ -83,7 +83,7 @@
                                 Resume
                             </button>
 
-                            <button type="button" class="btn btn-primary" ng-click="meeting.isBoring = true" ng-show="(meeting.status == 'started' || meeting.status == 'paused') && meeting.isBoring == false">
+                            <button type="button" class="btn btn-primary" ng-click="meeting.isBoring = true; animateToBottom()" ng-show="(meeting.status == 'started' || meeting.status == 'paused') && meeting.isBoring == false">
                                 Boring?
                             </button>
 

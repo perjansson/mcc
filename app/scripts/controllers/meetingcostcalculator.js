@@ -67,8 +67,6 @@ app.controller('MeetingCostCalculatorCtrl', function($scope, $location, constant
         updateBackendTimerId = setInterval(sendMeetingToServer, updateBackendIntervalDelay);
 
         sendMeetingToServer();
-
-        animateToBottom();
     };
 
     $scope.stopMeeting = function() {
@@ -124,9 +122,10 @@ app.controller('MeetingCostCalculatorCtrl', function($scope, $location, constant
         }
     }
 
-    function animateToBottom() {
-        $('html, body').scrollTop($('body').prop("scrollHeight"));
-        return false;
+    $scope.animateToBottom = function() {
+        setTimeout(function () {    
+            $('html, body').scrollTop($('body').prop("scrollHeight"));
+        }, 100);
     }
 
 });
