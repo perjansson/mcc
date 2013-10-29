@@ -2,6 +2,10 @@
 	padding-bottom: 15px;
 }
 
+.placeholder { 
+	color: #AAA; 
+}
+
 .form-inline .form-group {
 	margin-bottom: 15px;
 }
