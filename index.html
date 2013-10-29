@@ -16,14 +16,14 @@
     <script src="bower_components/jquery-placeholder/jquery.placeholder.min.js" type="text/javascript"></script>
 
     <!-- In-app dependencies -->
-    <link href="client/ui/style/style.css" rel="stylesheet"/>    
+    <link href="app/ui/style/style.css" rel="stylesheet"/>    
     <script src="app/app.js" type="text/javascript"></script>
     <script src="app/constants.js" type="text/javascript"></script>
-    <script src="client/js/service/meetingcostservice.js" type="text/javascript"></script>
-    <script src="client/js/service/socketioservice.js" type="text/javascript"></script>
-    <script src="client/js/service/restservice.js" type="text/javascript"></script>
-    <script src="client/js/controller/meetingcostcalculatorcontroller.js" type="text/javascript"></script>
-    <script src="client/js/controller/tictactoecontroller.js" type="text/javascript"></script>
+    <script src="app/scripts/services/meetingcostcalculator.js" type="text/javascript"></script>
+    <script src="app/scripts/services/socketio.js" type="text/javascript"></script>
+    <script src="app/scripts/services/rest.js" type="text/javascript"></script>
+    <script src="app/scripts/controllers/meetingcostcalculator.js" type="text/javascript"></script>
+    <script src="app/scripts/controllers/tictactoe.js" type="text/javascript"></script>
     <script src="app/scripts/filters/meetingstatus.js" type="text/javascript"></script>
     <script src="app/scripts/filters/tictactoewinner.js" type="text/javascript"></script>
     <script src="app/scripts/filters/version.js" type="text/javascript"></script>
@@ -33,14 +33,14 @@
 
 <body>
 
-    <div ng-controller="MeetingCostController">
+    <div ng-controller="MeetingCostCalculatorCtrl">
 
         <div class="jumbotron">
             <div class="page-header">
                 <h1><span id="connection-indicator" class="connecting" ng-click="connect()">M</span>eeting cost calculator<h1> <h4><span class="version" data-toggle="tooltip" title="{{version}}">{{version|version}}</span></h4>
             </div>
             <div class="alert alert-warning">
-                <img src="client/ui/image/warning.png">
+                <img src="app/ui/image/warning.png">
                 Warning, should probably only be used in a laid-back way and together w/ the right people.
             </div>
         </div>

@@ -1,4 +1,4 @@
-app.controller('MeetingCostController', function($scope, $location, constants, meetingCostService, socketioMeetingService, restMeetingService) {
+app.controller('MeetingCostCalculatorCtrl', function($scope, $location, constants, meetingCostService, socketioMeetingService, restMeetingService) {
 
     /* Properties for handling updating of meeting cost text */
     var updateMeetingTextIntervalDelay = constants.meetingCostTextUpdateIntervalInMillis;
