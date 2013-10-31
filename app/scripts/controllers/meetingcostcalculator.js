@@ -57,6 +57,7 @@ app.controller('MeetingCostCalculatorCtrl', function($scope, $location, $window,
     $scope.startMeeting = function() {
         $scope.meeting.status = 'started';
         $scope.meeting.id = null;
+        $scope.meeting.name = null;
         $scope.meeting.meetingStartTime = new Date();
         $scope.meeting.meetingCost = 0;
         $scope.meeting.meetingPauseTime = null;
@@ -102,11 +103,15 @@ app.controller('MeetingCostCalculatorCtrl', function($scope, $location, $window,
         sendMeetingToServer();
     };
 
-    $scope.copyMeeting = function() {
+    $scope.shareMeeting = function() {
         var meetingId = $scope.meeting.id;
-        /*if (meetingId != null && meetingId != '') {*/
+        if (meetingId != null) {
             $window.open(constants.sharingUrl + meetingId);  
-        /*}*/
+        }
+    }
+
+    $scope.addNameToMeeting = function() {
+        sendMeetingToServer();
     }
 
     var meetingCostCalculator = function() {

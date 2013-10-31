@@ -71,7 +71,7 @@
                                 Start meeting
                             </button>
 
-                            <button type="button" class="btn btn-danger" ng-click="stopMeeting()" ng-show="meeting.status == 'started' || meeting.status == 'paused'">
+                            <button type="button" class="btn btn-danger" ng-click="stopMeeting()" ng-show="meeting.status == 'started' || meeting.status == 'paused'" data-toggle="modal" data-target="#addNameModal">
                                 Stop
                             </button>
 
@@ -94,9 +94,28 @@
                     </div>
                 </div>
 
+                <div class="modal fade" id="addNameModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel">Add a name to the meeting?</h4>
+                      </div>
+                      <div class="modal-body">
+                        <label for="nameOfMeeting">Meeting name</label>
+                        <input id="nameOfMeeting" type="text" class="form-control" ng-model="meeting.name">
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Skip</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="addNameToMeeting()">Add name</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
             </form>
 
-            <div ng-show="meeting.status != 'notStarted'" ng-click="copyMeeting()"  data-toggle="tooltip" title="Click to open a sharing url (in a new tab) for this fantastic meeting" class="meeting-cost label label-info col-xs-12 col-md-8">
+            <div ng-show="meeting.status != 'notStarted'" ng-click="shareMeeting()"  data-toggle="tooltip" title="Click to open a sharing url (in a new tab) for this fantastic meeting" ng-class="{'clickable': meeting.id != null}" class="meeting-cost label label-info col-xs-12 col-md-8">
                 {{meeting|meetingstatus}}
             </div>
 
