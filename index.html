@@ -73,6 +73,16 @@
       </div>
     </div>
 
+    <div class="jumbotron">
+        <div class="page-header">
+            <h1><span id="connection-indicator" class="connecting" ng-click="connect()">M</span>eeting cost calculator<h1> <h4><span class="version" data-toggle="tooltip" title="{{version}}">{{version|version}}</span></h4>
+        </div>
+        <div class="alert alert-warning">
+            <img src="app/ui/image/warning.png">
+            Warning, should probably only be used in a laid-back way and together w/ the right people.
+        </div>
+    </div>
+
     <div class="container">
         <ng-view></ng-view>
     </div>
