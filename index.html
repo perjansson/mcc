@@ -73,7 +73,15 @@
       </div>
     </div>
 
-    <ng-view></ng-view>
+    <div class="container">
+        <ng-view></ng-view>
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('input, textarea').placeholder();
+        });
+    </script>
 
 </body>
 </html>
