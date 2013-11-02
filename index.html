@@ -92,6 +92,16 @@
     <script type="text/javascript">
         $(document).ready(function() {
             $('input, textarea').placeholder();
+            $(function(){
+                var tabindex = 1;
+                $('input,select').each(function() {
+                    if (this.type != "hidden") {
+                        var $input = $(this);
+                        $input.attr("tabindex", tabindex);
+                        tabindex++;
+                    }
+                });
+            });
             /*$('.nav a').on('click', function(){
                 console.log("message");
                 $(".navbar-toggle").click();
