@@ -1,5 +1,5 @@
 app.constant('constants', {
-    versionNumber: '1.3.8',
+    versionNumber: '1.4.0',
     numberOfAttendeesText: null,
     averageHourlyRateText: null,
     currencyText: null,
@@ -8,7 +8,7 @@ app.constant('constants', {
     shouldPersistMeetings: true,
     shouldUseNodeJs: true,
     shouldUseSpringMvc: false,
-    /*nodeJsBackendHost: "ws://mcc.cloudno.de/",*/
-    nodeJsBackendHost: "127.0.0.1:1337/",
+    nodeJsBackendHost: "ws://mcc.cloudno.de/",
+    /*nodeJsBackendHost: "127.0.0.1:1337/",*/
     sharingUrl: 'https://cloudno.de/couchdb/mcc/'
 });
