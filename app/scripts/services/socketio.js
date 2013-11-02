@@ -6,7 +6,6 @@ app.factory('socketioMeetingService', function(constants) {
   service.connect = function() {
     // Only create connection if no connected socket exist
     if (socket == null || !socket.socket.connected) {
-      console.log("message");
       socket = io.connect(constants.nodeJsBackendHost, {
         'force new connection': true
       });
