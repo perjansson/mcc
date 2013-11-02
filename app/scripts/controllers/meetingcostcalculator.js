@@ -7,8 +7,6 @@ app.controller('MeetingCostCalculatorCtrl', function($scope, $location, $window,
     /* Properties for handling updating backend */
     var updateBackendIntervalDelay = constants.backendUpdateIntervalInMillis;
     var updateBackendTimerId = 0;
-
-    $scope.version = constants.versionNumber;
     
     if (meetingCostService.hasMeeting()) {
         $scope.meeting = meetingCostService.getMeeting();
@@ -50,12 +48,6 @@ app.controller('MeetingCostCalculatorCtrl', function($scope, $location, $window,
             };
             socketioMeetingService.subscribe(onConnectCallback, onMeetingUpdatedCallback, onDisconnectCallback, onErrorCallback);
         
-            socketioMeetingService.connect();
-        }
-    }
-
-    $scope.connect = function() {        
-        if (constants.shouldPersistMeetings && constants.shouldUseNodeJs && $('#connection-indicator').attr('class').split(' ') == 'disconnected') {
             socketioMeetingService.connect();
         }
     }
