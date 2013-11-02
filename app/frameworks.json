@@ -1,0 +1,50 @@
+[
+    {
+        "name": "AngularJS",
+        "url": "angularjs.org"
+    },
+    {
+        "name": "jQuery",
+        "url": "jquery.com"
+    },
+    {
+        "name": "jquery-placeholder",
+        "url": "github.com/mathiasbynens/jquery-placeholder"
+    },
+    {
+        "name": "Socket.io",
+        "url": "socket.io"
+    },
+    {
+        "name": "Bootstrap",
+        "url": "getbootstrap.com"
+    },
+    {
+        "name": "Node.js",
+        "url": "nodejs.org"
+    },
+    {
+        "name": "node-uuid",
+        "url": "github.com/broofa/node-uuid"
+    },
+    {
+        "name": "Moment.js",
+        "url": "momentjs.com"
+    },
+    {
+        "name": "CouchDB",
+        "url": "couchdb.apache.org"
+    },
+    {
+        "name": "Cradle",
+        "url": "github.com/cloudhead/cradle"
+    },
+    {
+        "name": "Yeoman",
+        "url": "yeoman.io"
+    },
+    {
+        "name": "Bower",
+        "url": "github.com/bower/bower"
+    }
+]
