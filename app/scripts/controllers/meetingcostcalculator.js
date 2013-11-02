@@ -27,7 +27,8 @@ app.controller('MeetingCostCalculatorCtrl', function($scope, $location, $window,
                 meetingStartTime: null,
                 pauseTimeStamp: null,
                 meetingPauseTime: null,
-                meetingCost: null
+                meetingCost: null,
+                worthIt: false
             };        
     }
     

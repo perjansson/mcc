@@ -52,15 +52,30 @@
 	        <div class="modal-content">
 	          <div class="modal-header">
 	            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-	            <h4 class="modal-title" id="myModalLabel">Add a name to the meeting?</h4>
+	            <h4 class="modal-title" id="myModalLabel">Add more to the meeting?</h4>
 	          </div>
-	          <div class="modal-body">
-	            <label for="nameOfMeeting">Meeting name</label>
-	            <input id="nameOfMeeting" type="text" class="form-control" ng-model="meeting.name">
-	          </div>
+				<div class="modal-body">
+					<form class="form-horizontal" role="form">
+ 						<div class="form-group">
+    						<label for="nameOfMeeting" class="col-sm-2 control-label">Meeting name</label>
+    						<div class="col-sm-10">
+								<input id="nameOfMeeting" type="text" class="form-control" ng-model="meeting.name">
+							</div>
+						</div>
+				        <div class="form-group">
+    						<div class="col-sm-offset-2 col-sm-10">
+								<div class="checkbox">
+									<label>
+										<input type="checkbox" ng-model="meeting.worthIt"> Was the meeting worth it?
+									</label>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
 	          <div class="modal-footer">
 	            <button type="button" class="btn btn-default" data-dismiss="modal">Skip</button>
-	            <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="addNameToMeeting()">Add name</button>
+	            <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="addNameToMeeting()">Add info</button>
 	          </div>
 	        </div>
 	      </div>
