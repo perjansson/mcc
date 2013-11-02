@@ -10,47 +10,53 @@ app.controller('MeetingCostCalculatorCtrl', function($scope, $location, $window,
 
     $scope.version = constants.versionNumber;
     
- 	$scope.meeting = {
-				    	id: null,
-                        name: null,
-                        numberOfAttendees: constants.numberOfAttendeesText, 
-				    	averageHourlyRate: constants.averageHourlyRateText,
-				    	currency: constants.currencyText,
-                        status: 'notStarted',
-                        isBoring: false,
-                        meetingStartTime: null,
-                        pauseTimeStamp: null,
-                        meetingPauseTime: null,
-                        meetingCost: null
-				    };
- 
+    if (meetingCostService.hasMeeting()) {
+        $scope.meeting = meetingCostService.getMeeting();
+        if ($scope.meeting.status == 'started') {
+            updateMeetingTextTimerId = setInterval(meetingCostCalculator, updateMeetingTextIntervalDelay);
+            updateBackendTimerId = setInterval(sendMeetingToServer, updateBackendIntervalDelay);        
+        }
+    } else  {
+        $scope.meeting = 
+            {
+                id: null,
+                name: null,
+                numberOfAttendees: constants.numberOfAttendeesText, 
+                averageHourlyRate: constants.averageHourlyRateText,
+                currency: constants.currencyText,
+                status: 'notStarted',
+                isBoring: false,
+                meetingStartTime: null,
+                pauseTimeStamp: null,
+                meetingPauseTime: null,
+                meetingCost: null
+            };        
+    }
+    
     if (constants.shouldPersistMeetings) {
         if (constants.shouldUseNodeJs) {
-            connectUsingNodeJs();
+            var onConnectCallback = function() {
+                $('#connection-indicator').addClass('connected').removeClass('disconnected');
+            };
+            var onMeetingUpdatedCallback = function(meeting) {
+                console.log('On meeting update: ' + JSON.stringify(meeting));
+                $scope.meeting.id = meeting.id;
+            };
+            var onDisconnectCallback = function() {
+                $('#connection-indicator').addClass('disconnected').removeClass('connected').removeClass('connecting');
+            };
+            var onErrorCallback = function() {
+                $('#connection-indicator').addClass('disconnected').removeClass('connected').removeClass('connecting');
+            };
+            socketioMeetingService.subscribe(onConnectCallback, onMeetingUpdatedCallback, onDisconnectCallback, onErrorCallback);
+        
+            socketioMeetingService.connect();
         }
     }
 
-    function connectUsingNodeJs() {
-        var onConnectCallback = function() {
-            $('#connection-indicator').addClass('connected').removeClass('disconnected');
-        };
-        var onMeetingUpdatedCallback = function(meeting) {
-            console.log('On meeting update: ' + JSON.stringify(meeting));
-            $scope.meeting.id = meeting.id;
-        };
-        var onDisconnectCallback = function() {
-            $('#connection-indicator').addClass('disconnected').removeClass('connected').removeClass('connecting');
-        };
-        var onErrorCallback = function() {
-            $('#connection-indicator').addClass('disconnected').removeClass('connected').removeClass('connecting');
-        };
-        socketioMeetingService.subscribe(onConnectCallback, onMeetingUpdatedCallback, onDisconnectCallback, onErrorCallback);
-        socketioMeetingService.connect();
-    }
-
     $scope.connect = function() {        
-        if (constants.shouldUseNodeJs && $('#connection-indicator').attr('class').split(' ') == 'disconnected') {
-            connectUsingNodeJs();
+        if (constants.shouldPersistMeetings && constants.shouldUseNodeJs && $('#connection-indicator').attr('class').split(' ') == 'disconnected') {
+            socketioMeetingService.connect();
         }
     }
 
@@ -79,7 +85,6 @@ app.controller('MeetingCostCalculatorCtrl', function($scope, $location, $window,
         clearInterval(updateBackendTimerId);
 
         sendMeetingToServer();
-
     };
 
     $scope.pauseMeeting = function() {
@@ -114,7 +119,7 @@ app.controller('MeetingCostCalculatorCtrl', function($scope, $location, $window,
         sendMeetingToServer();
     }
 
-    var meetingCostCalculator = function() {
+    function meetingCostCalculator() {
         $scope.meeting.meetingCost = meetingCostService.getMeetingCost($scope.meeting);
         $scope.$apply();
     }
@@ -138,6 +143,67 @@ app.controller('MeetingCostCalculatorCtrl', function($scope, $location, $window,
         setTimeout(function () {    
             $('html, body').scrollTop($('body').prop("scrollHeight"));
         }, 100);
+    }
+
+    $scope.$on('$destroy', function controllerDestroyed() {
+        clearInterval(updateMeetingTextTimerId);
+        clearInterval(updateBackendTimerId);
+    })
+
+    /**********************************************
+    ******************* TIC TAC TOE ***************
+    **********************************************/
+    $scope.cellStyle= {
+        'min-height': '100%',
+        'border': '2px solid #C4C4C4',
+        'text-align': 'center',
+        'vertical-align': 'middle',
+        'cursor': 'pointer',
+        'font-size': '4em',
+        'color': '#C4C4C4'
+    };
+
+    $scope.reset = function() {
+        $scope.board = [
+            ['', '', ''],
+            ['', '', ''],
+            ['', '', '']
+        ];
+        $scope.nextMove = 'X';
+        $scope.winner = '';
+    };
+
+    $scope.dropPiece = function(row, col) {
+        if (!$scope.winner && !$scope.board[row][col]) {
+            $scope.board[row][col] = $scope.nextMove;
+            $scope.nextMove = $scope.nextMove == 'X' ? 'O' : 'X';
+        }
+        grade();
+    };
+
+    $scope.reset();
+
+    function grade() {
+        var b = $scope.board;
+        $scope.winner =
+            row(0) || row(1) || row(2) ||
+            col(0) || col(1) || col(2) ||
+            diagonal(-1) || diagonal(1);
+        function row(row) { return same(b[row][0], b[row][1], b[row][2]);}
+        function col(col) { return same(b[0][col], b[1][col], b[2][col]);}
+        function diagonal(i) { return same(b[0][1-i], b[1][1], b[2][1+i]);}
+        function same(a, b, c) { return (a==b && b==c) ? a : '';};
+    }
+
+    function readUrl(value) {
+        if (value) {
+            value = value.split('/');
+            $scope.nextMove = value[1];
+            angular.forEach(value[0].split(';'), function(row, col){
+                $scope.board[col] = row.split(',');
+            });
+            grade();
+        }
     }
 
 });

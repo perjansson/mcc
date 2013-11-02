@@ -1,4 +1,4 @@
-app.controller('NavigationCtrl', function ($scope, $location) {
+app.controller('HeaderCtrl', function ($scope, $location) {
 	$scope.isActive = function (viewLocation) { 
 	    return viewLocation === $location.path();
 	};

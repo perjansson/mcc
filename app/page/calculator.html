@@ -1,1 +1,111 @@
-calculator.html
+<div>
+
+	<form class="form-inline" role="form">
+
+	    <div class="row">
+	        <div class="form-group col-sm-4 col-lg-3">
+	            <label class="sr-only" for="numberOfAttendees">Number of attendees</label>
+	            <input id="numberOfAttendees" type="number" class="form-control" ng-model="meeting.numberOfAttendees" placeholder="Number of attendees">
+	        </div>
+
+	        <div class="form-group col-sm-4 col-lg-3">
+	            <label class="sr-only" for="averageHourlyRate">Average hourly rate</label>
+	            <input id="averageHourlyRate" type="number" class="form-control" ng-model="meeting.averageHourlyRate" placeholder="Average hourly rate">
+	        </div>
+
+	        <div class="form-group col-sm-4 col-lg-3">
+	            <label class="sr-only" for="currency">Currency</label>
+	            <input id="currency" type="text" class="form-control" ng-model="meeting.currency" placeholder="Currency">
+	        </div>
+
+	        <div class="form-group col-sm-12 col-lg-3">
+	            <div class="pull-right">
+	                <button type="button" class="btn btn-success" ng-click="startMeeting(); animateToBottom()" ng-show="meeting.status == 'notStarted' || meeting.status == 'stopped'" ng-disabled="meeting.numberOfAttendees == null || meeting.averageHourlyRate == null || meeting.currency == null || meeting.currency == ''">
+	                    Start meeting
+	                </button>
+
+	                <button type="button" class="btn btn-danger" ng-click="stopMeeting()" ng-show="meeting.status == 'started' || meeting.status == 'paused'" data-toggle="modal" data-target="#addNameModal">
+	                    Stop
+	                </button>
+
+	                <button type="button" class="btn btn-warning" ng-click="pauseMeeting()" ng-show="meeting.status == 'started'">
+	                    Pause
+	                </button>
+
+	                <button type="button" class="btn btn-warning" ng-click="resumeMeeting()" ng-show="meeting.status == 'paused'">
+	                    Resume
+	                </button>
+
+	                <button type="button" class="btn btn-primary" ng-click="meeting.isBoring = true; animateToBottom()" ng-show="(meeting.status == 'started' || meeting.status == 'paused') && meeting.isBoring == false">
+	                    Boring?
+	                </button>
+
+	                <button type="button" class="btn btn-primary" ng-click="meeting.isBoring = false" ng-show="(meeting.status == 'started' || meeting.status == 'paused') && meeting.isBoring == true">
+	                    Not boring?
+	                </button>
+	            </div>
+	        </div>
+	    </div>
+
+	    <div class="modal fade" id="addNameModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	      <div class="modal-dialog">
+	        <div class="modal-content">
+	          <div class="modal-header">
+	            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	            <h4 class="modal-title" id="myModalLabel">Add a name to the meeting?</h4>
+	          </div>
+	          <div class="modal-body">
+	            <label for="nameOfMeeting">Meeting name</label>
+	            <input id="nameOfMeeting" type="text" class="form-control" ng-model="meeting.name">
+	          </div>
+	          <div class="modal-footer">
+	            <button type="button" class="btn btn-default" data-dismiss="modal">Skip</button>
+	            <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="addNameToMeeting()">Add name</button>
+	          </div>
+	        </div>
+	      </div>
+	    </div>
+
+	    <div class="modal fade" id="notBuiltYetModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	      <div class="modal-dialog">
+	        <div class="modal-content">
+	          <div class="modal-header">
+	            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	            <h4 class="modal-title" id="myModalLabel">Whoops!</h4>
+	          </div>
+	          <div class="modal-body">
+	            This functionality is not built yet... Check back soon!
+	          </div>
+	          <div class="modal-footer">
+	            <button type="button" class="btn btn-default" data-dismiss="modal">Okay!</button>
+	          </div>
+	        </div>
+	      </div>
+	    </div>
+
+	</form>
+
+	<div ng-show="meeting.status != 'notStarted'" ng-click="shareMeeting()"  data-toggle="tooltip" title="Click to open a sharing url (in a new tab) for this fantastic meeting" ng-class="{'clickable': meeting.id != null}" class="meeting-cost label label-info col-xs-12 col-md-8">
+	    {{meeting|meetingstatus}}
+	</div>
+
+	<div id="playground" ng-show="meeting.isBoring">
+	    <div class="nextPlayer">Next Player: {{nextMove}}</a></div>
+	    <table class="board">
+	        <tr ng-repeat="row in board" style="height:15px;">
+	            <td ng-repeat="cell in row track by $index" ng-style="cellStyle" ng-click="dropPiece($parent.$index, $index)">
+	            	{{cell}}
+	            </td>
+	        </tr>
+	    </table>
+	    <div class="winner" ng-show="winner">{{winner|tictactoewinner}}</div>
+	    <a ng-click="reset()" data-role="button" data-inline="true">Reset board</a>
+	</div>
+
+	<script type="text/javascript">
+	    $(document).ready(function() {
+	        $('input, textarea').placeholder();
+	    });
+	</script>
+
+</div>

@@ -17,27 +17,17 @@ function TicTacToeCtrl($scope, $location) {
 	    ];
 	    $scope.nextMove = 'X';
 	    $scope.winner = '';
-	    setUrl();
 	};
 
 	$scope.dropPiece = function(row, col) {
 		if (!$scope.winner && !$scope.board[row][col]) {
 			$scope.board[row][col] = $scope.nextMove;
 			$scope.nextMove = $scope.nextMove == 'X' ? 'O' : 'X';
-			setUrl();
 		}
+		grade();
 	};
 
 	$scope.reset();
-	$scope.$watch(function() {return $location.search().board;}, readUrl);
-
-	function setUrl() {
-		var rows = [];
-		angular.forEach($scope.board, function(row) {
-			rows.push(row.join(','));
-		});
-		$location.search({board: rows.join(';') + '/' + $scope.nextMove});
-	}
 
 	function grade() {
 		var b = $scope.board;
@@ -60,5 +50,5 @@ function TicTacToeCtrl($scope, $location) {
 			});
 			grade();
 		}
-  }
+  	}
 }
