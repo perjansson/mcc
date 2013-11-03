@@ -4,7 +4,7 @@ app.constant('constants', {
     averageHourlyRateText: null,
     currencyText: null,
     meetingCostTextUpdateIntervalInMillis: '50',
-    backendUpdateIntervalInMillis: '3000',
+    backendUpdateIntervalInMillis: '60000',
     shouldPersistMeetings: true,
     shouldUseNodeJs: true,
     shouldUseSpringMvc: false,
