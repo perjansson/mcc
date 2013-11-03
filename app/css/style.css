@@ -79,6 +79,12 @@ body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom
 	}
 }
 
+@media screen and (min-width: 1140px) {
+	.arch-pic {
+		padding-right: 15%;
+	}
+}
+
 .about-me h1 {
 	font-size: 18px;
 }
