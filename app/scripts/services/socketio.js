@@ -12,6 +12,7 @@ app.factory('socketioMeetingService', function(constants) {
 
       socket.on('connecting', function () {
         console.log('Trying to connect to websocket at ' + constants.nodeJsBackendHost);
+        service.onConnectingCallback();
       });
 
       socket.on('connect', function () {
@@ -56,7 +57,8 @@ app.factory('socketioMeetingService', function(constants) {
     /*}*/
   }
  
-  service.subscribe = function(onConnectCallback, onMeetingUpdatedCallback, onDisconnectCallback, onErrorCallback) {
+  service.subscribe = function(onConnectingCallback, onConnectCallback, onMeetingUpdatedCallback, onDisconnectCallback, onErrorCallback) {
+    service.onConnectingCallback = onConnectingCallback;
     service.onConnectCallback = onConnectCallback;
     service.onMeetingUpdatedCallback = onMeetingUpdatedCallback;
     service.onDisconnectCallback = onDisconnectCallback;

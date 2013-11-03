@@ -34,8 +34,11 @@ app.controller('MeetingCostCalculatorCtrl', function($scope, $location, $window,
     
     if (constants.shouldPersistMeetings) {
         if (constants.shouldUseNodeJs) {
+            var onConnectingCallback = function() {
+                $('#connection-indicator').addClass('connecting').removeClass('connected').removeClass('disconnected');
+            };
             var onConnectCallback = function() {
-                $('#connection-indicator').addClass('connected').removeClass('disconnected');
+                $('#connection-indicator').addClass('connected').removeClass('disconnected').removeClass('connecting');
             };
             var onMeetingUpdatedCallback = function(meeting) {
                 console.log('On meeting update: ' + JSON.stringify(meeting));
@@ -47,7 +50,7 @@ app.controller('MeetingCostCalculatorCtrl', function($scope, $location, $window,
             var onErrorCallback = function() {
                 $('#connection-indicator').addClass('disconnected').removeClass('connected').removeClass('connecting');
             };
-            socketioMeetingService.subscribe(onConnectCallback, onMeetingUpdatedCallback, onDisconnectCallback, onErrorCallback);
+            socketioMeetingService.subscribe(onConnectingCallback, onConnectCallback, onMeetingUpdatedCallback, onDisconnectCallback, onErrorCallback);
         
             socketioMeetingService.connect();
         }
