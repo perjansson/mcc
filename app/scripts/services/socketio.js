@@ -48,6 +48,10 @@ app.factory('socketioMeetingService', function(constants) {
       socket.on('meeting update response', function (meeting) {
         service.onMeetingUpdatedCallback(meeting);
       });
+
+      socket.on('top list update response', function (topList) {
+        service.onTopListUpdatedCallback(topList);
+      });
     }
   }
  
@@ -56,11 +60,23 @@ app.factory('socketioMeetingService', function(constants) {
       socket.emit('meeting update request', data);
     /*}*/
   }
+
+  service.getTopList = function(data) {
+    socket.emit('top list request');
+  }
  
-  service.subscribe = function(onConnectingCallback, onConnectCallback, onMeetingUpdatedCallback, onDisconnectCallback, onErrorCallback) {
+  service.subscribe = function(onConnectingCallback, onConnectCallback, onDisconnectCallback, onErrorCallback, onMeetingUpdatedCallback) {
     service.onConnectingCallback = onConnectingCallback;
     service.onConnectCallback = onConnectCallback;
     service.onMeetingUpdatedCallback = onMeetingUpdatedCallback;
+    service.onDisconnectCallback = onDisconnectCallback;
+    service.onErrorCallback = onErrorCallback;
+  }
+
+  service.subscribeTopList = function(onConnectingCallback, onConnectCallback, onDisconnectCallback, onErrorCallback, onTopListUpdatedCallback) {
+    service.onConnectingCallback = onConnectingCallback;
+    service.onConnectCallback = onConnectCallback;
+    service.onTopListUpdatedCallback = onTopListUpdatedCallback;
     service.onDisconnectCallback = onDisconnectCallback;
     service.onErrorCallback = onErrorCallback;
   }

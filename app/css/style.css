@@ -96,15 +96,9 @@ body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom
 	margin-top: 7%;
 }
 
-table, tr, td {
+#playground table tr td {
 	width: 33%;
 	height: 33%;
-}
-
-table {
-	width: 100%; 
-	height: 70%;
-	border-spacing: 0px;
 }
 
 .board {
@@ -120,4 +114,10 @@ table {
 .winner {
 	margin-top: 5px;
 	color: #8F8F8F;
+}
+
+@media screen and (max-width: 768px) {
+	#toplist table tr td, th {
+		font-size: 12px;
+	}
 }

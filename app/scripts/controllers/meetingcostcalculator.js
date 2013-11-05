@@ -40,17 +40,17 @@ app.controller('MeetingCostCalculatorCtrl', function($scope, $location, $window,
             var onConnectCallback = function() {
                 $('#connection-indicator').addClass('connected').removeClass('disconnected').removeClass('connecting');
             };
-            var onMeetingUpdatedCallback = function(meeting) {
-                console.log('On meeting update: ' + JSON.stringify(meeting));
-                $scope.meeting.id = meeting.id;
-            };
             var onDisconnectCallback = function() {
                 $('#connection-indicator').addClass('disconnected').removeClass('connected').removeClass('connecting');
             };
             var onErrorCallback = function() {
                 $('#connection-indicator').addClass('disconnected').removeClass('connected').removeClass('connecting');
             };
-            socketioMeetingService.subscribe(onConnectingCallback, onConnectCallback, onMeetingUpdatedCallback, onDisconnectCallback, onErrorCallback);
+            var onMeetingUpdatedCallback = function(meeting) {
+                console.log('On meeting update: ' + JSON.stringify(meeting));
+                $scope.meeting.id = meeting.id;
+            };
+            socketioMeetingService.subscribe(onConnectingCallback, onConnectCallback, onDisconnectCallback, onErrorCallback, onMeetingUpdatedCallback);
         
             socketioMeetingService.connect();
         }

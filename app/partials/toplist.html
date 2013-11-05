@@ -1,0 +1,22 @@
+<div id="toplist" class="table-responsive">
+	<table class="table table-striped table-hover">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Number of attendees</th>
+				<th>Average hourly rate</th>
+				<th>Currency</th>
+				<th>Meeting cost</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="meeting in toplist">
+				<td width="20%">{{meeting.name}}</td>
+				<td width="20%">{{meeting.numberOfAttendees}}</td>
+				<td width="20%">{{meeting.averageHourlyRate}}</td>
+				<td width="20%">{{meeting.currency}}</td>
+				<td width="20%">{{meeting.meetingCost}}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
