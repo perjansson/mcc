@@ -1,18 +1,18 @@
-app.controller('MeetingCostCalculatorCtrl', function($scope, $location, $window, constants, meetingCostService, socketioMeetingService, restMeetingService) {
+app.controller('MeetingCostCalculatorCtrl', function($scope, $interval, $location, $window, constants, meetingCostService, socketioMeetingService, restMeetingService) {
 
     /* Properties for handling updating of meeting cost text */
-    var updateMeetingTextIntervalDelay = constants.meetingCostTextUpdateIntervalInMillis;
-    var updateMeetingTextTimerId = 0;
+    var updateMeetingTextDelay = constants.meetingCostTextUpdateIntervalInMillis;
+    var updateMeetingTextPromise;
 
     /* Properties for handling updating backend */
-    var updateBackendIntervalDelay = constants.backendUpdateIntervalInMillis;
-    var updateBackendTimerId = 0;
+    var updateBackendDelay = constants.backendUpdateIntervalInMillis;
+    var updateBackendPromise = 0;
     
     if (meetingCostService.hasMeeting()) {
         $scope.meeting = meetingCostService.getMeeting();
         if ($scope.meeting.status == 'started') {
-            updateMeetingTextTimerId = setInterval(meetingCostCalculator, updateMeetingTextIntervalDelay);
-            updateBackendTimerId = setInterval(sendMeetingToServer, updateBackendIntervalDelay);        
+            updateMeetingTextPromise = $interval(meetingCostCalculator, updateMeetingTextDelay);
+            updateBackendPromise = $interval(sendMeetingToServer, updateBackendDelay);        
         }
     } else  {
         $scope.meeting = 
@@ -64,10 +64,10 @@ app.controller('MeetingCostCalculatorCtrl', function($scope, $location, $window,
         $scope.meeting.meetingCost = 0;
         $scope.meeting.meetingPauseTime = null;
 
-        clearInterval(updateMeetingTextTimerId);
-        clearInterval(updateBackendTimerId);
-        updateMeetingTextTimerId = setInterval(meetingCostCalculator, updateMeetingTextIntervalDelay);
-        updateBackendTimerId = setInterval(sendMeetingToServer, updateBackendIntervalDelay);
+        $interval.cancel(updateMeetingTextPromise);
+        $interval.cancel(updateBackendPromise);
+        updateMeetingTextPromise = $interval(meetingCostCalculator, updateMeetingTextDelay);
+        updateBackendPromise = $interval(sendMeetingToServer, updateBackendDelay);
 
         sendMeetingToServer();
     };
@@ -77,8 +77,8 @@ app.controller('MeetingCostCalculatorCtrl', function($scope, $location, $window,
         $scope.meeting.isBoring = false;
 
         pauseTimeStamp = new Date();
-        clearInterval(updateMeetingTextTimerId);
-        clearInterval(updateBackendTimerId);
+        $interval.cancel(updateMeetingTextPromise);
+        $interval.cancel(updateBackendPromise);
 
         sendMeetingToServer();
     };
@@ -87,8 +87,8 @@ app.controller('MeetingCostCalculatorCtrl', function($scope, $location, $window,
         $scope.meeting.status = 'paused';
 
         $scope.meeting.pauseTimeStamp = new Date();
-        clearInterval(updateMeetingTextTimerId);
-        clearInterval(updateBackendTimerId);
+        $interval.cancel(updateMeetingTextPromise);
+        $interval.cancel(updateBackendPromise);
 
         sendMeetingToServer();
     };
@@ -98,8 +98,8 @@ app.controller('MeetingCostCalculatorCtrl', function($scope, $location, $window,
         $scope.meeting.status = 'started';
 
         $scope.meeting.pauseTimeStamp = 0;
-        updateMeetingTextTimerId = setInterval(meetingCostCalculator, updateMeetingTextIntervalDelay);
-        updateBackendTimerId = setInterval(sendMeetingToServer, updateBackendIntervalDelay);
+        updateMeetingTextPromise = $interval(meetingCostCalculator, updateMeetingTextDelay);
+        updateBackendPromise = $interval(sendMeetingToServer, updateBackendDelay);
 
         sendMeetingToServer();
     };
@@ -117,7 +117,6 @@ app.controller('MeetingCostCalculatorCtrl', function($scope, $location, $window,
 
     function meetingCostCalculator() {
         $scope.meeting.meetingCost = meetingCostService.getMeetingCost($scope.meeting);
-        $scope.$apply();
     }
 
     function sendMeetingToServer() {
@@ -142,8 +141,8 @@ app.controller('MeetingCostCalculatorCtrl', function($scope, $location, $window,
     }
 
     $scope.$on('$destroy', function controllerDestroyed() {
-        clearInterval(updateMeetingTextTimerId);
-        clearInterval(updateBackendTimerId);
+        $interval.cancel(updateMeetingTextPromise);
+        $interval.cancel(updateBackendPromise);
     })
 
     /**********************************************
