@@ -97,8 +97,8 @@
 
 	</form>
 
-	<div ng-show="meeting.status != 'notStarted'" ng-click="shareMeeting()"  data-toggle="tooltip" title="Click to open a sharing url (in a new tab) for this fantastic meeting" ng-class="{'clickable': meeting.id != null}" class="meeting-cost label label-info col-xs-12 col-md-8">
-	    {{meeting|meetingstatus}}
+	<div class="col-xs-12 col-md-8">
+		<div pj-meeting-status></div>
 	</div>
 
 	<div id="playground" ng-show="meeting.isBoring">
