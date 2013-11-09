@@ -56,9 +56,9 @@ app.factory('socketioMeetingService', function(constants) {
   }
  
   service.send = function(data) {
-    /*if (constants.nodeJsBackendHost != '127.0.0.1:1337/') {*/
+    if (constants.nodeJsBackendHost != '127.0.0.1:1337/') {
       socket.emit('meeting update request', data);
-    /*}*/
+    }
   }
 
   service.getTopList = function(data) {

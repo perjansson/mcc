@@ -116,7 +116,7 @@ app.controller('MeetingCostCalculatorCtrl', function($scope, $interval, $locatio
     }
 
     function meetingCostCalculator() {
-        $scope.meeting.meetingCost = meetingCostService.getMeetingCost($scope.meeting);
+        meetingCostService.calculateMeetingCost($scope.meeting);
     }
 
     function sendMeetingToServer() {
