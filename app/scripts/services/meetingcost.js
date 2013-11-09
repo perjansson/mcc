@@ -11,9 +11,9 @@ app.factory('meetingCostService', function(constants) {
     return meeting;
   }
  
-  service.getMeetingCost = function(updateMeeting) {
+  service.calculateMeetingCost = function(updateMeeting) {
     meeting = updateMeeting;
-    return roundToZeroDecimals(getCurrentMeetingCost());
+    meeting.meetingCost = roundToZeroDecimals(getCurrentMeetingCost());
   }
 
   function roundToZeroDecimals(value) {
