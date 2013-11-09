@@ -4,18 +4,18 @@
 
 	    <div class="row">
 	        <div class="form-group col-sm-4 col-lg-3">
-	            <label class="sr-only" for="numberOfAttendees">Number of attendees</label>
-	            <input id="numberOfAttendees" type="number" class="form-control" ng-model="meeting.numberOfAttendees" placeholder="Number of attendees">
+	            <label for="numberOfAttendees">Number of attendees</label>
+	            <input id="numberOfAttendees" type="number" class="form-control" ng-model="meeting.numberOfAttendees">
 	        </div>
 
 	        <div class="form-group col-sm-4 col-lg-3">
-	            <label class="sr-only" for="averageHourlyRate">Average hourly rate</label>
-	            <input id="averageHourlyRate" type="number" class="form-control" ng-model="meeting.averageHourlyRate" placeholder="Average hourly rate">
+	            <label for="averageHourlyRate">Average hourly rate</label>
+	            <input id="averageHourlyRate" type="number" class="form-control" ng-model="meeting.averageHourlyRate">
 	        </div>
 
 	        <div class="form-group col-sm-4 col-lg-3">
-	            <label class="sr-only" for="currency">Currency</label>
-	            <input id="currency" type="text" class="form-control" ng-model="meeting.currency" placeholder="Currency">
+	            <label for="currency">Currency</label>
+	            <input id="currency" type="text" class="form-control" ng-model="meeting.currency">
 	        </div>
 
 	        <div class="form-group col-sm-12 col-lg-3">
@@ -113,11 +113,5 @@
 	    <div class="winner" ng-show="winner">{{winner|tictactoewinner}}</div>
 	    <a ng-click="reset()" data-role="button" data-inline="true">Reset board</a>
 	</div>
-
-	<script type="text/javascript">
-	    $(document).ready(function() {
-	        $('input, textarea').placeholder();
-	    });
-	</script>
 
 </div>
