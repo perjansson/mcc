@@ -1,4 +1,4 @@
-app.controller('MeetingCostCalculatorCtrl', function($scope, $interval, $location, $window, constants, meetingCostService, socketioMeetingService, restMeetingService) {
+app.controller('MeetingCostCalculatorCtrl', function($scope, $http, $interval, $location, $window, constants, meetingCostService, socketioMeetingService, restMeetingService) {
 
     /* Properties for handling updating of meeting cost text */
     var updateMeetingTextDelay = constants.meetingCostTextUpdateIntervalInMillis;
@@ -31,6 +31,10 @@ app.controller('MeetingCostCalculatorCtrl', function($scope, $interval, $locatio
                 goodMeeting: false
             };        
     }
+
+    $http.get('app/currencies.json').success(function (data) {
+        $scope.currencies = data;
+    });
     
     if (constants.shouldPersistMeetings) {
         if (constants.shouldUseNodeJs) {

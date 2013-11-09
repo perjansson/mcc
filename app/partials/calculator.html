@@ -15,7 +15,7 @@
 
 	        <div class="form-group col-sm-4 col-lg-3">
 	            <label for="currency">Currency</label>
-	            <input id="currency" type="text" class="form-control" ng-model="meeting.currency">
+      			<select ng-model="meeting.currency" ng-options="currency.key as currency.key + ' (' + currency.name + ')' for currency in currencies" class="form-control"></select>
 	        </div>
 
 	        <div class="form-group col-sm-12 col-lg-3">

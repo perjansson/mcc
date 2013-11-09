@@ -1,39 +1,8 @@
-# bower-angular-resource
+#### Chosen
+- by Patrick Filler for [Harvest](http://getharvest.com)
+- Copyright (c) 2011-2013 by Harvest
 
-This repo is for distribution on `bower`. The source for this module is in the
-[main AngularJS repo](https://github.com/angular/angular.js/tree/master/src/ngResource).
-Please file issues and pull requests against that repo.
-
-## Install
-
-Install with `bower`:
-
-```shell
-bower install angular-resource
-```
-
-Add a `<script>` to your `index.html`:
-
-```html
-<script src="/bower_components/angular-resource/angular-resource.js"></script>
-```
-
-And add `ngResource` as a dependency for your app:
-
-```javascript
-angular.module('myApp', ['ngResource']);
-```
-
-## Documentation
-
-Documentation is available on the
-[AngularJS docs site](http://docs.angularjs.org/api/ngResource).
-
-## License
-
-The MIT License
-
-Copyright (c) 2010-2012 Google, Inc. http://angularjs.org
+Available for use under the [MIT License](http://en.wikipedia.org/wiki/MIT_License)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
