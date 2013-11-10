@@ -121,3 +121,7 @@ body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom
 		font-size: 12px;
 	}
 }
+
+table th.numeric, td.numeric {
+	text-align: right;
+}
