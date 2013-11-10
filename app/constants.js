@@ -1,8 +1,8 @@
 app.constant('constants', {
-    versionNumber: '1.4.3',
+    versionNumber: '1.4.4',
     numberOfAttendeesText: null,
     averageHourlyRateText: null,
-    currencyText: null,
+    currencyText: 'USD',
     meetingCostTextUpdateIntervalInMillis: '50',
     backendUpdateIntervalInMillis: '60000',
     shouldPersistMeetings: true,
