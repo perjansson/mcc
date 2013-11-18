@@ -10,13 +10,6 @@ body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom
 	margin-bottom: 0px;
 }
 
-.navbar-default .navbar-nav > .active > a, 
-.navbar-default .navbar-nav > .active > a:hover, 
-.navbar-default .navbar-nav > .active > a:focus {
-    color: #FFF;
-    background-color: #5bc0de;
-}
-
 .navbar-brand img {
 	display: inline;
 	width: 40px;
@@ -44,7 +37,6 @@ body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom
 }
 
 .connected {
-	color: #419C21;
 	cursor: auto;
 }
 
@@ -58,7 +50,7 @@ body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom
 	cursor: help;
 }
 
-.alert {
+.text-warning {
 	font-size: 14px;
 }
 
