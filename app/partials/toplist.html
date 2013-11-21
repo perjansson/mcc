@@ -11,7 +11,7 @@
 		</thead>
 		<tbody>
 			<tr ng-repeat="meeting in toplist">
-				<td>{{meeting.name}}</td>
+				<td>{{meeting.name | characters:28}}</td>
 				<td class="numeric hidden-xs">{{meeting.numberOfAttendees}}</td>
 				<td class="numeric hidden-xs">{{meeting.averageHourlyRate}}</td>
 				<td class="numeric hidden-xs hidden-sm">{{meeting.meetingCost}} {{meeting.currency}}</td>
