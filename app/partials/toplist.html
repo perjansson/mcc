@@ -2,7 +2,8 @@
 	<table class="table table-striped table-hover">
 		<thead>
 			<tr>
-				<th width="25%">Name</th>
+				<th width="25%" class="hidden-lg hidden-xl">Name</th>
+				<th width="25%" class="visible-lg visible-xl">Name</th>
 				<th width="20%" class="numeric hidden-xs">Number of attendees</th>
 				<th width="20%" class="numeric hidden-xs">Average hourly rate</th>
 				<th width="16%" class="numeric hidden-xs hidden-sm">Meeting cost</th>
@@ -11,7 +12,8 @@
 		</thead>
 		<tbody>
 			<tr ng-repeat="meeting in toplist">
-				<td>{{meeting.name | characters:28}}</td>
+				<td class="hidden-lg hidden-xl">{{meeting.name | characters:28}}</td>
+				<td class="visible-lg visible-xl">{{meeting.name | characters:45}}</td>
 				<td class="numeric hidden-xs">{{meeting.numberOfAttendees}}</td>
 				<td class="numeric hidden-xs">{{meeting.averageHourlyRate}}</td>
 				<td class="numeric hidden-xs hidden-sm">{{meeting.meetingCost}} {{meeting.currency}}</td>
