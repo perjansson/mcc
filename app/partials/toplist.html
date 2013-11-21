@@ -3,18 +3,18 @@
 		<thead>
 			<tr>
 				<th width="25%">Name</th>
-				<th width="21%" class="numeric">Number of attendees</th>
-				<th width="21%" class="numeric">Average hourly rate</th>
-				<th width="17%" class="numeric">Meeting cost</th>
-				<th width="16%" class="numeric">Comparable cost</th>
+				<th width="20%" class="numeric hidden-xs">Number of attendees</th>
+				<th width="20%" class="numeric hidden-xs">Average hourly rate</th>
+				<th width="16%" class="numeric hidden-xs hidden-sm">Meeting cost</th>
+				<th width="20%" class="numeric">Comparable cost</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr ng-repeat="meeting in toplist">
 				<td>{{meeting.name}}</td>
-				<td class="numeric">{{meeting.numberOfAttendees}}</td>
-				<td class="numeric">{{meeting.averageHourlyRate}}</td>
-				<td class="numeric">{{meeting.meetingCost}} {{meeting.currency}}</td>
+				<td class="numeric hidden-xs">{{meeting.numberOfAttendees}}</td>
+				<td class="numeric hidden-xs">{{meeting.averageHourlyRate}}</td>
+				<td class="numeric hidden-xs hidden-sm">{{meeting.meetingCost}} {{meeting.currency}}</td>
 				<td class="numeric">{{meeting.comparableMeetingCost}} {{meeting.comparableCurrency}}</td>
 			</tr>
 		</tbody>
