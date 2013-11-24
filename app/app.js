@@ -1,1 +1,1 @@
-var app = angular.module('MeetingCostCalculatorApp', ['ngRoute', 'ngResource', 'truncate']);
+var app = angular.module('MeetingCostCalculatorApp', ['ngRoute', 'ngResource']);
