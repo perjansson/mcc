@@ -1,4 +1,4 @@
-app.controller('TopListCtrl', function ($scope, $location, constants, socketioMeetingService) {
+app.controller('TopListCtrl', function ($scope, $location, constants, meetingServiceSocketIO) {
 
     if (constants.shouldPersistMeetings) {
         if (constants.shouldUseNodeJs) {
@@ -23,11 +23,11 @@ app.controller('TopListCtrl', function ($scope, $location, constants, socketioMe
                 $scope.$apply();
             };
 
-            socketioMeetingService.subscribeTopList(onConnectingCallback, onConnectCallback, onDisconnectCallback, onErrorCallback, onTopListUpdatedCallback);
+            meetingServiceSocketIO.subscribeTopList(onConnectingCallback, onConnectCallback, onDisconnectCallback, onErrorCallback, onTopListUpdatedCallback);
 
-            socketioMeetingService.connect();
+            meetingServiceSocketIO.connect();
 
-            socketioMeetingService.getTopList();
+            meetingServiceSocketIO.getTopList();
         }
     }
 

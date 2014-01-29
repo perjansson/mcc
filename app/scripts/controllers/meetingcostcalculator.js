@@ -1,4 +1,4 @@
-app.controller('MeetingCostCalculatorCtrl', function($scope, $http, $interval, $location, $window, constants, meetingCostService, socketioMeetingService, restMeetingService) {
+app.controller('MeetingCostCalculatorCtrl', function($scope, $http, $interval, $location, $window, constants, meetingCostService, meetingServiceSocketIO, meetingServiceREST) {
 
     /* Properties for handling updating of meeting cost text */
     var updateMeetingTextDelay = constants.meetingCostTextUpdateIntervalInMillis;
@@ -17,6 +17,7 @@ app.controller('MeetingCostCalculatorCtrl', function($scope, $http, $interval, $
     } else  {
         $scope.meeting = 
             {
+                _id: null,
                 id: null,
                 name: null,
                 numberOfAttendees: constants.numberOfAttendeesText, 
@@ -54,9 +55,9 @@ app.controller('MeetingCostCalculatorCtrl', function($scope, $http, $interval, $
                 console.log('On meeting update: ' + JSON.stringify(meeting));
                 $scope.meeting.id = meeting.id;
             };
-            socketioMeetingService.subscribe(onConnectingCallback, onConnectCallback, onDisconnectCallback, onErrorCallback, onMeetingUpdatedCallback);
+            meetingServiceSocketIO.subscribe(onConnectingCallback, onConnectCallback, onDisconnectCallback, onErrorCallback, onMeetingUpdatedCallback);
         
-            socketioMeetingService.connect();
+            meetingServiceSocketIO.connect();
         }
     }
 
@@ -109,9 +110,11 @@ app.controller('MeetingCostCalculatorCtrl', function($scope, $http, $interval, $
     };
 
     $scope.shareMeeting = function() {
-        var meetingId = $scope.meeting.id;
-        if (meetingId != null) {
-            $window.open(constants.sharingUrl + meetingId);  
+        var meetingInternalId = $scope.meeting.id;
+        if (meetingInternalId != null) {
+            var path = constants.sharingUrl + meetingInternalId;
+            console.log("Will share to path " + path);
+            $location.path(path);
         }
     }
 
@@ -126,10 +129,10 @@ app.controller('MeetingCostCalculatorCtrl', function($scope, $http, $interval, $
     function sendMeetingToServer() {
         if (constants.shouldPersistMeetings) {
             if (constants.shouldUseNodeJs) {
-                socketioMeetingService.send(JSON.stringify($scope.meeting));
+                meetingServiceSocketIO.send(JSON.stringify($scope.meeting));
             }
             if (constants.shouldUseSpringMvc) {
-                restMeetingService.create($scope.meeting, function success(responseMeeting) {
+                meetingServiceREST.create($scope.meeting, function success(responseMeeting) {
                     // Update meeting with id from response
                     $scope.meeting.id = responseMeeting.id;
                     console.log(JSON.stringify($scope.meeting));

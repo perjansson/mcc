@@ -1,4 +1,4 @@
-app.controller('HeaderCtrl', function ($scope, $location, constants, socketioMeetingService) {
+app.controller('HeaderCtrl', function ($scope, $location, constants, meetingServiceSocketIO) {
 
     $scope.version = constants.versionNumber;
 
@@ -8,7 +8,7 @@ app.controller('HeaderCtrl', function ($scope, $location, constants, socketioMee
 
     $scope.connect = function() {        
         if (constants.shouldPersistMeetings && constants.shouldUseNodeJs && $('#connection-indicator').attr('class').split(' ') == 'disconnected') {
-            socketioMeetingService.connect();
+            meetingServiceSocketIO.connect();
         }
     }
 

@@ -1,4 +1,4 @@
-app.factory('socketioMeetingService', function(constants) {
+app.factory('meetingServiceSocketIO', function(constants) {
 
   var service = {};
   var socket;
