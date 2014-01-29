@@ -31,4 +31,12 @@ app.controller('TopListCtrl', function ($scope, $location, constants, meetingSer
         }
     }
 
+    $scope.shareMeeting = function(meetingId) {
+        console.log("Sharing " + meetingId);
+        if (meetingId != null) {
+            var path = constants.sharingUrl + meetingId;
+            $location.path(path);
+        }
+    }
+
 });

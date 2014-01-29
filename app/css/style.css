@@ -135,3 +135,7 @@ body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom
 table th.numeric, td.numeric {
     text-align: right;
 }
+
+.clickable {
+    cursor: pointer;
+}

@@ -1,5 +1,5 @@
 app.constant('constants', {
-    versionNumber: '1.5.3',
+    versionNumber: '1.5.4',
     numberOfAttendeesText: null,
     averageHourlyRateText: null,
     currencyText: 'BTC',
