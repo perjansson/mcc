@@ -1,4 +1,4 @@
-Meeting Cost Calculator
+Meeting Cost Calculator - frontend
 ===
 
 Frontend for Meeting cost calculator, implemented in Angular.js, jQuery, Bootstrap etc. 
