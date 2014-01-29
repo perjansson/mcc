@@ -1,15 +1,19 @@
 app.config(['$routeProvider', function($routeProvider) {
 	$routeProvider.
 		when('/meeting', {
-			templateUrl: 'app/partials/calculator.html',
+			templateUrl: 'app/views/calculator.html',
 			controller: 'MeetingCostCalculatorCtrl'
 		}).
+        when('/meeting/:id', {
+            templateUrl: 'app/views/meetingdetail.html',
+            controller: 'MeetingDetailCtrl'
+        }).
 		when('/toplist', {
-	        templateUrl: 'app/partials/toplist.html',
+	        templateUrl: 'app/views/toplist.html',
 	        controller: 'TopListCtrl'
 		}).
 		when('/about', {
-	        templateUrl: 'app/partials/about.html',
+	        templateUrl: 'app/views/about.html',
 	        controller: 'AboutCtrl'
 		}).
 		otherwise({

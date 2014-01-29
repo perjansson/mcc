@@ -18,8 +18,8 @@ module.exports = function (config) {
             'app/bower_components/angular-resource/angular-resource.js',
             'app/bower_components/angular-route/angular-route.js',
             'app/bower_components/angular-mocks/angular-mocks.js',
-            'app/app.js',
-            'app/constants.js',
+            'app/scripts/app.js',
+            'app/scripts/constants.js',
             'app/scripts/filters/truncate.js',
             'test/spec/**/*.js'
         ],
