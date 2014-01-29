@@ -1,3 +1,7 @@
-app.controller('MeetingDetailCtrl', function ($scope, $http, $location, meetingServiceREST) {
-    console.log("MeetingDetailCtrl :)");
+app.controller('MeetingDetailCtrl', function ($scope, $http, $location, $routeParams, meetingServiceREST) {
+
+    meetingServiceREST.get({meetingId:$routeParams.meetingId}, function(meeting) {
+        $scope.meeting = meeting;
+    });
+
 });

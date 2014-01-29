@@ -110,10 +110,9 @@ app.controller('MeetingCostCalculatorCtrl', function($scope, $http, $interval, $
     };
 
     $scope.shareMeeting = function() {
-        var meetingInternalId = $scope.meeting.id;
-        if (meetingInternalId != null) {
-            var path = constants.sharingUrl + meetingInternalId;
-            console.log("Will share to path " + path);
+        var meetingId = $scope.meeting.id;
+        if (meetingId != null) {
+            var path = constants.sharingUrl + meetingId;
             $location.path(path);
         }
     }
