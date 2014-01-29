@@ -8,7 +8,7 @@ app.constant('constants', {
     shouldPersistMeetings: true,
     shouldUseNodeJs: true,
     shouldUseSpringMvc: false,
-    //nodeJsBackendHost: "ws://mcc.cloudno.de/",
-    nodeJsBackendHost: "127.0.0.1:1337/",
+    nodeJsBackendHost: "ws://mcc.cloudno.de/",
+    //nodeJsBackendHost: "127.0.0.1:1337/",
     sharingUrl: 'https://couchdb.cloudno.de/mcc/'
 });
