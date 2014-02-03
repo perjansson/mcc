@@ -17,7 +17,6 @@ app.controller('MeetingCostCalculatorCtrl', function($scope, $http, $interval, $
     } else  {
         $scope.meeting = 
             {
-                _id: null,
                 id: null,
                 name: null,
                 numberOfAttendees: constants.numberOfAttendeesText, 
