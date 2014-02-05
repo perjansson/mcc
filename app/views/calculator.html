@@ -3,22 +3,22 @@
 	<form class="form-inline" role="form">
 
 	    <div class="row">
-	        <div class="form-group col-sm-4 col-lg-3">
+	        <div class="form-group col-sm-4">
 	            <label for="numberOfAttendees">Number of attendees</label>
 	            <input id="numberOfAttendees" type="number" class="form-control" ng-model="meeting.numberOfAttendees" placeholder="E.g. 10">
 	        </div>
 
-	        <div class="form-group col-sm-4 col-lg-3">
+	        <div class="form-group col-sm-4">
 	            <label for="averageHourlyRate">Average hourly rate</label>
 	            <input id="averageHourlyRate" type="number" class="form-control" ng-model="meeting.averageHourlyRate" placeholder="E.g. 150">
 	        </div>
 
-	        <div class="form-group col-sm-4 col-lg-3">
+	        <div class="form-group col-sm-4">
 	            <label for="currency">Currency</label>
       			<select id="currency" ng-model="meeting.currency" ng-options="currency.key as currency.key + ' (' + currency.name + ')' for currency in currencies" class="form-control"></select>
 	        </div>
 
-	        <div class="form-group col-sm-12 col-lg-3">
+	        <div class="form-group col-sm-12">
 	            <div class="pull-right">
 	                <button type="button" class="btn btn-primary" ng-click="startMeeting(); animateToBottom()" ng-show="meeting.status == 'notStarted' || meeting.status == 'stopped'" ng-disabled="meeting.numberOfAttendees == null || meeting.averageHourlyRate == null || meeting.currency == null || meeting.currency == ''">
 	                    Start meeting
@@ -81,7 +81,7 @@
 	</form>
 
     <div class="row">
-		<div class="col-xs-12 col-md-8">
+		<div class="col-xs-12">
 			<div pj-meeting-status></div>
 		</div>
 	</div>

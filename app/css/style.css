@@ -7,7 +7,7 @@ body {
     margin: 0;
     background-repeat: no-repeat;
     background-attachment: fixed;
-  background-color: EDEDED;
+    background-color: #FFF;
 }
 
 body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom {
