@@ -3,11 +3,12 @@
 		<thead>
 			<tr>
 				<th width="25%" class="hidden-md hidden-lg">Name</th>
-				<th width="25%" class="hidden-xs hidden-sm">Name</th>
-				<th width="20%" class="numeric hidden-xs">Number of attendees</th>
-				<th width="20%" class="numeric hidden-xs">Average hourly rate</th>
-				<th width="16%" class="numeric">Meeting cost</th>
-				<th width="20%" class="numeric hidden-xs hidden-sm">Comparable cost</th>
+				<th width="20%" class="hidden-xs hidden-sm">Name</th>
+				<th width="16%" class="numeric hidden-xs"># of attendees</th>
+				<th width="16%" class="numeric hidden-xs">Avg. hourly rate</th>
+                <th width="16%" class="numeric">Cost</th>
+				<th width="16%" class="numeric hidden-xs">Duration</th>
+				<th width="16%" class="numeric hidden-xs hidden-sm">Comparable cost</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -17,6 +18,7 @@
 				<td class="numeric hidden-xs">{{meeting.numberOfAttendees}}</td>
 				<td class="numeric hidden-xs">{{meeting.averageHourlyRate}}</td>
 				<td class="numeric">{{meeting.meetingCost}} {{meeting.currency}}</td>
+                <td class="numeric hidden-xs">{{getPrettyMeetingTime(meeting)}}</td>
 				<td class="numeric hidden-xs hidden-sm">{{meeting.comparableMeetingCost}} {{meeting.comparableCurrency}}</td>
 			</tr>
 		</tbody>

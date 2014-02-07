@@ -1,11 +1,5 @@
 'use strict';
 
-/*app.filter('truncate_characters', function () {
-    return function (input) {
-        return 'truncate filter: ' + input;
-    };
-});*/
-
 app.filter('truncate_characters', function () {
     return function (input, chars, breakOnWord) {
         if (isNaN(chars)) return input;
