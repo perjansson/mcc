@@ -61,7 +61,7 @@ app.factory('socketioMeetingService', function(constants) {
     }
   }
 
-  service.getTopList = function(data) {
+  service.getTopList = function() {
     socket.emit('top list request');
   }
  

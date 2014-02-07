@@ -31,4 +31,26 @@ app.controller('TopListCtrl', function ($scope, $location, constants, socketioMe
         }
     }
 
+    $scope.getPrettyMeetingTime = function(meeting) {
+        var prettyMeetingTime = null;
+        var timeInHours = meeting.meetingCost / meeting.numberOfAttendees / meeting.averageHourlyRate;
+        if (timeInHours >= 1) {
+            var array = roundToDecimals(timeInHours, 2).toString().split('.');
+            var hours = parseInt(array[0]);
+            var minutes = parseInt(array[1]);
+            prettyMeetingTime = hours + " h " + minutes + " min";
+        } else if (timeInHours >= 0.01666666666667) {
+            var minutes = timeInHours * 60;
+            prettyMeetingTime = roundToDecimals(minutes, 0) + " min";
+        } else {
+            var seconds = timeInHours * 3600;
+            prettyMeetingTime = roundToDecimals(seconds, 0) + " s";
+        }
+        return  prettyMeetingTime;
+    }
+
+    function roundToDecimals(value, numberOfDecimals) {
+        return (Math.round(value * 100000) / 100000).toFixed(numberOfDecimals);
+    }
+
 });
