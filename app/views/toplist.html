@@ -2,17 +2,17 @@
 	<table class="table table-striped table-hover clickable">
 		<thead>
 			<tr>
-				<th ng-click="updateSortColumn('name')" width="25%" class="hidden-md hidden-lg">Name</th>
-				<th ng-click="updateSortColumn('name')" width="20%" class="hidden-xs hidden-sm">Name</th>
-				<th ng-click="updateSortColumn('numberOfAttendees')" width="16%" class="numeric hidden-xs"># of attendees</th>
-				<th ng-click="updateSortColumn('averageHourlyRate')" width="16%" class="numeric hidden-xs">Avg. hourly rate</th>
-                <th ng-click="updateSortColumn('cost')" width="16%" class="numeric">Cost</th>
-				<th ng-click="updateSortColumn('duration')" width="16%" class="numeric hidden-xs">Duration</th>
-				<th ng-click="updateSortColumn('comparableCost')" width="16%" class="numeric hidden-xs hidden-sm">Comparable cost</th>
+				<th ng-click="orderByAttribute='name'" width="25%" class="hidden-md hidden-lg">Name</th>
+				<th ng-click="orderByAttribute='name'" width="20%" class="hidden-xs hidden-sm">Name</th>
+				<th ng-click="orderByAttribute='numberOfAttendees'" width="16%" class="numeric hidden-xs"># of attendees</th>
+				<th ng-click="orderByAttribute='averageHourlyRate'" width="16%" class="numeric hidden-xs">Avg. hourly rate</th>
+                <th ng-click="orderByAttribute='meetingCost'" width="16%" class="numeric">Cost</th>
+				<th ng-click="orderByAttribute='duration'" width="16%" class="numeric hidden-xs">Duration</th>
+				<th ng-click="orderByAttribute='comparableMeetingCost'" width="16%" class="numeric hidden-xs hidden-sm">Comparable cost</th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr ng-repeat="meeting in toplist" ng-click="shareMeeting(meeting.id)">
+			<tr ng-repeat="meeting in toplist | orderObjectBy:orderByAttribute" ng-click="shareMeeting(meeting.id)">
 				<td class="hidden-md hidden-lg">{{meeting.name | truncate_characters:28}}</td>
 				<td class="hidden-xs hidden-sm">{{meeting.name | truncate_characters:45}}</td>
 				<td class="numeric hidden-xs">{{meeting.numberOfAttendees}}</td>

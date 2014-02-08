@@ -29,27 +29,7 @@ app.controller('TopListCtrl', function ($scope, $location, constants, meetingSer
         }
     }
 
-    $scope.sortOrder = {
-        column: 'comparableCost',
-        desc: true
-    }
-
-    $scope.updateSortColumn = function (sortColumn) {
-        var isDescNow = $scope.sortOrder.desc;
-        $scope.sortOrder = {
-            column: sortColumn,
-            desc: !isDescNow
-        }
-    }
-
-    $scope.$watch('sortOrder', function () {
-        sortTopList();
-        $scope.$apply();
-    });
-
-    function sortTopList() {
-
-    }
+    $scope.orderByAttribute = 'cost';
 
     $scope.shareMeeting = function (meetingId) {
         console.log("Sharing " + meetingId);
