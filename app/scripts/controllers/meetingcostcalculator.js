@@ -28,7 +28,9 @@ app.controller('MeetingCostCalculatorCtrl', function($scope, $http, $interval, $
                 pauseTimeStamp: null,
                 meetingPauseTime: null,
                 meetingCost: null,
-                goodMeeting: false
+                goodMeeting: false,
+                duration: null,
+                prettyDuration: null
             };        
     }
 

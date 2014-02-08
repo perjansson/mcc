@@ -10,9 +10,17 @@ app.filter('orderObjectBy', function () {
         }
 
         array.sort(function (a, b) {
-            a = parseInt(a[attribute]);
-            b = parseInt(b[attribute]);
-            return a - b;
+            var first = a[attribute];
+            var second = b[attribute];
+            if (isNaN(first)) {
+                var alc = first.toLowerCase(),
+                    blc = second.toLowerCase();
+                return alc < blc ? 1 : alc > blc ? -1 : 0;
+            } else {
+                a = parseInt(first);
+                b = parseInt(second);
+                return b - a;
+            }
         });
         return array;
     }
