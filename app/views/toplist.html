@@ -2,13 +2,13 @@
 	<table class="table table-striped table-hover clickable">
 		<thead>
 			<tr>
-				<th width="25%" class="hidden-md hidden-lg">Name</th>
-				<th width="20%" class="hidden-xs hidden-sm">Name</th>
-				<th width="16%" class="numeric hidden-xs"># of attendees</th>
-				<th width="16%" class="numeric hidden-xs">Avg. hourly rate</th>
-                <th width="16%" class="numeric">Cost</th>
-				<th width="16%" class="numeric hidden-xs">Duration</th>
-				<th width="16%" class="numeric hidden-xs hidden-sm">Comparable cost</th>
+				<th ng-click="updateSortColumn('name')" width="25%" class="hidden-md hidden-lg">Name</th>
+				<th ng-click="updateSortColumn('name')" width="20%" class="hidden-xs hidden-sm">Name</th>
+				<th ng-click="updateSortColumn('numberOfAttendees')" width="16%" class="numeric hidden-xs"># of attendees</th>
+				<th ng-click="updateSortColumn('averageHourlyRate')" width="16%" class="numeric hidden-xs">Avg. hourly rate</th>
+                <th ng-click="updateSortColumn('cost')" width="16%" class="numeric">Cost</th>
+				<th ng-click="updateSortColumn('duration')" width="16%" class="numeric hidden-xs">Duration</th>
+				<th ng-click="updateSortColumn('comparableCost')" width="16%" class="numeric hidden-xs hidden-sm">Comparable cost</th>
 			</tr>
 		</thead>
 		<tbody>

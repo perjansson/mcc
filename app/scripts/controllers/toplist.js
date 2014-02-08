@@ -24,14 +24,34 @@ app.controller('TopListCtrl', function ($scope, $location, constants, meetingSer
             };
 
             meetingServiceSocketIO.subscribeTopList(onConnectingCallback, onConnectCallback, onDisconnectCallback, onErrorCallback, onTopListUpdatedCallback);
-
             meetingServiceSocketIO.connect();
-
             meetingServiceSocketIO.getTopList();
         }
     }
 
-    $scope.shareMeeting = function(meetingId) {
+    $scope.sortOrder = {
+        column: 'comparableCost',
+        desc: true
+    }
+
+    $scope.updateSortColumn = function (sortColumn) {
+        var isDescNow = $scope.sortOrder.desc;
+        $scope.sortOrder = {
+            column: sortColumn,
+            desc: !isDescNow
+        }
+    }
+
+    $scope.$watch('sortOrder', function () {
+        sortTopList();
+        $scope.$apply();
+    });
+
+    function sortTopList() {
+
+    }
+
+    $scope.shareMeeting = function (meetingId) {
         console.log("Sharing " + meetingId);
         if (meetingId != null) {
             var path = constants.sharingUrl + meetingId;
@@ -39,7 +59,7 @@ app.controller('TopListCtrl', function ($scope, $location, constants, meetingSer
         }
     }
 
-    $scope.getPrettyMeetingTime = function(meeting) {
+    $scope.getPrettyMeetingTime = function (meeting) {
         var prettyMeetingTime = null;
         var timeInHours = meeting.meetingCost / meeting.numberOfAttendees / meeting.averageHourlyRate;
         if (timeInHours >= 1) {
