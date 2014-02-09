@@ -30,6 +30,49 @@ app.controller('TopListCtrl', function ($scope, $location, constants, meetingSer
     }
 
     $scope.orderByAttribute = 'comparableMeetingCost';
+    $scope.orderByDesc = true;
+
+    var nameOrderByDesc = false;
+    var numberOfAttendeesOrderByDesc = false;
+    var averageHourlyRateOrderByDesc = false;
+    var meetingCostOrderByDesc = false;
+    var durationOrderByDesc = false;
+    var comparableMeetingCostOrderByDesc = true;
+
+    $scope.updateNameOrder = function () {
+        nameOrderByDesc = !nameOrderByDesc;
+        updateOrder('name', nameOrderByDesc);
+    }
+
+    $scope.updateNumberOfAttendeesOrder = function () {
+        numberOfAttendeesOrderByDesc = !numberOfAttendeesOrderByDesc;
+        updateOrder('numberOfAttendees', numberOfAttendeesOrderByDesc);
+    }
+
+    $scope.updateAverageHourlyRateOrder = function () {
+        averageHourlyRateOrderByDesc = !averageHourlyRateOrderByDesc;
+        updateOrder('averageHourlyRate', averageHourlyRateOrderByDesc);
+    }
+
+    $scope.updateMeetingCostOrder = function () {
+        meetingCostOrderByDesc = !meetingCostOrderByDesc;
+        updateOrder('meetingCost', meetingCostOrderByDesc);
+    }
+
+    $scope.updateDurationOrder = function () {
+        durationOrderByDesc = !durationOrderByDesc;
+        updateOrder('duration', durationOrderByDesc);
+    }
+
+    $scope.updateComparableMeetingCostOrder = function () {
+        comparableMeetingCostOrderByDesc = !comparableMeetingCostOrderByDesc;
+        updateOrder('comparableMeetingCost', comparableMeetingCostOrderByDesc);
+    }
+
+    function updateOrder(column, orderByDesc) {
+        $scope.orderByAttribute = column;
+        $scope.orderByDesc = orderByDesc;
+    }
 
     $scope.shareMeeting = function (meetingId) {
         console.log("Sharing " + meetingId);
