@@ -28,6 +28,10 @@ body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom
     margin: -15px 5px -10px -5px;
 }
 
+.jumbotron {
+    text-align: center;
+}
+
 .placeholder {
     color: #AAA;
 }
@@ -63,7 +67,7 @@ body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom
 }
 
 .text-warning {
-    font-size: 14px;
+    font-size: 0.6em;
 }
 
 .clickable {
@@ -138,4 +142,9 @@ table th.numeric, td.numeric {
 
 .clickable {
     cursor: pointer;
+}
+
+.contact-information {
+    font-size: 12px;
+    padding-bottom: 0.5em;
 }
