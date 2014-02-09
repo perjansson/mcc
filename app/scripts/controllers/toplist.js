@@ -32,11 +32,11 @@ app.controller('TopListCtrl', function ($scope, $location, constants, meetingSer
     $scope.orderByAttribute = 'comparableMeetingCost';
     $scope.orderByDesc = true;
 
-    var nameOrderByDesc = false;
-    var numberOfAttendeesOrderByDesc = false;
-    var averageHourlyRateOrderByDesc = false;
-    var meetingCostOrderByDesc = false;
-    var durationOrderByDesc = false;
+    var nameOrderByDesc = true;
+    var numberOfAttendeesOrderByDesc = true;
+    var averageHourlyRateOrderByDesc = true;
+    var meetingCostOrderByDesc = true;
+    var durationOrderByDesc = true;
     var comparableMeetingCostOrderByDesc = true;
 
     $scope.updateNameOrder = function () {
