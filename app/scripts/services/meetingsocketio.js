@@ -45,24 +45,22 @@ app.factory('meetingServiceSocketIO', function (constants) {
                 service.onErrorCallback();
             });
 
-            socket.on('meeting update response', function (meeting) {
+            socket.on('meeting response', function (meeting) {
                 service.onMeetingUpdatedCallback(meeting);
             });
 
-            socket.on('meeting update error', function (errorMessage) {
+            socket.on('meeting error', function (errorMessage) {
                 console.log('Error ' + errorMessage + ' from websocket at ' + constants.nodeJsBackendHost);
             });
 
-            socket.on('top list update response', function (topList) {
+            socket.on('top list response', function (topList) {
                 service.onTopListUpdatedCallback(topList);
             });
         }
     }
 
     service.send = function (data) {
-        //if (constants.nodeJsBackendHost != '127.0.0.1:1337/') {
         socket.emit('meeting update request', data);
-        //}
     }
 
     service.getTopList = function (data) {
