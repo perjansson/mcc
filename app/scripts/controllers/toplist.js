@@ -18,7 +18,6 @@ app.controller('TopListCtrl', function ($scope, $location, constants, meetingSer
                 toplist.sort(function (a, b) {
                     return parseFloat(b.comparableMeetingCost) - parseFloat(a.comparableMeetingCost)
                 });
-                console.log('On toplist update');
                 $scope.toplist = toplist;
                 $scope.$apply();
             };

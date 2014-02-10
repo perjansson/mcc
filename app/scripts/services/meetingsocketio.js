@@ -54,6 +54,7 @@ app.factory('meetingServiceSocketIO', function (constants) {
             });
 
             socket.on('top list response', function (topList) {
+                console.log('Top list response');
                 service.onTopListUpdatedCallback(topList);
             });
         }
