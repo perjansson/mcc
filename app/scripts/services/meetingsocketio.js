@@ -45,7 +45,8 @@ app.factory('meetingServiceSocketIO', function (constants) {
                 service.onErrorCallback();
             });
 
-            socket.on('meeting server response', function (meeting) {
+            socket.on('meeting update response', function (meeting) {
+                console.log('meeting update response');
                 service.onMeetingUpdatedCallback(meeting);
             });
 
@@ -53,8 +54,8 @@ app.factory('meetingServiceSocketIO', function (constants) {
                 console.log('Error ' + errorMessage + ' from websocket at ' + constants.nodeJsBackendHost);
             });
 
-            socket.on('top list server response', function (topList) {
-                console.log('Top list server response');
+            socket.on('top list update response', function (topList) {
+                console.log('top list update response');
                 service.onTopListUpdatedCallback(topList);
             });
         }
