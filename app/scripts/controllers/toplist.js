@@ -1,31 +1,20 @@
-app.controller('TopListCtrl', function ($scope, $location, constants, meetingServiceSocketIO) {
+app.controller('TopListCtrl', function ($rootScope, $scope, $location, constants, meetingService) {
 
-    if (constants.shouldPersistMeetings) {
-        if (constants.shouldUseNodeJs) {
-            var onConnectingCallback = function () {
-                $('#connection-indicator').addClass('connecting').removeClass('connected').removeClass('disconnected');
-            };
-            var onConnectCallback = function () {
-                $('#connection-indicator').addClass('connected').removeClass('disconnected').removeClass('connecting');
-            };
-            var onDisconnectCallback = function () {
-                $('#connection-indicator').addClass('disconnected').removeClass('connected').removeClass('connecting');
-            };
-            var onErrorCallback = function () {
-                $('#connection-indicator').addClass('disconnected').removeClass('connected').removeClass('connecting');
-            };
-            var onTopListUpdatedCallback = function (toplist) {
-                toplist.sort(function (a, b) {
-                    return parseFloat(b.comparableMeetingCost) - parseFloat(a.comparableMeetingCost)
-                });
-                $scope.toplist = toplist;
-                $scope.$apply();
-            };
+    var deRegTopListUpdateEvent = $rootScope.$on('top list update event', function (event, topList) {
+        sortAndSaveTopList(topList);
+        $scope.$apply();
+    });
 
-            meetingServiceSocketIO.subscribeTopList(onConnectingCallback, onConnectCallback, onDisconnectCallback, onErrorCallback, onTopListUpdatedCallback);
-            meetingServiceSocketIO.connect();
-            meetingServiceSocketIO.getTopList();
-        }
+    function sortAndSaveTopList(topList) {
+        topList.sort(function (a, b) {
+            return parseFloat(b.comparableMeetingCost) - parseFloat(a.comparableMeetingCost)
+        });
+        $scope.topList = topList;
+    }
+
+    var topList = meetingService.tryGetTopList();
+    if (topList != null) {
+        sortAndSaveTopList(topList);
     }
 
     $scope.orderByAttribute = 'comparableMeetingCost';
@@ -80,5 +69,9 @@ app.controller('TopListCtrl', function ($scope, $location, constants, meetingSer
             $location.path(path);
         }
     }
+
+    $scope.$on('$destroy', function () {
+        deRegTopListUpdateEvent()
+    });
 
 });

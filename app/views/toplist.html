@@ -12,7 +12,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr ng-repeat="meeting in toplist | orderObjectBy:orderByAttribute:orderByDesc" ng-click="shareMeeting(meeting.id)">
+			<tr ng-repeat="meeting in topList | orderObjectBy:orderByAttribute:orderByDesc" ng-click="shareMeeting(meeting.id)">
 				<td class="hidden-md hidden-lg">{{meeting.name | truncate_characters:28}}</td>
 				<td class="hidden-xs hidden-sm">{{meeting.name | truncate_characters:45}}</td>
 				<td class="numeric hidden-xs">{{meeting.numberOfAttendees}}</td>

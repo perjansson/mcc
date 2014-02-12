@@ -1,4 +1,4 @@
-app.controller('MeetingCostCalculatorCtrl', function($scope, $http, $interval, $location, $window, constants, meetingCostService, meetingServiceSocketIO, meetingServiceREST) {
+app.controller('MeetingCostCalculatorCtrl', function ($rootScope, $scope, $http, $interval, $location, $window, constants, meetingService) {
 
     /* Properties for handling updating of meeting cost text */
     var updateMeetingTextDelay = constants.meetingCostTextUpdateIntervalInMillis;
@@ -7,62 +7,24 @@ app.controller('MeetingCostCalculatorCtrl', function($scope, $http, $interval, $
     /* Properties for handling updating backend */
     var updateBackendDelay = constants.backendUpdateIntervalInMillis;
     var updateBackendPromise = 0;
-    
-    if (meetingCostService.hasMeeting()) {
-        $scope.meeting = meetingCostService.getMeeting();
-        if ($scope.meeting.status == 'started') {
-            updateMeetingTextPromise = $interval(meetingCostCalculator, updateMeetingTextDelay);
-            updateBackendPromise = $interval(sendMeetingToServer, updateBackendDelay);        
-        }
-    } else  {
-        $scope.meeting = 
-            {
-                id: null,
-                name: null,
-                numberOfAttendees: constants.numberOfAttendeesText, 
-                averageHourlyRate: constants.averageHourlyRateText,
-                currency: constants.currencyText,
-                status: 'notStarted',
-                isBoring: false,
-                meetingStartTime: null,
-                pauseTimeStamp: null,
-                meetingPauseTime: null,
-                meetingCost: null,
-                goodMeeting: false,
-                duration: null,
-                prettyDuration: null
-            };        
+
+    var deRegMeetingUpdateEvent = $rootScope.$on('meeting update event', function (event, meeting) {
+        console.log('On meeting update: ' + JSON.stringify(meeting));
+        $scope.meeting.id = meeting.id;
+        $scope.$apply();
+    });
+
+    $scope.meeting = meetingService.getMeeting();
+    if ($scope.meeting.status == 'started') {
+        updateMeetingTextPromise = $interval(meetingCostCalculator, updateMeetingTextDelay);
+        updateBackendPromise = $interval(sendMeetingToServer, updateBackendDelay);
     }
 
     $http.get('app/currencies.json').success(function (data) {
         $scope.currencies = data;
     });
-    
-    if (constants.shouldPersistMeetings) {
-        if (constants.shouldUseNodeJs) {
-            var onConnectingCallback = function() {
-                $('#connection-indicator').addClass('connecting').removeClass('connected').removeClass('disconnected');
-            };
-            var onConnectCallback = function() {
-                $('#connection-indicator').addClass('connected').removeClass('disconnected').removeClass('connecting');
-            };
-            var onDisconnectCallback = function() {
-                $('#connection-indicator').addClass('disconnected').removeClass('connected').removeClass('connecting');
-            };
-            var onErrorCallback = function() {
-                $('#connection-indicator').addClass('disconnected').removeClass('connected').removeClass('connecting');
-            };
-            var onMeetingUpdatedCallback = function(meeting) {
-                console.log('On meeting update: ' + JSON.stringify(meeting));
-                $scope.meeting.id = meeting.id;
-            };
-            meetingServiceSocketIO.subscribe(onConnectingCallback, onConnectCallback, onDisconnectCallback, onErrorCallback, onMeetingUpdatedCallback);
-        
-            meetingServiceSocketIO.connect();
-        }
-    }
 
-    $scope.startMeeting = function() {
+    $scope.startMeeting = function () {
         $scope.meeting.status = 'started';
         $scope.meeting.id = null;
         $scope.meeting.name = null;
@@ -78,7 +40,7 @@ app.controller('MeetingCostCalculatorCtrl', function($scope, $http, $interval, $
         sendMeetingToServer();
     };
 
-    $scope.stopMeeting = function() {
+    $scope.stopMeeting = function () {
         $scope.meeting.status = 'stopped';
         $scope.meeting.isBoring = false;
 
@@ -89,7 +51,7 @@ app.controller('MeetingCostCalculatorCtrl', function($scope, $http, $interval, $
         sendMeetingToServer();
     };
 
-    $scope.pauseMeeting = function() {
+    $scope.pauseMeeting = function () {
         $scope.meeting.status = 'paused';
 
         $scope.meeting.pauseTimeStamp = new Date();
@@ -99,7 +61,7 @@ app.controller('MeetingCostCalculatorCtrl', function($scope, $http, $interval, $
         sendMeetingToServer();
     };
 
-    $scope.resumeMeeting = function() {
+    $scope.resumeMeeting = function () {
         $scope.meeting.meetingPauseTime = $scope.meeting.meetingPauseTime + (new Date() - $scope.meeting.pauseTimeStamp);
         $scope.meeting.status = 'started';
 
@@ -110,7 +72,7 @@ app.controller('MeetingCostCalculatorCtrl', function($scope, $http, $interval, $
         sendMeetingToServer();
     };
 
-    $scope.shareMeeting = function() {
+    $scope.shareMeeting = function () {
         var meetingId = $scope.meeting.id;
         if (meetingId != null) {
             var path = constants.sharingUrl + meetingId;
@@ -118,44 +80,34 @@ app.controller('MeetingCostCalculatorCtrl', function($scope, $http, $interval, $
         }
     }
 
-    $scope.addNameToMeeting = function() {
+    $scope.addNameToMeeting = function () {
         sendMeetingToServer();
     }
 
     function meetingCostCalculator() {
-        meetingCostService.calculateMeetingCost($scope.meeting);
+        meetingService.calculateMeetingCost($scope.meeting);
     }
 
     function sendMeetingToServer() {
-        if (constants.shouldPersistMeetings) {
-            if (constants.shouldUseNodeJs) {
-                meetingServiceSocketIO.send(JSON.stringify($scope.meeting));
-            }
-            if (constants.shouldUseSpringMvc) {
-                meetingServiceREST.create($scope.meeting, function success(responseMeeting) {
-                    // Update meeting with id from response
-                    $scope.meeting.id = responseMeeting.id;
-                    console.log(JSON.stringify($scope.meeting));
-                });
-            }
-        }
+        meetingService.send(JSON.stringify($scope.meeting));
     }
 
-    $scope.animateToBottom = function() {
-        setTimeout(function () {    
+    $scope.animateToBottom = function () {
+        setTimeout(function () {
             $('html, body').scrollTop($('body').prop("scrollHeight"));
         }, 100);
     }
 
-    $scope.$on('$destroy', function controllerDestroyed() {
+    $scope.$on('$destroy', function () {
         $interval.cancel(updateMeetingTextPromise);
         $interval.cancel(updateBackendPromise);
-    })
+        deRegMeetingUpdateEvent();
+    });
 
     /**********************************************
-    ******************* TIC TAC TOE ***************
-    **********************************************/
-    $scope.cellStyle= {
+     ******************* TIC TAC TOE ***************
+     **********************************************/
+    $scope.cellStyle = {
         'min-height': '100%',
         'border': '2px solid #C4C4C4',
         'text-align': 'center',
@@ -165,7 +117,7 @@ app.controller('MeetingCostCalculatorCtrl', function($scope, $http, $interval, $
         'color': '#C4C4C4'
     };
 
-    $scope.reset = function() {
+    $scope.reset = function () {
         $scope.board = [
             ['', '', ''],
             ['', '', ''],
@@ -175,7 +127,7 @@ app.controller('MeetingCostCalculatorCtrl', function($scope, $http, $interval, $
         $scope.winner = '';
     };
 
-    $scope.dropPiece = function(row, col) {
+    $scope.dropPiece = function (row, col) {
         if (!$scope.winner && !$scope.board[row][col]) {
             $scope.board[row][col] = $scope.nextMove;
             $scope.nextMove = $scope.nextMove == 'X' ? 'O' : 'X';
@@ -189,19 +141,30 @@ app.controller('MeetingCostCalculatorCtrl', function($scope, $http, $interval, $
         var b = $scope.board;
         $scope.winner =
             row(0) || row(1) || row(2) ||
-            col(0) || col(1) || col(2) ||
-            diagonal(-1) || diagonal(1);
-        function row(row) { return same(b[row][0], b[row][1], b[row][2]);}
-        function col(col) { return same(b[0][col], b[1][col], b[2][col]);}
-        function diagonal(i) { return same(b[0][1-i], b[1][1], b[2][1+i]);}
-        function same(a, b, c) { return (a==b && b==c) ? a : '';};
+                col(0) || col(1) || col(2) ||
+                diagonal(-1) || diagonal(1);
+        function row(row) {
+            return same(b[row][0], b[row][1], b[row][2]);
+        }
+
+        function col(col) {
+            return same(b[0][col], b[1][col], b[2][col]);
+        }
+
+        function diagonal(i) {
+            return same(b[0][1 - i], b[1][1], b[2][1 + i]);
+        }
+
+        function same(a, b, c) {
+            return (a == b && b == c) ? a : '';
+        };
     }
 
     function readUrl(value) {
         if (value) {
             value = value.split('/');
             $scope.nextMove = value[1];
-            angular.forEach(value[0].split(';'), function(row, col){
+            angular.forEach(value[0].split(';'), function (row, col) {
                 $scope.board[col] = row.split(',');
             });
             grade();
