@@ -3,12 +3,12 @@ app.factory('meetingService', function ($rootScope, constants) {
     var service = {};
     var socket;
 
-    var meeting = null;
+    var activeMeeting = null;
     var topList;
 
-    service.getMeeting = function () {
-        if (meeting == null) {
-            meeting = {
+    service.getActiveMeeting = function () {
+        if (activeMeeting == null) {
+            activeMeeting = {
                 id: null,
                 name: null,
                 numberOfAttendees: constants.numberOfAttendeesText,
@@ -22,15 +22,16 @@ app.factory('meetingService', function ($rootScope, constants) {
                 meetingCost: null,
                 goodMeeting: false,
                 duration: null,
-                prettyDuration: null
+                prettyDuration: null,
+                comparableMeetingCost: null
             };
         }
-        return meeting;
+        return activeMeeting;
     }
 
     service.calculateMeetingCost = function (updatedMeeting) {
-        meeting = updatedMeeting;
-        meeting.meetingCost = roundToZeroDecimals(getCurrentMeetingCost());
+        activeMeeting = updatedMeeting;
+        activeMeeting.meetingCost = roundToZeroDecimals(getCurrentMeetingCost());
     }
 
     function roundToZeroDecimals(value) {
@@ -42,17 +43,17 @@ app.factory('meetingService', function ($rootScope, constants) {
     }
 
     function getMeetingCostPerSecond() {
-        var numberOfAttendees = meeting.numberOfAttendees;
-        var averageHourlyRate = meeting.averageHourlyRate;
+        var numberOfAttendees = activeMeeting.numberOfAttendees;
+        var averageHourlyRate = activeMeeting.averageHourlyRate;
         return numberOfAttendees * (averageHourlyRate / 3600);
     }
 
     function getElapsedMeetingTimeInSeconds() {
         var meetingCurrentTime = new Date();
-        return (meetingCurrentTime - meeting.meetingStartTime - meeting.meetingPauseTime) / 1000;
+        return (meetingCurrentTime - activeMeeting.meetingStartTime - activeMeeting.meetingPauseTime) / 1000;
     }
 
-    service.tryGetTopList = function () {
+    service.tryToGetTopList = function () {
         if (topList != null) {
             return topList;
         } else {
@@ -61,8 +62,12 @@ app.factory('meetingService', function ($rootScope, constants) {
         }
     }
 
-    service.send = function (data) {
-        socket.emit('meeting update request', data);
+    service.tryToGetMeetingById = function (meetingId) {
+        socket.emit('meeting status request', meetingId);
+    }
+
+    service.send = function (meeting) {
+        socket.emit('meeting update request', meeting);
     }
 
     service.connect = function () {
@@ -108,10 +113,15 @@ app.factory('meetingService', function ($rootScope, constants) {
                 $rootScope.$emit('socket error event', topList);
             });
 
-            socket.on('meeting update response', function (data) {
+            socket.on('meeting update response', function (meeting) {
                 console.log('meeting update response');
-                meeting = data;
-                $rootScope.$emit('meeting update event', meeting);
+                activeMeeting = meeting;
+                $rootScope.$emit('meeting update event', activeMeeting);
+            });
+
+            socket.on('meeting status response', function (meeting) {
+                console.log('meeting status response');
+                $rootScope.$emit('meeting status event', meeting);
             });
 
             socket.on('meeting error', function (errorMessage) {

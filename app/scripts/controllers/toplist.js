@@ -12,7 +12,7 @@ app.controller('TopListCtrl', function ($rootScope, $scope, $location, constants
         $scope.topList = topList;
     }
 
-    var topList = meetingService.tryGetTopList();
+    var topList = meetingService.tryToGetTopList();
     if (topList != null) {
         sortAndSaveTopList(topList);
     }
@@ -63,7 +63,6 @@ app.controller('TopListCtrl', function ($rootScope, $scope, $location, constants
     }
 
     $scope.shareMeeting = function (meetingId) {
-        console.log("Sharing " + meetingId);
         if (meetingId != null) {
             var path = constants.sharingUrl + meetingId;
             $location.path(path);

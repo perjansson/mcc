@@ -14,7 +14,7 @@ app.controller('MeetingCostCalculatorCtrl', function ($rootScope, $scope, $http,
         $scope.$apply();
     });
 
-    $scope.meeting = meetingService.getMeeting();
+    $scope.meeting = meetingService.getActiveMeeting();
     if ($scope.meeting.status == 'started') {
         updateMeetingTextPromise = $interval(meetingCostCalculator, updateMeetingTextDelay);
         updateBackendPromise = $interval(sendMeetingToServer, updateBackendDelay);
