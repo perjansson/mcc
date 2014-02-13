@@ -21,6 +21,12 @@ app.controller('HeaderCtrl', function ($rootScope, $scope, $location, constants,
         $('#connection-indicator').addClass('disconnected').removeClass('connected').removeClass('connecting');
     });
 
+    var deRegMeetingDeleteEvent = $rootScope.$on('meeting delete event', function (event, meeting) {
+        console.log(meeting.id);
+        $scope.deletedMeetingId = meeting.id;
+        $scope.$apply();
+    });
+
     $scope.version = constants.versionNumber;
 
     $scope.isActive = function (viewLocation) {
@@ -39,6 +45,7 @@ app.controller('HeaderCtrl', function ($rootScope, $scope, $location, constants,
         deRegConnectFailedEvent();
         deRegDisconnectFailedEvent();
         deRegErrorEvent();
+        deRegMeetingDeleteEvent();
     });
 
 });

@@ -1,5 +1,5 @@
 app.constant('constants', {
-    versionNumber: '1.8.0',
+    versionNumber: '1.8.1',
     numberOfAttendeesText: null,
     averageHourlyRateText: null,
     currencyText: 'BTC',
@@ -7,5 +7,6 @@ app.constant('constants', {
     backendUpdateIntervalInMillis: '60000',
     nodeJsBackendHost: "ws://mcc.cloudno.de/",
     //nodeJsBackendHost: "127.0.0.1:1337/",
-    sharingUrl: '/meeting/'
+    meetingDetailUrl: '/meeting/',
+    topListUrl: '/toplist/'
 });

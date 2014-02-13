@@ -1,4 +1,4 @@
-app.controller('MeetingDetailCtrl', function ($rootScope, $scope, $routeParams, meetingService) {
+app.controller('MeetingDetailCtrl', function ($rootScope, $scope, $routeParams, $location, meetingService, constants) {
 
     var meetingId = $routeParams.meetingId;
     meetingService.tryToGetMeetingById(meetingId);
@@ -8,6 +8,13 @@ app.controller('MeetingDetailCtrl', function ($rootScope, $scope, $routeParams, 
         $scope.meeting.id = meetingId;
         $scope.$apply();
     });
+
+    $scope.keyPressed = function (e) {
+        if (46 == e.which) {
+            meetingService.deleteMeetingWithId(meetingId);
+            $location.path(constants.topListUrl);
+        }
+    };
 
     $scope.$on('$destroy', function () {
         deRegMeetingUpdateEvent();

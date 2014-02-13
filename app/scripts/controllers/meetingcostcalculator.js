@@ -75,7 +75,7 @@ app.controller('MeetingCostCalculatorCtrl', function ($rootScope, $scope, $http,
     $scope.shareMeeting = function () {
         var meetingId = $scope.meeting.id;
         if (meetingId != null) {
-            var path = constants.sharingUrl + meetingId;
+            var path = constants.meetingDetailUrl + meetingId;
             $location.path(path);
         }
     }

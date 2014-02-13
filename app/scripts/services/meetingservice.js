@@ -66,6 +66,10 @@ app.factory('meetingService', function ($rootScope, constants) {
         socket.emit('meeting status request', meetingId);
     }
 
+    service.deleteMeetingWithId = function (meetingId) {
+        socket.emit('meeting delete request', meetingId);
+    }
+
     service.send = function (meeting) {
         socket.emit('meeting update request', meeting);
     }
@@ -122,6 +126,11 @@ app.factory('meetingService', function ($rootScope, constants) {
             socket.on('meeting status response', function (meeting) {
                 console.log('meeting status response');
                 $rootScope.$emit('meeting status event', meeting);
+            });
+
+            socket.on('meeting delete response', function (meeting) {
+                console.log('meeting delete response');
+                $rootScope.$emit('meeting delete event', meeting);
             });
 
             socket.on('meeting error', function (errorMessage) {
