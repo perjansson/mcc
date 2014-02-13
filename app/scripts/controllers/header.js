@@ -22,11 +22,11 @@ app.controller('HeaderCtrl', function ($rootScope, $scope, $location, constants,
     });
 
     var deRegMeetingDeleteEvent = $rootScope.$on('meeting delete event', function (event, meeting) {
-        console.log(meeting.id);
         $scope.deletedMeetingId = meeting.id;
         $scope.$apply();
     });
 
+    $scope.deletedMeetingId = null;
     $scope.version = constants.versionNumber;
 
     $scope.isActive = function (viewLocation) {
