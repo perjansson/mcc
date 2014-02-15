@@ -3,11 +3,22 @@ app.controller('MeetingDetailCtrl', function ($rootScope, $scope, $routeParams, 
     var meetingId = $routeParams.meetingId;
     meetingService.tryToGetMeetingById(meetingId);
 
-    var deRegMeetingUpdateEvent = $rootScope.$on('meeting status event', function (event, meeting) {
+    var deRegMeetingStatusEvent = $rootScope.$on('meeting status event', function (event, meeting) {
+        updateThisMeeting(meeting);
+    });
+
+    var deRegMeetingUpdateEvent = $rootScope.$on('meeting update event', function (event, meeting) {
+        console.log('On (some) meeting update: ' + JSON.stringify(meeting));
+        if ($scope.meeting.id == meeting.id) {
+            updateThisMeeting(meeting);
+        }
+    });
+
+    function updateThisMeeting(meeting) {
         $scope.meeting = meeting;
         $scope.meeting.id = meetingId;
         $scope.$apply();
-    });
+    }
 
     $scope.keyPressed = function (e) {
         if (46 == e.which) {
@@ -17,6 +28,7 @@ app.controller('MeetingDetailCtrl', function ($rootScope, $scope, $routeParams, 
     };
 
     $scope.$on('$destroy', function () {
+        deRegMeetingStatusEvent();
         deRegMeetingUpdateEvent();
     });
 
