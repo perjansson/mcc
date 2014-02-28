@@ -160,15 +160,4 @@ app.controller('MeetingCostCalculatorCtrl', function ($rootScope, $scope, $http,
         };
     }
 
-    function readUrl(value) {
-        if (value) {
-            value = value.split('/');
-            $scope.nextMove = value[1];
-            angular.forEach(value[0].split(';'), function (row, col) {
-                $scope.board[col] = row.split(',');
-            });
-            grade();
-        }
-    }
-
 });

@@ -10,6 +10,15 @@ app.controller('TopListCtrl', function ($rootScope, $scope, $location, constants
             return parseFloat(b.comparableMeetingCost) - parseFloat(a.comparableMeetingCost)
         });
         $scope.topList = topList;
+        $scope.totalComparableMeetingCost = calculateTotalCost(topList);
+    }
+
+    function calculateTotalCost(topList) {
+        var totalCost = null;
+        topList.forEach(function (meeting) {
+            totalCost = totalCost + parseFloat(meeting.comparableMeetingCost);
+        });
+        return totalCost + ' ' + constants.currencyText;
     }
 
     var topList = meetingService.tryToGetTopList();

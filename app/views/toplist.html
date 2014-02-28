@@ -11,8 +11,8 @@
             <th ng-click="updateNumberOfAttendeesOrder()" width="16%" class="numeric hidden-xs"># of attendees</th>
             <th ng-click="updateAverageHourlyRateOrder()" width="16%" class="numeric hidden-xs">Avg. hourly rate</th>
             <th ng-click="updateMeetingCostOrder()" width="16%" class="numeric">Cost</th>
-            <th ng-click="updateDurationOrder()" width="16%" class="numeric hidden-xs">Duration</th>
-            <th ng-click="updateComparableMeetingCostOrder()" width="16%" class="numeric hidden-xs hidden-sm">Comparable
+            <th ng-click="updateDurationOrder()" width="16%" class="numeric hidden-xs hidden-sm">Duration</th>
+            <th ng-click="updateComparableMeetingCostOrder()" width="16%" class="numeric hidden-xs">Comparable
                 cost
             </th>
         </tr>
@@ -25,9 +25,13 @@
             <td class="numeric hidden-xs">{{meeting.numberOfAttendees}}</td>
             <td class="numeric hidden-xs">{{meeting.averageHourlyRate}}</td>
             <td class="numeric">{{meeting.meetingCost}} {{meeting.currency}}</td>
-            <td class="numeric hidden-xs">{{meeting.prettyDuration}}</td>
-            <td class="numeric hidden-xs hidden-sm">{{meeting.comparableMeetingCost}} {{meeting.comparableCurrency}}
+            <td class="numeric hidden-xs hidden-sm">{{meeting.prettyDuration}}</td>
+            <td class="numeric hidden-xs">{{meeting.comparableMeetingCost}} {{meeting.comparableCurrency}}
             </td>
+        </tr>
+        <tr>
+            <td class="hidden-xs hidden-sm" colspan="5"><strong>Total cost</strong></td>
+            <td class="numeric hidden-xs hidden-sm"><strong>{{totalComparableMeetingCost}}</strong></td>
         </tr>
         </tbody>
     </table>

@@ -10,6 +10,15 @@ app.controller('RunningMeetingsCtrl', function ($rootScope, $scope, $location, c
             return parseFloat(b.comparableMeetingCost) - parseFloat(a.comparableMeetingCost)
         });
         $scope.runningMeetings = runningMeetings;
+        $scope.totalComparableMeetingCost = calculateTotalCost(runningMeetings);
+    }
+
+    function calculateTotalCost(runningMeetings) {
+        var totalCost = null;
+        runningMeetings.forEach(function (meeting) {
+            totalCost = totalCost + parseFloat(meeting.comparableMeetingCost);
+        });
+        return totalCost + ' ' + constants.currencyText;
     }
 
     var runningMeetings = meetingService.tryToGetRunningMeetings();
