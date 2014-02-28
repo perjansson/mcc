@@ -5,6 +5,7 @@ app.factory('meetingService', function ($rootScope, constants) {
 
     var activeMeeting = null;
     var topList;
+    var runningMeetings;
 
     service.getActiveMeeting = function () {
         if (activeMeeting == null) {
@@ -23,7 +24,8 @@ app.factory('meetingService', function ($rootScope, constants) {
                 goodMeeting: false,
                 duration: null,
                 prettyDuration: null,
-                comparableMeetingCost: null
+                comparableMeetingCost: null,
+                lastUpdatedAtTimeStamp: null
             };
         }
         return activeMeeting;
@@ -62,6 +64,15 @@ app.factory('meetingService', function ($rootScope, constants) {
         }
     }
 
+    service.tryToGetRunningMeetings = function () {
+        if (runningMeetings != null) {
+            return runningMeetings;
+        } else {
+            socket.emit('running meetings request');
+            return null;
+        }
+    }
+
     service.tryToGetMeetingById = function (meetingId) {
         socket.emit('meeting status request', meetingId);
     }
@@ -84,37 +95,37 @@ app.factory('meetingService', function ($rootScope, constants) {
 
             socket.on('connecting', function () {
                 console.log('Trying to connect to websocket at ' + constants.nodeJsBackendHost);
-                $rootScope.$emit('socket connecting event', topList);
+                $rootScope.$emit('socket connecting event');
             });
 
             socket.on('connect', function () {
                 console.log('Connected to websocket at ' + constants.nodeJsBackendHost + ' d-(*_*)z');
-                $rootScope.$emit('socket connect event', topList);
+                $rootScope.$emit('socket connect event');
             });
 
             socket.on('reconnect', function () {
                 console.log('Reconnected to websocket at ' + constants.nodeJsBackendHost + ' d-(*_*)z');
-                $rootScope.$emit('socket connect event', topList);
+                $rootScope.$emit('socket connect event');
             });
 
             socket.on('connect_failed', function () {
                 console.log('Connect failed to websocket at ' + constants.nodeJsBackendHost);
-                $rootScope.$emit('socket connect failed event', topList);
+                $rootScope.$emit('socket connect failed event');
             });
 
             socket.on('reconnect_failed', function () {
                 console.log('Reconnect failed to websocket at ' + constants.nodeJsBackendHost);
-                $rootScope.$emit('socket connect failed event', topList);
+                $rootScope.$emit('socket connect failed event');
             });
 
             socket.on('disconnect', function () {
                 console.log('Disconnect from websocket at ' + constants.nodeJsBackendHost);
-                $rootScope.$emit('socket disconnect event', topList);
+                $rootScope.$emit('socket disconnect event');
             });
 
             socket.on('error', function (errorMessage) {
                 console.log('Error ' + errorMessage + ' from websocket at ' + constants.nodeJsBackendHost);
-                $rootScope.$emit('socket error event', topList);
+                $rootScope.$emit('socket error event');
             });
 
             socket.on('meeting update response', function (meeting) {
@@ -141,6 +152,12 @@ app.factory('meetingService', function ($rootScope, constants) {
                 console.log('top list update response');
                 topList = data;
                 $rootScope.$emit('top list update event', topList);
+            });
+
+            socket.on('running meetings update response', function (data) {
+                console.log('running meetings update response');
+                runningMeetings = data;
+                $rootScope.$emit('running meetings update event', runningMeetings);
             });
         }
     }

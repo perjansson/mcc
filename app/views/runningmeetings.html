@@ -1,14 +1,12 @@
-<h3>Top list</h3>
+<h3>Running meetings</h3>
 
 <br/>
 
-<div id="toplist" class="table-responsive">
+<div id="runningmeetings" class="table-responsive">
     <table class="table table-striped table-hover clickable">
         <thead>
         <tr>
-            <th ng-click="updateNameOrder()" width="25%" class="hidden-md hidden-lg">Name</th>
-            <th ng-click="updateNameOrder()" width="20%" class="hidden-xs hidden-sm">Name</th>
-            <th ng-click="updateNumberOfAttendeesOrder()" width="16%" class="numeric hidden-xs"># of attendees</th>
+            <th ng-click="updateNumberOfAttendeesOrder()" width="16%" class="numeric"># of attendees</th>
             <th ng-click="updateAverageHourlyRateOrder()" width="16%" class="numeric hidden-xs">Avg. hourly rate</th>
             <th ng-click="updateMeetingCostOrder()" width="16%" class="numeric">Cost</th>
             <th ng-click="updateDurationOrder()" width="16%" class="numeric hidden-xs">Duration</th>
@@ -18,11 +16,9 @@
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="meeting in topList | orderObjectBy:orderByAttribute:orderByDesc"
+        <tr ng-repeat="meeting in runningMeetings | orderObjectBy:orderByAttribute:orderByDesc"
             ng-click="shareMeeting(meeting.id)">
-            <td class="hidden-md hidden-lg">{{meeting.name | truncate_characters:28}}</td>
-            <td class="hidden-xs hidden-sm">{{meeting.name | truncate_characters:45}}</td>
-            <td class="numeric hidden-xs">{{meeting.numberOfAttendees}}</td>
+            <td class="numeric">{{meeting.numberOfAttendees}}</td>
             <td class="numeric hidden-xs">{{meeting.averageHourlyRate}}</td>
             <td class="numeric">{{meeting.meetingCost}} {{meeting.currency}}</td>
             <td class="numeric hidden-xs">{{meeting.prettyDuration}}</td>

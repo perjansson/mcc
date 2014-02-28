@@ -34,7 +34,7 @@ body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom
     margin: -15px 5px -10px -5px;
 }
 
-.jumbotron {
+.jumbotron, .page-header {
     text-align: center;
 }
 

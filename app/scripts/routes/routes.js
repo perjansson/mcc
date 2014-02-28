@@ -8,6 +8,10 @@ app.config(['$routeProvider', function($routeProvider) {
             templateUrl: 'app/views/meetingdetail.html',
             controller: 'MeetingDetailCtrl'
         }).
+        when('/runningmeetings', {
+            templateUrl: 'app/views/runningmeetings.html',
+            controller: 'RunningMeetingsCtrl'
+        }).
 		when('/toplist', {
 	        templateUrl: 'app/views/toplist.html',
 	        controller: 'TopListCtrl'
