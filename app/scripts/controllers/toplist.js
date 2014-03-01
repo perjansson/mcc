@@ -10,15 +10,45 @@ app.controller('TopListCtrl', function ($rootScope, $scope, $location, constants
             return parseFloat(b.comparableMeetingCost) - parseFloat(a.comparableMeetingCost)
         });
         $scope.topList = topList;
-        $scope.totalComparableMeetingCost = calculateTotalCost(topList);
+        calculateTotals(topList);
     }
 
-    function calculateTotalCost(topList) {
+    function calculateTotals(topList) {
         var totalCost = null;
+        var totalNumberOfAttendees = null;
+        var totalTimeInHours = null;
         topList.forEach(function (meeting) {
             totalCost = totalCost + parseFloat(meeting.comparableMeetingCost);
+            totalNumberOfAttendees = totalNumberOfAttendees + parseInt(meeting.numberOfAttendees);
+            totalTimeInHours = totalTimeInHours + (meeting.meetingCost / meeting.numberOfAttendees / meeting.averageHourlyRate);
         });
-        return totalCost + ' ' + constants.currencyText;
+        $scope.totalComparableMeetingCost = totalCost + ' ' + constants.currencyText;
+        $scope.totalNumberOfAttendees = totalNumberOfAttendees;
+        $scope.totalPrettyMeetingDuration = timeInHoursToPrettyMeetingDuration(totalTimeInHours);
+    }
+
+    const decimalToTimeFactor = 0.6;
+
+    function timeInHoursToPrettyMeetingDuration(timeInHours) {
+        var prettyMeetingDuration = null;
+        var hours, minutes, seconds = null;
+        if (timeInHours >= 1) {
+            var array = roundToDecimals(timeInHours, 2).toString().split('.');
+            hours = parseInt(array[0]);
+            minutes = roundToDecimals(parseInt(array[1]) * decimalToTimeFactor, 0);
+            prettyMeetingDuration = hours + " h " + minutes + " min";
+        } else if (timeInHours >= 0.01666666666667) {
+            minutes = timeInHours * 60;
+            prettyMeetingDuration = roundToDecimals(minutes, 0) + " min";
+        } else {
+            seconds = timeInHours * 3600;
+            prettyMeetingDuration = roundToDecimals(seconds, 0) + " s";
+        }
+        return prettyMeetingDuration;
+    }
+
+    function roundToDecimals(value, numberOfDecimals) {
+        return (Math.round(value * 100000) / 100000).toFixed(numberOfDecimals);
     }
 
     var topList = meetingService.tryToGetTopList();

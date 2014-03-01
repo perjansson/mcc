@@ -1,8 +1,6 @@
-<h3>Running meetings</h3>
+<div id="runningmeetings" class="table-responsive" ng-show="runningMeetings.length > 0">
+    <div pj-header text="Running meetings"></div>
 
-<br/>
-
-<div id="runningmeetings" class="table-responsive">
     <table class="table table-striped table-hover clickable">
         <thead>
         <tr>
@@ -28,4 +26,8 @@
         </tr>
         </tbody>
     </table>
+</div>
+
+<div id="norunningmeetings" class="table-responsive" ng-show="runningMeetings.length == 0">
+    <div class="alert alert-warning">No running meetings right now</div>
 </div>
