@@ -21,11 +21,15 @@
             <td class="numeric hidden-xs">{{meeting.comparableMeetingCost}} {{meeting.comparableCurrency}}</td>
         </tr>
         <tr>
-            <td class="hidden-xs hidden-sm" colspan="4"><strong>Total</strong></td>
-            <td class="numeric hidden-xs hidden-sm"><strong>{{totalComparableMeetingCost}}</strong></td>
+            <td class="hidden-xs"><strong>Total</strong></td>
+            <td class="numeric hidden-xs"><strong>{{totalNumberOfAttendees}}</strong></td>
+            <td class="numeric hidden-xs"></td>
+            <td class="numeric hidden-xs hidden-sm"><strong>{{totalPrettyMeetingDuration}} *</strong></td>
+            <td class="numeric hidden-xs"><strong>{{totalComparableMeetingCost}} *</strong></td>
         </tr>
         </tbody>
     </table>
+    <span class="label label-info pull-right hidden-xs">* Yes, there might be a small rounding issue so the total differs from the sum of each row. Big deal...</span>
 </div>
 
 <div id="norunningmeetings" class="table-responsive" ng-show="runningMeetings.length == 0">
