@@ -22,7 +22,7 @@ app.controller('TopListCtrl', function ($rootScope, $scope, $location, constants
             totalNumberOfAttendees = totalNumberOfAttendees + parseInt(meeting.numberOfAttendees);
             totalTimeInHours = totalTimeInHours + (meeting.meetingCost / meeting.numberOfAttendees / meeting.averageHourlyRate);
         });
-        $scope.totalComparableMeetingCost = totalCost + ' ' + constants.currencyText;
+        $scope.totalComparableMeetingCost = roundToDecimals(totalCost, 5) + ' ' + constants.currencyText;
         $scope.totalNumberOfAttendees = totalNumberOfAttendees;
         $scope.totalPrettyMeetingDuration = timeInHoursToPrettyMeetingDuration(totalTimeInHours);
     }

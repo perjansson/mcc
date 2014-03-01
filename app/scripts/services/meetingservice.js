@@ -134,6 +134,11 @@ app.factory('meetingService', function ($rootScope, constants) {
                 $rootScope.$emit('meeting update event', activeMeeting);
             });
 
+            socket.on('some meeting update response', function (meeting) {
+                console.log('some meeting update response');
+                $rootScope.$emit('some meeting update event', activeMeeting);
+            });
+
             socket.on('meeting status response', function (meeting) {
                 console.log('meeting status response');
                 $rootScope.$emit('meeting status event', meeting);

@@ -7,7 +7,7 @@ app.controller('MeetingDetailCtrl', function ($rootScope, $scope, $routeParams, 
         updateThisMeeting(meeting);
     });
 
-    var deRegMeetingUpdateEvent = $rootScope.$on('meeting update event', function (event, meeting) {
+    var deRegMeetingUpdateEvent = $rootScope.$on('some meeting update event', function (event, meeting) {
         console.log('On (some) meeting update: ' + JSON.stringify(meeting));
         if ($scope.meeting.id == meeting.id) {
             updateThisMeeting(meeting);
