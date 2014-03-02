@@ -25,7 +25,8 @@ app.factory('meetingService', function ($rootScope, constants) {
                 duration: null,
                 prettyDuration: null,
                 comparableMeetingCost: null,
-                lastUpdatedAtTimeStamp: null
+                lastUpdatedAtTimeStamp: null,
+                position: null
             };
         }
         return activeMeeting;

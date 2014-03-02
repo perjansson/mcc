@@ -23,6 +23,7 @@ app.controller('CalculatorCtrl', function ($rootScope, $scope, $http, $interval,
     geoService.findPosition(function (position) {
         $scope.$apply(function () {
             $scope.position = position;
+            $scope.meeting.position = position;
         });
     });
 
