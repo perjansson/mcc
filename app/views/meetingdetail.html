@@ -50,8 +50,8 @@
             <div class="col-xs-12 col-sm-6 col-md-8 col-lg-9">{{meeting.prettyDuration}}</div>
         </div>
         <div class="row">
-            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3"><strong>Position</strong></div>
-            <div class="col-xs-12 col-sm-6 col-md-8 col-lg-9">Longitude {{meeting.position.longitude}} and Latitude {{meeting.position.latitude}}</div>
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3"><strong>Address</strong></div>
+            <div class="col-xs-12 col-sm-6 col-md-8 col-lg-9"><a href="http://maps.google.com/maps?q={{meeting.position.latitude}},{{meeting.position.longitude}}" target="_blank">{{meeting.position.address}}</a></div>
         </div>
         <div class="row">
             <div class="text-muted col-xs-12 col-sm-6 col-md-4 col-lg-3"><strong>Id</strong></div>

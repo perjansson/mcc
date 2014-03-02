@@ -20,7 +20,7 @@ app.controller('CalculatorCtrl', function ($rootScope, $scope, $http, $interval,
         updateBackendPromise = $interval(sendMeetingToServer, updateBackendDelay);
     }
 
-    geoService.findPosition(function (position) {
+    geoService.findCity(function (position) {
         $scope.$apply(function () {
             $scope.position = position;
             $scope.meeting.position = position;
