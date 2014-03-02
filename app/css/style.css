@@ -38,6 +38,12 @@ body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom
     text-align: center;
 }
 
+.position {
+    text-align: center;
+    color: #C4C4C4;
+    margin: -15px 0px 25px 0px;
+}
+
 .placeholder {
     color: #AAA;
 }

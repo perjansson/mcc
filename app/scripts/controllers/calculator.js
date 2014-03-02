@@ -1,4 +1,4 @@
-app.controller('MeetingCostCalculatorCtrl', function ($rootScope, $scope, $http, $interval, $location, $window, constants, meetingService) {
+app.controller('CalculatorCtrl', function ($rootScope, $scope, $http, $interval, $location, $window, constants, meetingService, geoService) {
 
     /* Properties for handling updating of meeting cost text */
     var updateMeetingTextDelay = constants.meetingCostTextUpdateIntervalInMillis;
@@ -19,6 +19,12 @@ app.controller('MeetingCostCalculatorCtrl', function ($rootScope, $scope, $http,
         updateMeetingTextPromise = $interval(meetingCostCalculator, updateMeetingTextDelay);
         updateBackendPromise = $interval(sendMeetingToServer, updateBackendDelay);
     }
+
+    geoService.findPosition(function (position) {
+        $scope.$apply(function () {
+            $scope.position = position;
+        });
+    });
 
     $http.get('app/currencies.json').success(function (data) {
         $scope.currencies = data;
