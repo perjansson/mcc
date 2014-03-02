@@ -2,7 +2,7 @@ app.config(['$routeProvider', function($routeProvider) {
 	$routeProvider.
 		when('/meeting', {
 			templateUrl: 'app/views/calculator.html',
-			controller: 'MeetingCostCalculatorCtrl'
+			controller: 'CalculatorCtrl'
 		}).
         when('/meeting/:meetingId', {
             templateUrl: 'app/views/meetingdetail.html',

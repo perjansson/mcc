@@ -1,5 +1,5 @@
 app.filter('version', function () {
-	return function (versionNumber) {
+	return function () {
 		return "d-(*_*)z";
 	};
 });
