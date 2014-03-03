@@ -1,109 +1,158 @@
 <div>
     <div pj-header text="Calculate meeting cost"></div>
 
-    <div class="position small" ng-show="position != null">
-        {{position.city}}<br>
-        {{position.address}}<br>
-        Longitude: {{position.longitude}} Latitude: {{position.latitude}}
+    <div class="position small" data-toggle="tooltip" title="{{position.address}}" ng-show="position != null">
+        <a href="" data-toggle="modal" data-target="#positionModal">{{position.city}}</a><br>
     </div>
 
-	<form class="form-inline" role="form">
+    <form class="form-inline" role="form">
 
-	    <div class="row">
-	        <div class="form-group col-sm-4">
-	            <label for="numberOfAttendees">Number of attendees</label>
-	            <input id="numberOfAttendees" type="number" class="form-control" ng-model="meeting.numberOfAttendees" placeholder="E.g. 10">
-	        </div>
+        <div class="row">
+            <div class="form-group col-sm-4">
+                <label for="numberOfAttendees">Number of attendees</label>
+                <input id="numberOfAttendees" type="number" class="form-control" ng-model="meeting.numberOfAttendees"
+                       placeholder="E.g. 10">
+            </div>
 
-	        <div class="form-group col-sm-4">
-	            <label for="averageHourlyRate">Average hourly rate</label>
-	            <input id="averageHourlyRate" type="number" class="form-control" ng-model="meeting.averageHourlyRate" placeholder="E.g. 150">
-	        </div>
+            <div class="form-group col-sm-4">
+                <label for="averageHourlyRate">Average hourly rate</label>
+                <input id="averageHourlyRate" type="number" class="form-control" ng-model="meeting.averageHourlyRate"
+                       placeholder="E.g. 150">
+            </div>
 
-	        <div class="form-group col-sm-4">
-	            <label for="currency">Currency</label>
-      			<select id="currency" ng-model="meeting.currency" ng-options="currency.key as currency.key + ' (' + currency.name + ')' for currency in currencies" class="form-control"></select>
-	        </div>
+            <div class="form-group col-sm-4">
+                <label for="currency">Currency</label>
+                <select id="currency" ng-model="meeting.currency"
+                        ng-options="currency.key as currency.key + ' (' + currency.name + ')' for currency in currencies"
+                        class="form-control"></select>
+            </div>
 
-	        <div class="form-group col-sm-12">
-	            <div class="pull-right">
-	                <button type="button" class="btn btn-primary" ng-click="startMeeting(); animateToBottom()" ng-show="meeting.status == 'notStarted' || meeting.status == 'stopped'" ng-disabled="meeting.numberOfAttendees == null || meeting.averageHourlyRate == null || meeting.currency == null || meeting.currency == ''">
-	                    Start meeting
-	                </button>
+            <div class="form-group col-sm-12">
+                <div class="pull-right">
+                    <button type="button" class="btn btn-primary" ng-click="startMeeting(); animateToBottom()"
+                            ng-show="meeting.status == 'notStarted' || meeting.status == 'stopped'"
+                            ng-disabled="meeting.numberOfAttendees == null || meeting.averageHourlyRate == null || meeting.currency == null || meeting.currency == ''">
+                        Start meeting
+                    </button>
 
-	                <button type="button" class="btn btn-danger" ng-click="stopMeeting()" ng-show="meeting.status == 'started' || meeting.status == 'paused'" data-toggle="modal" data-target="#addNameModal">
-	                    Stop
-	                </button>
+                    <button type="button" class="btn btn-danger" ng-click="stopMeeting()"
+                            ng-show="meeting.status == 'started' || meeting.status == 'paused'" data-toggle="modal"
+                            data-target="#addNameModal">
+                        Stop
+                    </button>
 
-	                <button type="button" class="btn btn-warning" ng-click="pauseMeeting()" ng-show="meeting.status == 'started'">
-	                    Pause
-	                </button>
+                    <button type="button" class="btn btn-warning" ng-click="pauseMeeting()"
+                            ng-show="meeting.status == 'started'">
+                        Pause
+                    </button>
 
-	                <button type="button" class="btn btn-warning" ng-click="resumeMeeting()" ng-show="meeting.status == 'paused'">
-	                    Resume
-	                </button>
+                    <button type="button" class="btn btn-warning" ng-click="resumeMeeting()"
+                            ng-show="meeting.status == 'paused'">
+                        Resume
+                    </button>
 
-	                <button type="button" class="btn btn-default" ng-click="meeting.isBoring = true; animateToBottom()" ng-show="(meeting.status == 'started' || meeting.status == 'paused') && meeting.isBoring == false">
-	                    Boring?
-	                </button>
+                    <button type="button" class="btn btn-default" ng-click="meeting.isBoring = true; animateToBottom()"
+                            ng-show="(meeting.status == 'started' || meeting.status == 'paused') && meeting.isBoring == false">
+                        Boring?
+                    </button>
 
-	                <button type="button" class="btn btn-default" ng-click="meeting.isBoring = false" ng-show="(meeting.status == 'started' || meeting.status == 'paused') && meeting.isBoring == true">
-	                    Not boring?
-	                </button>
-	            </div>
-	        </div>
-	    </div>
+                    <button type="button" class="btn btn-default" ng-click="meeting.isBoring = false"
+                            ng-show="(meeting.status == 'started' || meeting.status == 'paused') && meeting.isBoring == true">
+                        Not boring?
+                    </button>
+                </div>
+            </div>
+        </div>
 
-	    <div class="modal fade" id="addNameModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	      <div class="modal-dialog">
-	        <div class="modal-content">
-	          <div class="modal-header">
-	            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-	            <h4 class="modal-title" id="myModalLabel">Add more info to the meeting?</h4>
-	          </div>
-				<div class="modal-body">
-					<form class="form-horizontal" role="form">
- 						<div class="form-group">
-    						<label for="nameOfMeeting" class="col-sm-4 control-label">Meeting name</label>
-    						<div class="col-sm-8">
-								<input id="nameOfMeeting" type="text" class="form-control" ng-model="meeting.name">
-							</div>
-						</div>
-				        <div class="form-group">
-    						<label for="nameOfMeeting" class="col-sm-4 control-label">A good meeting?</label>
-    						<div class="col-sm-8">
-								<input type="checkbox" ng-model="meeting.goodMeeting">
-							</div>
-						</div>
-					</form>
-				</div>
-	          <div class="modal-footer">
-	            <button type="button" class="btn btn-default" data-dismiss="modal">Skip</button>
-	            <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="addNameToMeeting()">Add info</button>
-	          </div>
-	        </div>
-	      </div>
-	    </div>
+        <div class="modal fade" id="addNameModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel">Add more info to the meeting?</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <label for="nameOfMeeting" class="col-sm-4 control-label">Meeting name</label>
 
-	</form>
+                                <div class="col-sm-8">
+                                    <input id="nameOfMeeting" type="text" class="form-control" ng-model="meeting.name">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="nameOfMeeting" class="col-sm-4 control-label">A good meeting?</label>
+
+                                <div class="col-sm-8">
+                                    <input type="checkbox" ng-model="meeting.goodMeeting">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Skip</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal"
+                                ng-click="addNameToMeeting()">Add info
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="positionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">Your position (probably)</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3"><strong>City</strong></div>
+                            <div class="col-xs-12 col-sm-8 col-md-8 col-lg-9">{{position.city}}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3"><strong>Address</strong></div>
+                            <div class="col-xs-12 col-sm-8 col-md-8 col-lg-9">{{position.address}}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3"><strong>Latitude</strong></div>
+                            <div class="col-xs-12 col-sm-8 col-md-8 col-lg-9">{{position.latitude}}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3"><strong>Longitude</strong></div>
+                            <div class="col-xs-12 col-sm-8 col-md-8 col-lg-9">{{position.longitude}}</div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
 
     <div class="row">
-		<div class="col-xs-12">
-			<div pj-meeting-status></div>
-		</div>
-	</div>
+        <div class="col-xs-12">
+            <div pj-meeting-status></div>
+        </div>
+    </div>
 
-	<div id="playground" ng-show="meeting.isBoring">
-	    <div class="nextPlayer">Next Player: {{nextMove}}</a></div>
-	    <table class="board">
-	        <tr ng-repeat="row in board" style="height:15px;">
-	            <td ng-repeat="cell in row track by $index" ng-style="cellStyle" ng-click="dropPiece($parent.$index, $index)">
-	            	{{cell}}
-	            </td>
-	        </tr>
-	    </table>
-	    <div class="winner" ng-show="winner">{{winner|tictactoewinner}}</div>
-	    <a ng-click="reset()" data-role="button" data-inline="true">Reset board</a>
-	</div>
+    <div id="playground" ng-show="meeting.isBoring">
+        <div class="nextPlayer">Next Player: {{nextMove}}</a></div>
+        <table class="board">
+            <tr ng-repeat="row in board" style="height:15px;">
+                <td ng-repeat="cell in row track by $index" ng-style="cellStyle"
+                    ng-click="dropPiece($parent.$index, $index)">
+                    {{cell}}
+                </td>
+            </tr>
+        </table>
+        <div class="winner" ng-show="winner">{{winner|tictactoewinner}}</div>
+        <a ng-click="reset()" data-role="button" data-inline="true">Reset board</a>
+    </div>
 
 </div>
