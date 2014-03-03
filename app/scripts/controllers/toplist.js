@@ -27,7 +27,7 @@ app.controller('TopListCtrl', function ($rootScope, $scope, $location, constants
         $scope.totalPrettyMeetingDuration = timeInHoursToPrettyMeetingDuration(totalTimeInHours);
     }
 
-    const decimalToTimeFactor = 0.6;
+    var decimalToTimeFactor = 0.6;
 
     function timeInHoursToPrettyMeetingDuration(timeInHours) {
         var prettyMeetingDuration = null;
