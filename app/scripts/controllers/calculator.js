@@ -20,11 +20,9 @@ app.controller('CalculatorCtrl', function ($rootScope, $scope, $http, $interval,
         updateBackendPromise = $interval(sendMeetingToServer, updateBackendDelay);
     }
 
-    geoService.findCity(function (position) {
-        $scope.$apply(function () {
-            $scope.position = position;
-            $scope.meeting.position = position;
-        });
+    var promiseToUserPosition = geoService.getUserPositionDetails();
+    promiseToUserPosition.then(function (position) {
+        $scope.meeting.position = position;
     });
 
     $http.get('app/currencies.json').success(function (data) {

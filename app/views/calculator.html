@@ -1,8 +1,8 @@
 <div>
     <div pj-header text="Calculate meeting cost"></div>
 
-    <div class="position small" data-toggle="tooltip" title="{{position.address}}" ng-show="position != null">
-        <a href="" data-toggle="modal" data-target="#positionModal">{{position.city}}</a><br>
+    <div class="position small" data-toggle="tooltip" ng-show="meeting.position != null">
+        <a href="" data-toggle="modal" data-target="#positionModal">{{meeting.position.city}}</a><br>
     </div>
 
     <form class="form-inline" role="form">
@@ -111,19 +111,19 @@
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3"><strong>City</strong></div>
-                            <div class="col-xs-12 col-sm-8 col-md-8 col-lg-9">{{position.city}}</div>
+                            <div class="col-xs-12 col-sm-8 col-md-8 col-lg-9">{{meeting.position.city}}</div>
                         </div>
                         <div class="row">
                             <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3"><strong>Address</strong></div>
-                            <div class="col-xs-12 col-sm-8 col-md-8 col-lg-9">{{position.address}}</div>
+                            <div class="col-xs-12 col-sm-8 col-md-8 col-lg-9">{{meeting.position.address}}</div>
                         </div>
                         <div class="row">
                             <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3"><strong>Latitude</strong></div>
-                            <div class="col-xs-12 col-sm-8 col-md-8 col-lg-9">{{position.latitude}}</div>
+                            <div class="col-xs-12 col-sm-8 col-md-8 col-lg-9">{{meeting.position.latitude}}</div>
                         </div>
                         <div class="row">
                             <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3"><strong>Longitude</strong></div>
-                            <div class="col-xs-12 col-sm-8 col-md-8 col-lg-9">{{position.longitude}}</div>
+                            <div class="col-xs-12 col-sm-8 col-md-8 col-lg-9">{{meeting.position.longitude}}</div>
                         </div>
                     </div>
                     <div class="modal-footer">
