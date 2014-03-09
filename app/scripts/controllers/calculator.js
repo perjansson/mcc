@@ -90,7 +90,7 @@ app.controller('CalculatorCtrl', function ($rootScope, $scope, $http, $interval,
     }
 
     function meetingCostCalculator() {
-        meetingService.calculateMeetingCost($scope.meeting);
+        $scope.meeting.calcuateRoundedMeetingCost();
     }
 
     function sendMeetingToServer() {

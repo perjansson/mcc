@@ -9,51 +9,9 @@ app.factory('meetingService', function ($rootScope, constants) {
 
     service.getActiveMeeting = function () {
         if (activeMeeting == null) {
-            activeMeeting = {
-                id: null,
-                name: null,
-                numberOfAttendees: constants.numberOfAttendeesText,
-                averageHourlyRate: constants.averageHourlyRateText,
-                currency: constants.currencyText,
-                status: 'notStarted',
-                isBoring: false,
-                meetingStartTime: null,
-                pauseTimeStamp: null,
-                meetingPauseTime: null,
-                meetingCost: null,
-                goodMeeting: false,
-                duration: null,
-                prettyDuration: null,
-                comparableMeetingCost: null,
-                lastUpdatedAtTimeStamp: null,
-                position: null
-            };
+            activeMeeting = aMeeting();
         }
         return activeMeeting;
-    }
-
-    service.calculateMeetingCost = function (updatedMeeting) {
-        activeMeeting = updatedMeeting;
-        activeMeeting.meetingCost = roundToZeroDecimals(getCurrentMeetingCost());
-    }
-
-    function roundToZeroDecimals(value) {
-        return Math.round(value).toFixed(0);
-    }
-
-    function getCurrentMeetingCost() {
-        return getMeetingCostPerSecond() * getElapsedMeetingTimeInSeconds();
-    }
-
-    function getMeetingCostPerSecond() {
-        var numberOfAttendees = activeMeeting.numberOfAttendees;
-        var averageHourlyRate = activeMeeting.averageHourlyRate;
-        return numberOfAttendees * (averageHourlyRate / 3600);
-    }
-
-    function getElapsedMeetingTimeInSeconds() {
-        var meetingCurrentTime = new Date();
-        return (meetingCurrentTime - activeMeeting.meetingStartTime - activeMeeting.meetingPauseTime) / 1000;
     }
 
     service.tryToGetTopList = function () {
@@ -131,7 +89,12 @@ app.factory('meetingService', function ($rootScope, constants) {
 
             socket.on('meeting update response', function (meeting) {
                 console.log('meeting update response');
-                activeMeeting = meeting;
+                activeMeeting.id = meeting.id;
+                activeMeeting.lastUpdatedAtTimeStamp = meeting.lastUpdatedAtTimeStamp;
+                activeMeeting.comparableCurrency = meeting.comparableCurrency;
+                activeMeeting.comparableMeetingCost = meeting.comparableMeetingCost;
+                activeMeeting.duration = meeting.duration;
+                activeMeeting.prettyDuration = meeting.prettyDuration;
                 $rootScope.$emit('meeting update event', activeMeeting);
             });
 

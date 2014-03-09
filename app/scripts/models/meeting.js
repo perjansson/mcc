@@ -1,12 +1,13 @@
 function aMeeting() {
 
-    var getRoundedMeetingCost = function () {
-        return Math.round(getExactMeetingCost()).toFixed(0)
+    var calcuateRoundedMeetingCost = function () {
+        var roundedMeetingCost = Math.round(getExactMeetingCost()).toFixed(0);
+        meeting.meetingCost = roundedMeetingCost;
+        return  roundedMeetingCost;
     }
 
     var getExactMeetingCost = function () {
-        var meetingCost = getMeetingCostPerSecond() * getElapsedMeetingTimeInSeconds();
-        return meetingCost;
+        return getMeetingCostPerSecond() * getElapsedMeetingTimeInSeconds();
     }
 
     function getMeetingCostPerSecond() {
@@ -38,7 +39,7 @@ function aMeeting() {
         comparableMeetingCost: null,
         lastUpdatedAtTimeStamp: null,
         position: null,
-        getRoundedMeetingCost: getRoundedMeetingCost,
+        calcuateRoundedMeetingCost: calcuateRoundedMeetingCost,
         getExactMeetingCost: getExactMeetingCost
     };
 

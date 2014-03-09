@@ -39,7 +39,9 @@ describe("Cost calculator logic", function () {
         meeting.averageHourlyRate = 1000;
         meeting.currency = 'SEK';
         meeting.meetingStartTime = tenMinutesAgo;
-        expect(meeting.getRoundedMeetingCost()).toBeCloseTo(10000);
+        var roundedMeetingCost = meeting.calcuateRoundedMeetingCost();
+        expect(roundedMeetingCost).toBeCloseTo(10000);
+        expect(meeting.meetingCost).toEqual(roundedMeetingCost);
     });
 
 });
