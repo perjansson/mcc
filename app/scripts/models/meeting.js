@@ -1,5 +1,25 @@
 function aMeeting() {
 
+    var getRoundedMeetingCost = function () {
+        return Math.round(getExactMeetingCost()).toFixed(0)
+    }
+
+    var getExactMeetingCost = function () {
+        var meetingCost = getMeetingCostPerSecond() * getElapsedMeetingTimeInSeconds();
+        return meetingCost;
+    }
+
+    function getMeetingCostPerSecond() {
+        var numberOfAttendees = meeting.numberOfAttendees;
+        var averageHourlyRate = meeting.averageHourlyRate;
+        return numberOfAttendees * (averageHourlyRate / 3600);
+    }
+
+    function getElapsedMeetingTimeInSeconds() {
+        var meetingCurrentTime = new Date();
+        return (meetingCurrentTime - meeting.meetingStartTime - meeting.meetingPauseTime) / 1000;
+    }
+
     var meeting = {
         id: null,
         name: null,
@@ -17,10 +37,11 @@ function aMeeting() {
         prettyDuration: null,
         comparableMeetingCost: null,
         lastUpdatedAtTimeStamp: null,
-        position: null
+        position: null,
+        getRoundedMeetingCost: getRoundedMeetingCost,
+        getExactMeetingCost: getExactMeetingCost
     };
 
     return meeting;
-
 
 }
